@@ -1,0 +1,67 @@
+.Button {
+  @apply inline-flex items-center justify-center ui-outline cursor-pointer;
+  border-radius: 4px;
+  padding: 0 var(--button-padding);
+  font-size: var(--button-font-size);
+  font-weight: 500;
+  height: var(--button-height);
+  background: var(--button-background);
+  color: var(--button-color);
+  &:hover {
+    background: var(--button-hover-background, var(--button-background));
+    color: var(--button-hover-color, var(--button-color));
+  }
+
+  &:where([size=sm]) {
+    --button-font-size: theme(fontSize.sm[0]);
+    --button-padding: theme(spacing.3);
+    --button-height: theme(spacing.6);
+  }
+  &:where([size=md],:not([size])) {
+    --button-font-size: theme(fontSize.base[0]);
+    --button-padding: theme(spacing.4);
+    --button-height: theme(spacing.8);
+  }
+
+  &:where([size=lg]) {
+
+  }
+
+
+  &:where([shape=square]) {
+    --button-padding: 0;
+    width: var(--button-height);
+  }
+
+
+  &:where(:not([variant])) {
+    
+  }
+  &:where([variant=classic]) {
+    
+  }
+  &:where([variant=ghost]) {
+    
+  }
+  &:where([variant=outline]) {
+    box-shadow: var(--shadow-1);
+  }
+  &:where([variant=gradient]) {
+    
+  }
+
+  &:where(:not([color])) {
+    &:where([variant=ghost]) {
+      --button-hover-background: var(--foreground);
+    }
+  }
+
+  &:where([color=primary]) {
+    --button-color: var(--white-a11);
+    --button-background: var(--primary-solid);
+    --button-hover-background: var(--primary-solid-hover);
+    &:where([variant=ghost]) {
+
+    }
+  }
+}

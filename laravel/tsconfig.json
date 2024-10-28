@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "./dist",
+    "target": "ES2020",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "resolveJsonModule": true,
+    "strict": true,
+    "declaration": true,
+    "esModuleInterop": true,
+    "paths": {
+      "@/*": ["resources/app/*"]
+    }
+  },
+  "include": [
+    "env.d.ts",
+    "resources/app/**/*",
+    "resources/app/**/*.ts",
+    "resources/app/**/*.d.ts",
+    "resources/app/**/*.tsx",
+    "resources/app/**/*.vue",
+    "resources/view/**/*.blade.php"
+  ],
+  "files": [
+    "auto-imports.d.ts",
+    "components.d.ts"
+  ]
+}

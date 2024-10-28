@@ -1,0 +1,67 @@
+.Fieldset {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.Label {
+  font-size: 15px;
+  text-align: right;
+}
+
+.FieldInput {
+  @apply ui-outline box-border !border-0;
+  width: 100%;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  padding: 0 var(--input-padding);
+  font-size: var(--input-font-size);
+  font-weight: 500;
+  height: var(--input-height);
+  background: var(--input-background);
+  color: var(--input-color);
+
+  &:where([size=sm]) {
+    --input-font-size: theme(fontSize.sm[0]);
+    --input-padding: theme(spacing.3);
+    --input-height: theme(spacing.6);
+  }
+  &:where([size=md],:not([size])) {
+    --input-font-size: theme(fontSize.base[0]);
+    --input-padding: theme(spacing.4);
+    --input-height: theme(spacing.8);
+  }
+
+  &:where([size=lg]) {
+
+  }
+
+
+  &:where(:not([variant])) {
+    box-shadow: var(--shadow-1);
+    --input-background: var(--white)
+  }
+  &:focus {
+    @apply shadow-none
+  }
+
+}
+
+.Form {
+  &Item {
+    @apply grid;
+  }
+  &Description {
+    @apply flex first-letter:uppercase;
+    color: var(--muted);
+    font-size: var(--sub-title-font-size);
+    line-height: var(--sub-title-line-height);
+  }
+  &Message {
+    @apply text-sm flex first-letter:uppercase;
+    color: var(--danger-text)
+  }
+}

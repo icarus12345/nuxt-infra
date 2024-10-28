@@ -1,0 +1,73 @@
+.Card {
+  @apply flex flex-col relative ;
+  border-radius: var(--card-radius);
+  padding: var(--card-padding);
+  row-gap: var(--card-gap);
+  background-color: var(--card-background-color);
+  backdrop-filter: var(--backdrop-filter-panel);
+  box-shadow:
+    0 0 0 var(--card-border-width) var(--border),
+    var(--shadow-6);
+}
+
+/* * * * * * * * * * * * * * * * * * * */
+/*          Shadows / Surface          */
+/* * * * * * * * * * * * * * * * * * * */
+
+/* prettier-ignore */
+:where(.radix-themes) {
+}
+
+/* prettier-ignore */
+:is(.dark, .dark-theme),
+:is(.dark, .dark-theme) :where(.radix-themes:not(.light, .light-theme)) {
+}
+
+/* * * * * * * * * * * * * * * * * * * */
+/*                Sizes                */
+/* * * * * * * * * * * * * * * * * * * */
+
+.Card {
+  &:where([size=xs]) {
+    --card-padding: theme(padding.3);
+    --card-radius: var(--radius-4);
+    --card-gap: theme(gap.2);
+  }
+  &:where([size=sm]) {
+    --card-padding: theme(padding.4);
+    --card-radius: var(--radius-4);
+    --card-gap: theme(gap[2.5]);
+  }
+  &:where([size=md],:not([size])) {
+    --card-padding: theme(padding.5);
+    --card-radius: var(--radius-5);
+    --card-gap: theme(gap.3);
+  }
+  &:where([size=lg]) {
+    --card-padding: theme(padding.6);
+    --card-radius: var(--radius-5);
+    --card-gap: theme(gap.4);
+  }
+  &:where([size=xl]) {
+    --card-padding: theme(padding.7);
+    --card-radius: var(--radius-6);
+    --card-gap: theme(gap.4);
+  }
+  /* * * * * * * * * * * * * * * * * * * */
+  /*         Variants / Surface          */
+  /* * * * * * * * * * * * * * * * * * * */
+  
+  &:where(:not([variant])) {
+    --card-border-width: 1px;
+    --card-background-color: var(--card-background);
+  }
+  
+  /* * * * * * * * * * * * * * * * * * * */
+  /*         Variants / Classic          */
+  /* * * * * * * * * * * * * * * * * * * */
+  
+  &:where([variant=classic]) {
+    --card-border-width: 0px;
+    --card-background-color: var(--card-background);
+  }
+}
