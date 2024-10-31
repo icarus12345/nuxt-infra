@@ -10,8 +10,7 @@ services:
         environment:
             - NODE_OPTIONS=--max-old-space-size=4096
         volumes:
-            - ../laravel:/var/www:cached
-            - ../package:/var/package
+            - ../laravel:/var/www
 
     ####################################################################################################
     # Nginx
@@ -35,8 +34,8 @@ services:
     #     image: node
     #     container_name: node
     #     volumes:
-    #         - ../package:/home/node/app
-    #     working_dir: /var/www/html
+    #         - ../bff:/home/node/app
+    #     working_dir: /home/node/app
     #     ports:
     #         - 3000:3000
     #         - 3001:3001
@@ -64,19 +63,19 @@ services:
     ####################################################################################################
     # phpMyAdmin
     ####################################################################################################
-    phpmyadmin:
-        image: phpmyadmin
-        container_name: phpmyadmin
-        ports:
-            - 8081:80
-        links:
-            - db
-        environment:
-            PMA_HOST: db
-            PMA_PORT: 3306
-            PMA_ARBITRARY: 1
-        volumes:
-            - ./phpmyadmin/sessions:/sessions
+    # phpmyadmin:
+    #     image: phpmyadmin
+    #     container_name: phpmyadmin
+    #     ports:
+    #         - 8081:80
+    #     links:
+    #         - db
+    #     environment:
+    #         PMA_HOST: db
+    #         PMA_PORT: 3306
+    #         PMA_ARBITRARY: 1
+    #     volumes:
+    #         - ./phpmyadmin/sessions:/sessions
 
     ####################################################################################################
     # Adminer

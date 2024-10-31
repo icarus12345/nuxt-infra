@@ -41,9 +41,6 @@
       "@presentation/*": [
         "./src/presentation/*"
       ],
-      "@ui/*": [
-        "./src/ui/*"
-      ],
       "@store/*": [
         "./src/store/*"
       ]
@@ -53,7 +50,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "next-auth.d.ts",
+    "types.d.ts",
     "next-env.d.ts",
     "dist/types/**/*.ts"
   ],

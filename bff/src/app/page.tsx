@@ -1,26 +1,19 @@
+"use client"
 import React from 'react';
 import Link from 'next/link'
 import { Button, Container, Flex } from '@radix-ui/themes';
-import * as CRUD from '@/ui/Common/components/crud';
+import * as CRUD from '@presentation/components/crud';
+import { useDialog } from '@presentation/composables/useDialog';
+import { useToast } from '@presentation/composables/useToast';
+import { MdErrorOutline } from 'react-icons/md';
 
 export default function Home() {
+  const dialog = useDialog();
+  const toast = useToast();
+
   return (
-    <Container className='min-h-dvh' align="center">
+    <Container className='min-h-dvh rt-Page' align="center">
       <Link href="/login">Dashboard</Link>
-      <Flex gap="3">
-        <Button color="indigo" variant="soft" size="1">
-          Edit profile
-        </Button>
-        <Button color="cyan" variant="soft">
-          Edit profile
-        </Button>
-        <Button color="orange" variant="soft">
-          Edit profile
-        </Button>
-        <Button color="crimson" variant="soft">
-          Edit profile
-        </Button>
-      </Flex>
       <CRUD.Table />
     </Container>
   );

@@ -3,9 +3,10 @@ import type { NextConfig } from "next";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const path = require('path');
 
-const nextConfig = {
+const nextConfig: NextConfig = {
   output: 'export',
-  distDir: 'dist',
+  // distDir: 'dist',
+  // outDir: 'out',
   // sassOptions: {
   //   includePaths: [path.join(__dirname, 'styles')],
   // },

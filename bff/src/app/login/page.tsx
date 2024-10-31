@@ -1,4 +1,4 @@
-import LoginView from "@ui/Auth/Login/login.view";
+import LoginView from "@presentation/pages/auth/login/login.view";
 
 const Login = () => {
   return <LoginView />;

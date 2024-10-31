@@ -32,20 +32,23 @@ help: ## shows this Makefile help message
 # -------------------------------------------------------------------------------------------------
 #  Application Service
 # -------------------------------------------------------------------------------------------------
-.PHONY: build up install start stop restart clear destroy
+.PHONY: build up down install start stop restart clear destroy
 
 build: ## Builds the container from Dockerfile
-	cd infrastructure && $(DOCKER_COMPOSE) up --build --no-recreate -d
+	cd infrastructure && $(DOCKER_COMPOSE) up --build -d
 
 up: ## attaches to containers for a service and also starts any linked services
 	cd infrastructure && $(DOCKER_COMPOSE) up -d
+down: ## remove services
+	cd infrastructure && $(DOCKER_COMPOSE) down -v
 
 install: ## Builds, Attaches the container , Installs the application
-	$(MAKE) build
+#	$(MAKE) build
 	cd infrastructure && $(DOCKER_EXEC_TOOLS_APP) -c "cp .env.example .env"
 	cd infrastructure && $(DOCKER_EXEC_TOOLS_APP) -c "php artisan key:generate"
 	cd infrastructure && $(DOCKER_EXEC_TOOLS_APP) -c "php artisan storage:link"
-	$(MAKE) npm-install-package update
+	$(MAKE) update seed
+	cd infrastructure && $(DOCKER_EXEC_TOOLS_APP) -c "php artisan jwt:secret"
 
 update: ## Starts the container running
 	$(MAKE) composer-i npm-i migrate npm-build
@@ -77,23 +80,6 @@ vite-dev: ## Run Vite dev
 
 vite-build: ## Build the application
 	cd infrastructure && $(DOCKER_EXEC_TOOLS_APP) -c "npm run build"
-
-npm-install-package: ## Build the application
-	cd infrastructure && $(DOCKER_EXEC_TOOLS_APP) -c "cd ../package/radix-vue && npm install"
-	cd infrastructure && $(DOCKER_EXEC_TOOLS_APP) -c "cd ../package/radix-vue && npm run build"
-	cd infrastructure && $(DOCKER_EXEC_TOOLS_APP) -c "cd ../package/radix-vue && npm link"
-	cd infrastructure && $(DOCKER_EXEC_TOOLS_APP) -c "cd ../package/plugins && npm install"
-	cd infrastructure && $(DOCKER_EXEC_TOOLS_APP) -c "cd ../package/plugins && npm link radix-vue"
-	cd infrastructure && $(DOCKER_EXEC_TOOLS_APP) -c "cd ../package/docs && npm install"
-	cd infrastructure && $(DOCKER_EXEC_TOOLS_APP) -c "cd ../package/docs && npm link radix-vue"
-	cd infrastructure && $(DOCKER_EXEC_TOOLS_APP) -c "cd ../package/plugins && npm run build"
-	cd infrastructure && $(DOCKER_EXEC_TOOLS_APP) -c "cd npm link radix-vue"
-
-package-build: ## Build the application
-	cd infrastructure && $(DOCKER_EXEC_TOOLS_APP) -c "cd ../package/radix-vue && npm run build"
-
-package-watch: ## Build the application
-	cd infrastructure && $(DOCKER_EXEC_TOOLS_APP) -c "cd ../package/radix-vue && npm run watch"
 
 composer-i: ## Installs the application an dependencies packages
 	cd infrastructure && $(DOCKER_EXEC_TOOLS_APP) -c "composer install"
