@@ -10,7 +10,7 @@ use LaravelJsonApi\Laravel\Routing\ResourceRegistrar;
 use LaravelJsonApi\Laravel\Routing\Relationships;
 
 
-Route::middleware(['api.response'])->prefix('v1')->group(function () {
+Route::middleware([])->prefix('v1')->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
     })->middleware('auth:sanctum');
@@ -33,7 +33,7 @@ Route::middleware(['api.response'])->prefix('v1')->group(function () {
         'prefix' => 'auth'
     ], function () {
         Route::post('/register', [AuthController::class, 'register'])->name('register');
-        Route::post('/login', [AuthController::class, 'login'])->name('login');
+        Route::any('/login', [AuthController::class, 'login'])->name('login');
         Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
         Route::middleware(['auth.jwt'])->group(function () {
             Route::post('/refresh', [AuthController::class, 'refresh'])->name('refresh');

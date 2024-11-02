@@ -13,7 +13,6 @@ class UserPolicy
      */
     public function viewAny(?User $user): bool
     {
-        Log::debug($user);
         return $user->hasPermissionTo('view_user');
     }
 

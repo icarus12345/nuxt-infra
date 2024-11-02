@@ -7,10 +7,14 @@ use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
 use LaravelJsonApi\Eloquent\Fields\Str;
-use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
+use App\JsonApi\Filters\WhereText;
+use App\JsonApi\Filters\WhereNumber;
+use App\JsonApi\Filters\WhereDate;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
 use LaravelJsonApi\Eloquent\Fields\Relations\HasMany;
+use LaravelJsonApi\Eloquent\Fields\Relations\HasManyThrough;
+use LaravelJsonApi\Eloquent\Fields\Relations\MorphTo;
 
 class UserSchema extends Schema
 {
@@ -31,9 +35,16 @@ class UserSchema extends Schema
     {
         return [
             ID::make(),
-            Str::make('name'),
-            Str::make('email'),
+            Str::make('name')->sortable(),
+            Str::make('email')->sortable(),
+            // Map::make('profile', [
+            //     Str::make('description'),
+            //     Str::make('image'),
+            // ])->on('profile'),
             HasMany::make('roles')->readOnly(),
+            HasManyThrough::make('permissions'),
+            // MorphTo::make('permissions', 'roles'),
+            // Attribute::('permissions')->serializeUsing(fn($user) => $user->all_permissions),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];
@@ -47,7 +58,11 @@ class UserSchema extends Schema
     public function filters(): array
     {
         return [
-            WhereIdIn::make($this),
+            WhereNumber::make('id'),
+            WhereText::make('name'),
+            WhereText::make('email'),
+            WhereDate::make('createdAt'),
+            WhereDate::make('updatedAt'),
         ];
     }
 

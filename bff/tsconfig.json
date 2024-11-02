@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2017",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -15,6 +11,8 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
+    "emitDecoratorMetadata": true, 
+    "experimentalDecorators": true,
     "jsx": "preserve",
     "incremental": true,
     "plugins": [
@@ -23,27 +21,19 @@
       }
     ],
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "@application/*": [
-        "./src/application/*"
-      ],
-      "@gateways/*": [
-        "./src/gateways/*"
-      ],
-      "@adapter/*": [
-        "./src/gateways/adapter/*"
-      ],
-      "@sources/*": [
-        "./src/gateways/sources/*"
-      ],
-      "@presentation/*": [
-        "./src/presentation/*"
-      ],
-      "@store/*": [
-        "./src/store/*"
-      ]
+      "@/*": ["./src/*"],
+      "@application/*": ["./src/application/*"],
+      "@entities": ["./src/application/entities"],
+      "@interfaces": ["./src/application/interfaces"],
+      "@mappers": ["./src/application/mappers"],
+      "@usecases": ["./src/application/usecases"],
+      "@gateways": ["./src/infrastructure/gateways"],
+      "@repositories": ["./src/infrastructure/repositories"],
+      "@ui/*": ["./src/ui/*"],
+      "@components/*": ["./src/ui/components/*"],
+      "@hooks/*": ["./src/ui/hooks/*"],
+      "@pages/*": ["./src/ui/pages/*"],
+      "@store/*": ["./src/ui/store/*"]
     }
   },
   "include": [
@@ -54,7 +44,5 @@
     "next-env.d.ts",
     "dist/types/**/*.ts"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

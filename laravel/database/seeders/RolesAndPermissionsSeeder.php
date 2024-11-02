@@ -13,32 +13,32 @@ class RolesAndPermissionsSeeder extends Seeder
     {
         // Tạo Permissions
         $permissions = [
-            'create_user',
-            'edit_user',
-            'delete_user',
-            'view_user',
-            'create_role',
-            'edit_role',
-            'delete_role',
-            'view_role',
-            'create_permission',
-            'edit_permission',
-            'delete_permission',
-            'view_permission',
+            'create_user' => 'Create User',
+            'edit_user' => 'Edit User',
+            'delete_user' => 'Delete User',
+            'view_user' => 'View User',
+            'create_role' => 'Create User',
+            'edit_role' => 'Edit User',
+            'delete_role' => 'Delete User',
+            'view_role' => 'View User',
+            'create_permission' => 'Create User',
+            'edit_permission' => 'Edit User',
+            'delete_permission' => 'Delete User',
+            'view_permission' => 'View User',
         ];
 
-        foreach ($permissions as $permission) {
-            Permission::create(['name' => $permission]);
+        foreach ($permissions as $permission => $name) {
+            Permission::create(['name' => $permission, 'display' => $name]);
         }
 
         // Tạo Roles và gán Permissions
-        $role = Role::create(['name' => 'admin']);
+        $role = Role::create(['name' => 'admin', 'display' => 'Admin']);
         $role->givePermissionTo($permissions);
 
-        $role = Role::create(['name' => 'user']);
+        $role = Role::create(['name' => 'user', 'display' => 'User']);
         $role->givePermissionTo($permissions);
 
-        $role = Role::create(['name' => 'viewer']);
+        $role = Role::create(['name' => 'viewer', 'display' => 'Viewer']);
         $role->givePermissionTo(['user_view']);
 
         User::find(1)->assignRole('admin');

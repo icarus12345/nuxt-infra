@@ -14,7 +14,6 @@ class RolePolicy
      */
     public function viewAny(?User $user): bool
     {
-        Log::debug($user);
         return $user->hasRole('view_permission');
     }
 

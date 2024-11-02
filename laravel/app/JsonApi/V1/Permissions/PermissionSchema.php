@@ -30,6 +30,7 @@ class PermissionSchema extends Schema
         return [
             ID::make(),
             Str::make('name'),
+            Str::make('display'),
             Str::make('guard_name'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),

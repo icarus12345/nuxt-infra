@@ -11,6 +11,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use LaravelJsonApi\Laravel\Http\Controllers\Actions;
 use LaravelJsonApi\Core\Responses\DataResponse;
+use Carbon\Carbon;
 
 class AuthController extends Controller
 {
@@ -58,16 +59,28 @@ class AuthController extends Controller
 
             // Get the authenticated user.
             $user = auth()->user();
-            // $roles = $user->roles()->with('permissions')->get();
+            $rolePerms = $user->roles()->with('permissions')->get();
+            $roles = $rolePerms->pluck('name');
+            $permissions = $rolePerms->flatMap(function ($role) {
+                return $role->permissions->pluck('name');
+            })->unique();
 
             // (optional) Attach the role to the token.
-            $access_token = JWTAuth::claims(['role' => $user->role])->fromUser($user);
+            $access_token = JWTAuth::claims([
+                'roles' => $roles,
+                'permissions' => $permissions,
+                ])
+                ->fromUser($user);
 
-            return response()->json([
-                // "user" => $user,
-                "access_token" => $access_token,
-                // "roles" => $roles,
-            ]);
+            return DataResponse::make($user)
+                ->withMeta([
+                    'access_token' => $access_token,
+                    'token_type' => 'bearer',
+                    'expires_time' => Carbon::now()->addSeconds(JWTAuth::factory()->getTTL()),
+                ])
+                // ->withIncludePaths('roles.permissions')
+                ->withServer('v1');
+            
         } catch (JWTException $e) {
             return response()->json(['error' => 'Could not create token'], 500);
         }
@@ -84,9 +97,8 @@ class AuthController extends Controller
             return response()->json(['error' => 'Invalid token'], 400);
         }
         return DataResponse::make($user)
-        ->withIncludePaths('roles.permissions')
-        ->withServer('v1');
-        // return response()->json($user);
+            ->withIncludePaths('roles.permissions')
+            ->withServer('v1');
     }
 
     // User logout

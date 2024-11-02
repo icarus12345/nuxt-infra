@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 @import "@radix-ui/themes/layout.css";
-@import "@presentation/styles/main.css";
+@import "@ui/styles/main.css";
 /* :root {
   --background: #ffffff;
   --foreground: #171717;

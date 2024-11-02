@@ -1,7 +1,7 @@
-import React from 'react';
+import { ReactNode } from 'react';
 
 type Props = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 const Layout = ({ children }: Props) => children;

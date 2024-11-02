@@ -31,7 +31,8 @@ class RoleSchema extends Schema
         return [
             ID::make(),
             Str::make('name'),
-            Str::make('guard_name'),
+            Str::make('display'),
+            Str::make('guardName'),
             HasMany::make('permissions')->readOnly(),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),

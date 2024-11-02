@@ -4,7 +4,8 @@ import type { NextConfig } from "next";
 const path = require('path');
 
 const nextConfig: NextConfig = {
-  output: 'export',
+  // output: 'export',
+  // reactStrictMode: true,
   // distDir: 'dist',
   // outDir: 'out',
   // sassOptions: {
