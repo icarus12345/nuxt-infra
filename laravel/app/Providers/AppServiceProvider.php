@@ -3,11 +3,11 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Spatie\Permission\Models\Role;
+use App\Models\Role;
 use Illuminate\Support\Facades\Gate;
 use App\Policies\RolePolicy;
 use App\Policies\PermissionPolicy;
-use Spatie\Permission\Models\Permission;
+use App\Models\Permission;
 
 class AppServiceProvider extends ServiceProvider
 {

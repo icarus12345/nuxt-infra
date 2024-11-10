@@ -1,19 +1,21 @@
-import { Entity } from "./base"
-import { Role } from "./role"
+import { IResource } from "../interfaces"
+import { IEntity } from "./base"
+import { IRole } from "./role"
 
-export interface UserAttribute {
+export interface IUserAttribute {
   name: string
   email: string
-  createdAt: string
-  updatedAt: string
+  active: boolean
+  createdAt?: string
+  updatedAt?: string
+  deletedAt?: Nullable<string>
 }
 
-export class User implements Entity<UserAttribute> {
-  constructor(
-    public id: number,
-    public attributes: UserAttribute,
-    public roles: Role[] = [],
-  ) {
-
+export interface IUser {
+  id: Nullable<string>
+  type: string
+  attributes: Partial<IUserAttribute>
+  relationships?: {
+    roles: IResource<IRole[]>
   }
 }

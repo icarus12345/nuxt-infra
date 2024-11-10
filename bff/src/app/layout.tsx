@@ -1,12 +1,10 @@
 "use client"
 // import type { Metadata } from "next";
 import { Theme } from "@radix-ui/themes";
-import { Provider, useSelector } from 'react-redux';
 import { AuthenticationProvider } from "@ui/components/authentication.provider";
-import DialogProvider from "@ui/components/dialog.provider";
-import ToastProvider from "@ui/components/toast.provider";
+import Dialoger from "@ui/components/dialoger";
+import Toaster from "@ui/components/toaster";
 
-import AppStore, { RootState } from '@/ui/store/app.store';
 
 import "./globals.css";
 // export const metadata: Metadata = {
@@ -22,14 +20,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Provider store={AppStore}>
-          <Theme accentColor="green" grayColor="sage">
-            <ToastProvider><div>a</div></ToastProvider>
-            <DialogProvider>
-              <AuthenticationProvider>{children}</AuthenticationProvider>
-            </DialogProvider>
-          </Theme>
-        </Provider>
+        <Theme accentColor="green" grayColor="sage">
+          <Toaster />
+          <Dialoger />
+          <AuthenticationProvider>{children}</AuthenticationProvider>
+        </Theme>
       </body>
     </html>
   );

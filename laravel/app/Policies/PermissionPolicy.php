@@ -2,26 +2,51 @@
 
 namespace App\Policies;
 
-use Spatie\Permission\Models\Permission;
+use App\Models\Permission;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
-use Illuminate\Support\Facades\Log;
+use App\Traits\HasPermissions;
 
 class PermissionPolicy
 {
+    use HasPermissions;
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(?User $user): bool
+    public function viewAny(User $user): bool
     {
-        return $user->hasPermissionTo('view_permission');
+        return $this->hasPermissionTo('view_permission');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(?User $user, Permission $model): bool
+    public function view(User $user, Permission $model): bool
     {
-        return $user->hasPermissionTo('view_permission');
+        return $this->hasPermissionTo('view_permission');
     }
+
+    /**
+     * Determine whether the user can create models.
+     */
+    public function create(User $user): bool
+    {
+        return $this->hasPermissionTo('create_permission');
+    }
+
+    /**
+     * Determine whether the user can update the model.
+     */
+    public function update(User $user, Permission $model): bool
+    {
+        return $this->hasPermissionTo('edit_permission');
+    }
+
+    /**
+     * Determine whether the user can delete the model.
+     */
+    public function delete(User $user, Permission $model): bool
+    {
+        return $this->hasPermissionTo('delete_permission');
+    }
+
 }

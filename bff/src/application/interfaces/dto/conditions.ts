@@ -4,11 +4,13 @@ export interface IConditionDto {
     number: number
     size: number
   }
-  sort: string
-  filter?: { [colId: string]: string }
+  sort?: string
+  filter?: { [colId: string]: string | number | boolean | undefined | string[] | number[] }
   conditionOperator?: string
-  filterSecond?: { [colId: string]: string }
   operator?: { [colId: string]: string }
-  secondOperator?: { [colId: string]: string }
+  filter0?: { [colId: string]: string | number | boolean | string[] | number[] }
+  operator0?: { [colId: string]: string }
+  filter2?: { [colId: string]: string | number | boolean | string[] | number[] }
+  operator2?: { [colId: string]: string }
   
 }

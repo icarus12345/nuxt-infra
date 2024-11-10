@@ -19,8 +19,12 @@
   --ag-line-height: 34px;
   --ag-list-item-height: 32px;
   --ag-invalid-color: var(--red-11);
+  --ag-cell-horizontal-padding: calc(var(--ag-grid-size));
   &.ag-no-border {
-    --ag-borders: none;
+    .ag-root-wrapper {
+      border-radius: var(--ag-wrapper-border-radius);
+      border: none;
+    }
   }
   .ag-standard-button {
     padding: 6px 12px;

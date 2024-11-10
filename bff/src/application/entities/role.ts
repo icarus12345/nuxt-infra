@@ -1,8 +1,16 @@
-import { Entity } from "./base"
+import { IResource } from "../interfaces"
+import { IEntity } from "./base"
+import { IPermission } from "./permission"
 
-export interface RoleAttribute {
+export interface IRoleAttribute {
   name: string
-  display: string
-  guard_name: string
+  guardName: string
 }
-export interface Role extends Entity<RoleAttribute> {}
+export interface IRole {
+  id: Nullable<string>
+  type: string
+  attributes: IRoleAttribute,
+  relationships?: {
+    permissions: IResource<IPermission[]>
+  }
+}

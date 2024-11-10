@@ -55,9 +55,10 @@ class WhereText implements Filter
         $this->column = $column ?: Str::underscore($name);
         $this->operator = '=';
         $this->operatorType = request("operator.$name", "");
-        $this->secondOperatorType = request("secondOperator.$name", "");
         $this->conditionOperator = request("conditionOperator", "");
-        $this->secondValue = request("filterSecond.$name", "");
+
+        $this->secondOperatorType = request("operator2.$name", "");
+        $this->secondValue = request("filter2.$name", "");
     }
 
     /**
@@ -89,7 +90,7 @@ class WhereText implements Filter
         ][$conditionOperator];
         $operator = $this->operator();
         $whereValue = $this->deserialize($value);
-        switch ($this->operatorType) {
+        switch ($operatorType) {
             case 'notEquals':
                 $operator = '!=';
                 break;

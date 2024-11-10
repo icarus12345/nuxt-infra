@@ -1,11 +1,12 @@
-import { User } from "../entities";
-import { AuthIdentity } from "../interfaces";
+import { IUser } from "../entities";
+import { IAuthIdentity } from "../interfaces";
 
 export class AuthMapper {
-  static toAuthIdentity(data: any, meta: any): AuthIdentity {
+  static toAuthIdentity(data: any, meta: any): IAuthIdentity {
     // Extract user information
-    const user: User = {
+    const user: IUser = {
       id: data.id,
+      type: data.type,
       attributes: data.attributes
     };
 

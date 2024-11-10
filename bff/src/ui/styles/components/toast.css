@@ -4,7 +4,7 @@
 }
 
 .ToastRoot {
-  @apply rounded-md p-4 grid gap-x-3 items-center shadow;
+  @apply rounded-md p-3 grid gap-x-3 items-center shadow;
   background-color: var(--toast-background);
   grid-template-areas: "title action" "description action";
   grid-template-columns: auto max-content;

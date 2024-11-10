@@ -2,6 +2,7 @@
 
 @import "./components/color.css";
 @import "@radix-ui/themes/tokens/base.css";
+@import "./components/badge.css";
 @import "./components/base-button.css";
 @import "./components/base-checkbox.css";
 @import "./components/base-menu.css";
@@ -15,8 +16,10 @@
 @import "./components/label.css";
 /* @import "./components/menu-bar.css"; */
 @import "./components/popover.css";
+@import "./components/segmented.css";
 @import "./components/select.css";
 @import "./components/spinner.css";
+@import "./components/switch.css";
 @import "./components/tabs.css";
 @import "./components/text-field.css";
 @import "./components/text.css";
@@ -28,7 +31,7 @@
 @import "./components/aggrid.css";
 
 .radix-themes {
-  /* --default-font-size: var(--font-size-3); */
+  --default-font-size: var(--font-size-2);
   > .rt-Container {
     @apply relative;
     .rt-ContainerInner {

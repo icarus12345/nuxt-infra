@@ -7,18 +7,25 @@ use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
 use LaravelJsonApi\Eloquent\Fields\Str;
+use LaravelJsonApi\Eloquent\Fields\Boolean;
+use LaravelJsonApi\Eloquent\Filters\Where;
 use App\JsonApi\Filters\WhereText;
 use App\JsonApi\Filters\WhereNumber;
 use App\JsonApi\Filters\WhereDate;
+use Illuminate\Support\Facades\Log;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
 use LaravelJsonApi\Eloquent\Fields\Relations\HasMany;
+use LaravelJsonApi\Eloquent\Fields\Relations\BelongsToMany;
 use LaravelJsonApi\Eloquent\Fields\Relations\HasManyThrough;
+use LaravelJsonApi\Eloquent\SoftDeletes;
+use LaravelJsonApi\Eloquent\Fields\SoftDelete;
+use LaravelJsonApi\Eloquent\Filters\OnlyTrashed;
 use LaravelJsonApi\Eloquent\Fields\Relations\MorphTo;
 
 class UserSchema extends Schema
 {
-
+    use SoftDeletes;
     /**
      * The model the schema corresponds to.
      *
@@ -37,16 +44,18 @@ class UserSchema extends Schema
             ID::make(),
             Str::make('name')->sortable(),
             Str::make('email')->sortable(),
+            Boolean::make('active')->sortable(),
             // Map::make('profile', [
             //     Str::make('description'),
             //     Str::make('image'),
             // ])->on('profile'),
-            HasMany::make('roles')->readOnly(),
+            BelongsToMany::make('roles'),
             HasManyThrough::make('permissions'),
             // MorphTo::make('permissions', 'roles'),
             // Attribute::('permissions')->serializeUsing(fn($user) => $user->all_permissions),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
+            SoftDelete::make('deletedAt'),
         ];
     }
 
@@ -59,10 +68,12 @@ class UserSchema extends Schema
     {
         return [
             WhereNumber::make('id'),
+            Where::make('active')->asBoolean(),
             WhereText::make('name'),
             WhereText::make('email'),
             WhereDate::make('createdAt'),
             WhereDate::make('updatedAt'),
+            OnlyTrashed::make('archived'),
         ];
     }
 
@@ -76,4 +87,18 @@ class UserSchema extends Schema
         return PagePagination::make();
     }
 
+    public function creating(User $user, array $attributes): void
+    {
+        Log::info('User has been creating:', ['user' => $user->toArray()]);
+    }
+
+    public function updating(User $user, array $attributes): void
+    {
+        Log::info('User has been updating:', ['user' => $user->toArray()]);
+    }
+
+    public function saved(User $user, array $attributes): void
+    {
+        Log::info('User has been saved:', ['user' => $user->toArray()]);
+    }
 }

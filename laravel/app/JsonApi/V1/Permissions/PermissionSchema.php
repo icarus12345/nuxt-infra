@@ -9,6 +9,9 @@ use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
 use LaravelJsonApi\Eloquent\Fields\Str;
+use App\JsonApi\Filters\WhereText;
+use App\JsonApi\Filters\WhereNumber;
+use App\JsonApi\Filters\WhereDate;
 
 class PermissionSchema extends Schema
 {
@@ -18,7 +21,7 @@ class PermissionSchema extends Schema
      *
      * @var string
      */
-    public static string $model = \Spatie\Permission\Models\Permission::class;
+    public static string $model = \App\Models\Permission::class;
 
     /**
      * Get the resource fields.
@@ -29,9 +32,8 @@ class PermissionSchema extends Schema
     {
         return [
             ID::make(),
-            Str::make('name'),
-            Str::make('display'),
-            Str::make('guard_name'),
+            Str::make('name')->sortable(),
+            Str::make('guardName')->sortable(),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];
@@ -45,7 +47,11 @@ class PermissionSchema extends Schema
     public function filters(): array
     {
         return [
-            WhereIdIn::make($this),
+            WhereNumber::make('id'),
+            WhereText::make('name'),
+            WhereText::make('guardName'),
+            WhereDate::make('createdAt'),
+            WhereDate::make('updatedAt'),
         ];
     }
 

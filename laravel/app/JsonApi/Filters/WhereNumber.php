@@ -35,9 +35,13 @@ class WhereNumber implements Filter
      */
 
     private string $operatorType;
-    private string $secondOperatorType;
     private string $conditionOperator;
-    private string $secondValue;
+    private string $secondOperatorType;
+    private string|array $secondValue;
+
+    private string $firstOperatorType;
+    private string|array $firstValue;
+
     public static function make(string $name, string $column = null): self
     {
         return new static($name, $column);
@@ -55,9 +59,13 @@ class WhereNumber implements Filter
         $this->column = $column ?: Str::underscore($name);
         $this->operator = '=';
         $this->operatorType = request("operator.$name", "");
-        $this->secondOperatorType = request("secondOperator.$name", "");
         $this->conditionOperator = request("conditionOperator", "");
-        $this->secondValue = request("filterSecond.$name", "");
+
+        $this->secondOperatorType = request("operator2.$name", "");
+        $this->secondValue = request("filter2.$name", "");
+
+        $this->firstOperatorType = request("operator0.$name", "");
+        $this->firstValue = request("filter0.$name", "");
     }
 
     /**
@@ -75,6 +83,9 @@ class WhereNumber implements Filter
     {
 
         return $query->Where(function($query) use ($value) {
+            if ($this->firstOperatorType) {
+                $this->addCondition($query, $this->firstOperatorType, $this->firstValue);
+            }
             $this->addCondition($query, $this->operatorType, $value);
             if ($this->conditionOperator) {
                 $this->addCondition($query, $this->secondOperatorType, $this->secondValue, $this->conditionOperator);
@@ -89,7 +100,10 @@ class WhereNumber implements Filter
         ][$conditionOperator];
         $operator = $this->operator();
         $whereValue = $this->deserialize($value);
-        switch ($this->operatorType) {
+        if (is_array($value) && $operator === '=') {
+            $operatorType = 'in';
+        }
+        switch ($operatorType) {
             case 'notEquals':
                 $operator = '!=';
                 break;
@@ -111,8 +125,10 @@ class WhereNumber implements Filter
                 return $query->{"{$method}Null"}($query->getModel()->qualifyColumn($this->column()));
             case 'notBlank':
                 return $query->{"{$method}NotNull"}($query->getModel()->qualifyColumn($this->column()));
-            default:
-                $operator = '=';
+            case 'in':
+                return $query->{"{$method}In"}($query->getModel()->qualifyColumn($this->column()), $value);
+            case 'notIn':
+                return $query->{"{$method}NotIn"}($query->getModel()->qualifyColumn($this->column()), $value);
         }
         return $query->{$method}(
             $query->getModel()->qualifyColumn($this->column()),

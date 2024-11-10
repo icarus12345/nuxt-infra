@@ -1,3 +1,7 @@
 export * from './base'
 export * from './user'
 export * from './role'
+export * from './permission'
+export * from './post'
+export * from './tag'
+export * from './comment'

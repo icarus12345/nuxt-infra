@@ -41,7 +41,7 @@ class PostCollectionQuery extends ResourceQuery
                 JsonApiRule::page(),
             ],
             'page.number' => ['integer', 'min:1'],
-            'page.size' => ['integer', 'between:1,100'],
+            // 'page.size' => ['integer', 'between:1,100'],
             'sort' => [
                 'nullable',
                 'string',

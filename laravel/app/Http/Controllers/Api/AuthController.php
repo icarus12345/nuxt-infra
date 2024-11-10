@@ -58,7 +58,7 @@ class AuthController extends Controller
             }
 
             // Get the authenticated user.
-            $user = auth()->user();
+            $user = JWTAuth::parseToken()->authenticate();
             $rolePerms = $user->roles()->with('permissions')->get();
             $roles = $rolePerms->pluck('name');
             $permissions = $rolePerms->flatMap(function ($role) {

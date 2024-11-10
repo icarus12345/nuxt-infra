@@ -1,5 +1,4 @@
-import { ToastActions } from '@/ui/store/toast.slice';
-import store from '@/ui/store/app.store';
+import { useToast } from '@/ui/store';
 import axios, { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
 export class ApiClient {
@@ -9,7 +8,8 @@ export class ApiClient {
     this.client = axios.create({
       baseURL: String(process.env.NEXT_PUBLIC_API_BASE_URL),
       headers: {
-        'Content-Type': 'application/json',
+        'Accept': 'application/vnd.api+json',
+        'Content-Type': 'application/vnd.api+json',
       },
       timeout: 10000, // Thời gian chờ mặc định là 10 giây
     });
@@ -17,7 +17,6 @@ export class ApiClient {
     // Thêm interceptor cho request
     this.client.interceptors.request.use(
       (config: InternalAxiosRequestConfig) => {
-        config.headers['Content-Type'] = 'application/json';
         const token = localStorage.getItem('access_token');
         if (token && config.headers) {
           config.headers['Authorization'] = `Bearer ${token}`;
@@ -30,12 +29,13 @@ export class ApiClient {
     // Thêm interceptor cho response
     this.client.interceptors.response.use(
       (response: AxiosResponse) => response,
-      (error: AxiosError) => {
-        store.dispatch(ToastActions.alert({
+      (error: AxiosError<{message?: string, errors?: {detail: string}[]}>) => {
+        const message = error.response?.data.errors?.map(d=>d.detail).join('\n') || error.response?.data.message || error.message
+        useToast.getState().alert({
           type: 'error',
           title: `${error.status || error.code} ${error.response?.statusText || ''}`,
-          message: error.message
-        }));
+          message
+        });
         if (error.response?.status === 401) {
           localStorage.removeItem('token');
         }
@@ -62,10 +62,16 @@ export class ApiClient {
     return response.data;
   }
 
-  // Phương thức DELETE
-  public async delete<T>(url: string): Promise<T> {
-    const response = await this.client.delete(url);
+  // Phương thức PATCH
+  public async patch<T>(url: string, data?: any): Promise<T> {
+    const response = await this.client.patch(url, data);
     return response.data;
+  }
+
+  // Phương thức DELETE
+  public async delete(url: string): Promise<boolean> {
+    const response = await this.client.delete(url);
+    return !!response;
   }
 }
 export const $ApiClient = new ApiClient();
