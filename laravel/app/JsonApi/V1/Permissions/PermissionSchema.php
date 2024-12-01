@@ -22,7 +22,7 @@ class PermissionSchema extends Schema
      * @var string
      */
     public static string $model = \App\Models\Permission::class;
-
+    protected bool $selfLink = false;
     /**
      * Get the resource fields.
      *

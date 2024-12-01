@@ -1,49 +1,34 @@
 {
+  // https://nuxt.com/docs/guide/concepts/typescript
+  "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
-    "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "emitDecoratorMetadata": true, 
-    "experimentalDecorators": true,
-    "jsx": "preserve",
-    "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
+  //   "baseUrl": "./",
+  //   "moduleResolution": "node",
     "paths": {
-      "@/*": ["./src/*"],
-      "@application/*": ["./src/application/*"],
-      "@entities": ["./src/application/entities"],
-      "@interfaces": ["./src/application/interfaces"],
-      "@mappers": ["./src/application/mappers"],
-      "@usecases": ["./src/application/usecases"],
-      "@gateways": ["./src/infrastructure/gateways"],
-      "@repositories": ["./src/infrastructure/repositories"],
-      "@ui/*": ["./src/ui/*"],
-      "@utils": ["./src/ui/utils"],
-      "@components/*": ["./src/ui/components/*"],
-      "@hooks/*": ["./src/ui/hooks/*"],
-      "@pages/*": ["./src/ui/pages/*"],
-      "@store/*": ["./src/ui/store/*"]
-    }
+      "@application/*": ["./@application/*"],
+      "@entities": ["./@application/entities"],
+      "@interfaces": ["./@application/interfaces"],
+      "@mappers": ["./@application/mappers"],
+      "@usecases": ["./@application/usecases"],
+      "@gateways": ["./@infrastructure/gateways"],
+      "@repositories": ["./@infrastructure/repositories"],
+    },
+  // //   "resolveJsonModule": true,
+  // //   "types": ["node", "jsdom"],
+  // //   "strict": true,
+  // //   "declaration": false,
+  // //   "outDir": "dist",
+  // //   "sourceMap": true,
+  // //   "esModuleInterop": true,
+  //   "skipLibCheck": true,
+  //   "allowSyntheticDefaultImports": true,
   },
   "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
     "types.d.ts",
-    "next-env.d.ts",
-    "dist/types/**/*.ts"
-  ],
-  "exclude": ["node_modules"]
+  //   // "env.d.ts",
+  //   // "src/**/*",
+  //   "src/**/*.ts",
+  //   "src/**/*.tsx",
+  //   "src/**/*.vue"
+  ]
 }

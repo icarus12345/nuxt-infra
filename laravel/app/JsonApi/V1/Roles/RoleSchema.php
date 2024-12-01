@@ -24,7 +24,7 @@ class RoleSchema extends Schema
      * @var string
      */
     public static string $model = \App\Models\Role::class;
-
+    protected bool $selfLink = false;
     /**
      * Get the resource fields.
      *

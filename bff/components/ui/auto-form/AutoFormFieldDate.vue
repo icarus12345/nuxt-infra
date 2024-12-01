@@ -1,0 +1,28 @@
+<script setup lang="ts">
+import type { FieldProps } from './interface'
+import AutoFormLabel from './AutoFormLabel.vue'
+import { beautifyObjectName } from './utils'
+
+defineProps<FieldProps>()
+const { orientation } = inject('AutoForm')
+</script>
+
+<template>
+  <FormField v-slot="slotProps" :name="fieldName">
+    <FormItem :orientation="orientation">
+      <AutoFormLabel v-if="!config?.hideLabel" :required="required">
+        {{ config?.label || beautifyObjectName(label ?? fieldName) }}
+      </AutoFormLabel>
+      <FormControl>
+        <slot v-bind="slotProps">
+          <Input type="number" v-bind="{ ...slotProps.componentField, ...config?.inputProps }" :disabled="disabled" />
+        </slot>
+      </FormControl>
+
+      <FormDescription v-if="config?.description">
+        {{ config.description }}
+      </FormDescription>
+      <FormMessage />
+    </FormItem>
+  </FormField>
+</template>

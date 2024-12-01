@@ -1,0 +1,3 @@
+<template>
+  <CrudGrid></CrudGrid>
+</template>

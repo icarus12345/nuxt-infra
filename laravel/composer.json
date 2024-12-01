@@ -7,7 +7,9 @@
     "require": {
         "php": "^8.2",
         "guzzlehttp/guzzle": "^7.9",
+        "intervention/image": "^3.9",
         "laravel-json-api/laravel": "^4.1",
+        "laravel-json-api/non-eloquent": "^4.0",
         "laravel/framework": "^11.9",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",

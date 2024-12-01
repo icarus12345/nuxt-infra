@@ -1,0 +1,33 @@
+.ag-theme-quartz.ag-theme-default {
+  --ag-wrapper-border-radius: 4px;
+  --ag-active-color: hsl(var(--primary));
+  --ag-background-color: hsl(var(--background));
+  --ag-border-color: hsl(var(--border));
+  --ag-border-radius: 4px;
+  --ag-browser-color-scheme: light;
+  --ag-font-family: inherit;
+  --ag-font-size: 13px;
+  --ag-foreground-color: hsl(var(--foreground));
+  --ag-header-background-color: hsl(var(--background));
+  --ag-header-font-size: 13px;
+  --ag-header-font-weight: 400;
+  --ag-header-text-color: #84868B;
+  --ag-spacing: 6px;
+  --ag-wrapper-border-radius: 4px;
+  --ag-header-height: 40px;
+  --ag-row-height: 36px;
+  --ag-line-height: 34px;
+  --ag-list-item-height: 32px;
+  --ag-invalid-color: hls(var(--destructive));
+  --ag-cell-horizontal-padding: calc(var(--ag-grid-size));
+  --ag-icon-filter: invert(1);
+  &.ag-no-border {
+    .ag-root-wrapper {
+      border-radius: var(--ag-wrapper-border-radius);
+      border: none;
+    }
+  }
+  .ag-standard-button {
+    padding: 6px 12px;
+  }
+}

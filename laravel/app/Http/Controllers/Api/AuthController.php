@@ -12,6 +12,7 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use LaravelJsonApi\Laravel\Http\Controllers\Actions;
 use LaravelJsonApi\Core\Responses\DataResponse;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
@@ -58,7 +59,7 @@ class AuthController extends Controller
             }
 
             // Get the authenticated user.
-            $user = JWTAuth::parseToken()->authenticate();
+            $user = auth()->user();
             $rolePerms = $user->roles()->with('permissions')->get();
             $roles = $rolePerms->pluck('name');
             $permissions = $rolePerms->flatMap(function ($role) {
@@ -82,6 +83,7 @@ class AuthController extends Controller
                 ->withServer('v1');
             
         } catch (JWTException $e) {
+            Log::error($e);
             return response()->json(['error' => 'Could not create token'], 500);
         }
     }

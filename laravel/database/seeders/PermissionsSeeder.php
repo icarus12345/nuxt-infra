@@ -13,21 +13,27 @@ class PermissionsSeeder extends Seeder
     {
         // Tạo Permissions
         $permissions = [
-            'create_user' => 'Create User',
-            'edit_user' => 'Edit User',
-            'delete_user' => 'Delete User',
-            'view_user' => 'View User',
-            'create_role' => 'Create User',
-            'edit_role' => 'Edit User',
-            'delete_role' => 'Delete User',
-            'view_role' => 'View User',
-            'create_permission' => 'Create User',
-            'edit_permission' => 'Edit User',
-            'delete_permission' => 'Delete User',
-            'view_permission' => 'View User',
+            'create_user',
+            'edit_user',
+            'delete_user',
+            'view_user',
+
+            'create_role',
+            'edit_role',
+            'delete_role',
+            'view_role',
+
+            'create_permission',
+            'edit_permission',
+            'delete_permission',
+            'view_permission',
+
+            'create_media',
+            'delete_media',
+            'view_media',
         ];
 
-        foreach ($permissions as $permission => $name) {
+        foreach ($permissions as $permission) {
             Permission::create(['name' => $permission, 'guard_name' => 'web']);
         }
 

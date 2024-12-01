@@ -9,6 +9,8 @@ use LaravelJsonApi\Eloquent\Fields\ID;
 use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Fields\Boolean;
 use LaravelJsonApi\Eloquent\Filters\Where;
+use App\JsonApi\Filters\WhereAny;
+use LaravelJsonApi\Eloquent\Filters\WhereHas;
 use App\JsonApi\Filters\WhereText;
 use App\JsonApi\Filters\WhereNumber;
 use App\JsonApi\Filters\WhereDate;
@@ -32,7 +34,7 @@ class UserSchema extends Schema
      * @var string
      */
     public static string $model = User::class;
-
+    protected bool $selfLink = false;
     /**
      * Get the resource fields.
      *
@@ -68,12 +70,14 @@ class UserSchema extends Schema
     {
         return [
             WhereNumber::make('id'),
-            Where::make('active')->asBoolean(),
+            WhereNumber::make('active'),
             WhereText::make('name'),
             WhereText::make('email'),
             WhereDate::make('createdAt'),
             WhereDate::make('updatedAt'),
             OnlyTrashed::make('archived'),
+            WhereHas::make($this, 'roles'),
+            WhereAny::make('q', ['name', 'email'])
         ];
     }
 
@@ -85,20 +89,5 @@ class UserSchema extends Schema
     public function pagination(): ?Paginator
     {
         return PagePagination::make();
-    }
-
-    public function creating(User $user, array $attributes): void
-    {
-        Log::info('User has been creating:', ['user' => $user->toArray()]);
-    }
-
-    public function updating(User $user, array $attributes): void
-    {
-        Log::info('User has been updating:', ['user' => $user->toArray()]);
-    }
-
-    public function saved(User $user, array $attributes): void
-    {
-        Log::info('User has been saved:', ['user' => $user->toArray()]);
     }
 }
