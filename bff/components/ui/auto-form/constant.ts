@@ -1,5 +1,6 @@
 import type { InputComponents } from './interface'
 import AutoFormFieldArray from './AutoFormFieldArray.vue'
+import AutoFormFieldCheckList from './AutoFormFieldCheckList.vue'
 import AutoFormFieldBoolean from './AutoFormFieldBoolean.vue'
 import AutoFormFieldDate from './AutoFormFieldDate.vue'
 import AutoFormFieldEnum from './AutoFormFieldEnum.vue'
@@ -7,19 +8,27 @@ import AutoFormFieldFile from './AutoFormFieldFile.vue'
 import AutoFormFieldInput from './AutoFormFieldInput.vue'
 import AutoFormFieldNumber from './AutoFormFieldNumber.vue'
 import AutoFormFieldObject from './AutoFormFieldObject.vue'
+import AutoFormFieldTagsInput from './AutoFormFieldTagsInput.vue'
 
 export const INPUT_COMPONENTS: InputComponents = {
-  date: AutoFormFieldDate,
-  select: AutoFormFieldEnum,
-  radio: AutoFormFieldEnum,
-  checkbox: AutoFormFieldBoolean,
-  switch: AutoFormFieldBoolean,
-  textarea: AutoFormFieldInput,
-  number: AutoFormFieldNumber,
-  string: AutoFormFieldInput,
-  file: AutoFormFieldFile,
-  array: AutoFormFieldArray,
-  object: AutoFormFieldObject,
+  Radio: AutoFormFieldEnum,
+  Switch: AutoFormFieldBoolean,
+  Textarea: AutoFormFieldInput,
+  String: AutoFormFieldInput,
+  File: AutoFormFieldFile,
+  Array: AutoFormFieldArray,
+  Object: AutoFormFieldObject,
+
+  Number: AutoFormFieldNumber,
+  Checkbox: AutoFormFieldBoolean,
+  Textbox: AutoFormFieldInput,
+  Combobox: AutoFormFieldEnum,
+  DropdownList: AutoFormFieldEnum,
+  Select: AutoFormFieldEnum,
+  CheckList: AutoFormFieldCheckList,
+  List: AutoFormFieldCheckList,
+  Date: AutoFormFieldDate,
+  TagsInput: AutoFormFieldTagsInput
 }
 
 /**

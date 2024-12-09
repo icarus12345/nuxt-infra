@@ -9,13 +9,14 @@ import AutoFormField from './AutoFormField.vue'
 import { provideDependencies } from './dependencies'
 import { getBaseSchema, getBaseType, getDefaultValueInZodStack, getObjectFormSchema, type ZodObjectOrWrapped } from './utils'
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   schema: T
   form?: FormContext<GenericObject>
   fieldConfig?: Config<z.infer<T>>
   dependencies?: Dependency<z.infer<T>>[]
-  orientation?: 'vertical' | 'horizontal',
-}>()
+  layout?: string,
+}>(), {
+})
 
 const emits = defineEmits<{
   submit: [event: z.infer<T>]
@@ -77,15 +78,30 @@ const formComponentProps = computed(() => {
     }
   }
 })
+const formRef = ref();
+const submit = async () => {
+  console.log(formRef.value,'formRef.value')
+  if (formRef.value) {
+    const isValid = await formRef.value.validate();
+    console.log(isValid,'isValid')
+    if (isValid) {
+      formRef.value.submit();
+    }
+  }
+};
 provide('AutoForm', {
-  orientation: props.orientation
+  layout: props.layout
 })
+defineExpose({
+  submit
+});
 </script>
 
 <template>
   <component
     :is="formComponent"
     v-bind="formComponentProps"
+    ref="formRef"
   >
     <slot name="customAutoForm" :fields="fields">
       <template v-for="(shape, key) of shapes" :key="key">

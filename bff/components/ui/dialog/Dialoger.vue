@@ -1,35 +1,25 @@
 <script setup lang="ts">
-import { isVNode } from 'vue'
+import DialogCommon from './DialogCommon.vue';
 import { useDialog } from './useDialog'
 const { items } = useDialog()
+const loading = ref(false);
+const handleOKClick = (item) => {
+  const callback = item.callback
+  if (isAsyncFunction(callback)) {
+    loading.value = true
+    callback()
+      .then((status) => {
+        if (status !== false) item.open = false
+      })
+      .finally(() => (loading.value = false))
+  } else if (callback instanceof Function) {
+    if (callback() !== false) item.open = false
+  }
+}
 </script>
 
 <template>
-    <Dialog :defaultOpen="true" v-for="item in items" :key="item.id" v-bind="item.props?.dialog">
-      <DialogContent v-bind="item.props?.content">
-        <DialogHeader>
-          <DialogTitle v-if="item.title">{{ item.title }}</DialogTitle>
-          <DialogDescription v-if="item.description">{{ item.description }}</DialogDescription>
-        </DialogHeader>
-        <div class="grid gap-4 py-4">
-          <div class="grid grid-cols-4 items-center gap-4">
-            <Label for="name" class="text-right">
-              Name
-            </Label>
-            <Input id="name" default-value="Pedro Duarte" class="col-span-3" />
-          </div>
-          <div class="grid grid-cols-4 items-center gap-4">
-            <Label for="username" class="text-right">
-              Username
-            </Label>
-            <Input id="username" default-value="@peduarte" class="col-span-3" />
-          </div>
-        </div>
-        <DialogFooter>
-          <Button type="submit">
-            Save changes
-          </Button>
-        </DialogFooter>
-      </DialogContent>
+    <Dialog v-model:open="item.open" v-for="item in items" :key="item.id" v-bind="item.props?.dialog" @update:open="item.onOpenChange">
+      <DialogCommon :item="item"/>
     </Dialog>
 </template>

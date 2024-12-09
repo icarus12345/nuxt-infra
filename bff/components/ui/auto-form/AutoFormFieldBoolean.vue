@@ -8,15 +8,15 @@ import AutoFormLabel from './AutoFormLabel.vue'
 import { beautifyObjectName } from './utils'
 
 const props = defineProps<FieldProps>()
-const { orientation } = inject('AutoForm')
+const { layout } = inject('AutoForm')
 
-const booleanComponent = computed(() => props.config?.component === 'switch' ? Switch : Checkbox)
+const booleanComponent = computed(() => props.config?.component === 'Switch' ? Switch : Checkbox)
 </script>
 
 <template>
   <FormField v-slot="slotProps" :name="fieldName">
-    <FormItem :orientation="orientation">
-      <div class="flex items-center gap-3 col-start-2">
+    <FormItem :layout="layout">
+      <div class="flex items-center gap-2 col-start-2">
         <FormControl>
           <slot v-bind="slotProps">
             <component

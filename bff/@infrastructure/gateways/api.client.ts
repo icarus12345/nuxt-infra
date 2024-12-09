@@ -1,11 +1,11 @@
 import { useToast } from '@/components/ui/toast/use-toast'
 import axios, { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
-import { useTokenStore } from './storage'
+import { useAuthStore } from './storage'
 
 export const useAxiosClient = () => {
     const config = useRuntimeConfig()
     const $Toast = useToast()
-    const { accessToken, setToken} = useTokenStore()
+    const $AuthStore = useAuthStore()
     const client = axios.create({
       baseURL: config.public.apiBase,
       headers: {
@@ -17,8 +17,8 @@ export const useAxiosClient = () => {
     // Thêm interceptor cho request
     client.interceptors.request.use(
       (config: InternalAxiosRequestConfig) => {
-        if (accessToken && config.headers) {
-          config.headers['Authorization'] = `Bearer ${accessToken}`;
+        if ($AuthStore.accessToken && config.headers) {
+          config.headers['Authorization'] = `Bearer ${$AuthStore.accessToken}`;
         }
         return config;
       },
@@ -36,7 +36,7 @@ export const useAxiosClient = () => {
           description
         });
         if (error.response?.status === 401) {
-          setToken(null);
+          $AuthStore.clear()
         }
         return Promise.reject(error);
       }
@@ -70,7 +70,7 @@ export const $ApiClient = {
 // export const http = () => {
 //   const config = useRuntimeConfig()
 //   const accessToken = useStorage('access_token', null)
-//   // const tokenStore = useTokenStore();
+//   // const tokenStore = useAuthStore();
 //   const opts = {
 //     baseURL: config.public.apiBase,
 //     retryDelay: 500,

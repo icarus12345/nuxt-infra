@@ -10,7 +10,14 @@ export class AuthRepository implements IAuthRepository {
       const response: IdentityResource = await $ApiClient.post('/api/v1/auth/login', { email, password });
       return AuthMapper.toAuthIdentity(response.data, response.meta)
     } catch (error) {
-      console.error('Login failed:', error);
+      throw error;
+    }
+  }
+  async logout(): Promise<Boolean> {
+    try {
+      await $ApiClient.post('/api/v1/auth/logout');
+      return true
+    } catch (error) {
       throw error;
     }
   }

@@ -1,6 +1,7 @@
 import type { Component, InputHTMLAttributes } from 'vue'
 import type { z, ZodAny } from 'zod'
 import type { INPUT_COMPONENTS } from './constant'
+import { Field } from '@interfaces/data-source'
 
 export interface FieldProps {
   fieldName: string
@@ -19,17 +20,24 @@ export interface Shape {
 }
 
 export interface InputComponents {
-  date: Component;
-  select: Component;
-  radio: Component;
-  checkbox: Component;
-  switch: Component;
-  textarea: Component;
-  number: Component;
-  string: Component;
-  file: Component;
-  array: Component;
-  object: Component;
+  Radio: Component;
+  Switch: Component;
+  Textarea: Component;
+  String: Component;
+  File: Component;
+  Array: Component;
+  Object: Component;
+
+  Number: Component
+  Checkbox: Component
+  Textbox: Component
+  Combobox: Component
+  Select: Component
+  DropdownList: Component
+  CheckList: Component
+  List: Component
+  Date: Component
+  TagsInput: Component
 };
 
 export interface ConfigItem {
@@ -42,6 +50,7 @@ export interface ConfigItem {
   /** Hide `FormLabel`. */
   hideLabel?: boolean
   inputProps?: InputHTMLAttributes
+  field?: Field
 }
 
 // Define a type to unwrap an array

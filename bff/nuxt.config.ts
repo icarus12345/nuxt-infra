@@ -22,8 +22,6 @@ export default defineNuxtConfig({
   css: [
     '~/assets/css/tailwind.css',
     '~/assets/css/themes.css',
-    // 'ag-grid-community/styles/ag-grid.css',
-    // 'ag-grid-community/styles/ag-theme-quartz.css',
   ],
   modules: [
     '@nuxtjs/tailwindcss',

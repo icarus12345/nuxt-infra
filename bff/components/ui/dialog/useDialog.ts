@@ -1,22 +1,33 @@
-import type { Component, VNode } from 'vue'
+import type { AsyncComponentLoader, Component, VNode } from 'vue'
 import { computed, ref } from 'vue'
 import { type DialogRootProps, type DialogContentProps } from 'radix-vue/Dialog'
 import type { HTMLAttributes } from 'vue'
+import { ButtonProps } from '../button/Button.vue'
+import { CircleHelp } from 'lucide-vue-next'
 
 export type StringOrVNode =
   | string
   | VNode
   | (() => VNode)
 
-type IDialogProp = {
+export type IDialogProp = {
   id: string
+  open: Ref<Boolean>
   title?: StringOrVNode
+  icon?: StringOrVNode | Component | AsyncComponentLoader
   description?: StringOrVNode
-  action?: Component
+  content?: StringOrVNode | Component | AsyncComponentLoader
+  component?: Component | AsyncComponentLoader
   props?: {
     dialog?: DialogRootProps,
     content?: DialogContentProps,
-  }
+    okButton?: ButtonProps
+    cancelButton?: ButtonProps
+  },
+  okText?: string,
+  cancelText?: string,
+  onOpenChange?: Function
+  callback?: Function
 }
 let count = 0
 
@@ -33,36 +44,94 @@ const state = ref<State>({
   items: [],
 })
 
-function useDialog() {
-  return {
-    items: computed(() => state.value.items),
-    show,
-    // dismiss: (id?: string) => dispatch({ type: actionTypes.DISMISS_TOAST, toastId }),
-  }
-}
+export type TDialog = Omit<IDialogProp, 'id'>
 
-type TDialog = Omit<IDialogProp, 'id'>
-
-function show(props: TDialog) {
+function show(config: TDialog) {
   const id = genId()
-
-  const dismiss = () => {
-    console.log('dismiss')
-  }
-
-  state.value.items.push({
-    ...props,
+  const item = {
+    ...config,
     id,
-    // open: true,
-    // onOpenChange: (open: boolean) => {
-    //   if (!open)
-    //     dismiss()
-    // },
-  })
+    open: ref(true),
+    props: {
+      dialog: {
+        ...config.props?.dialog
+      },
+      content: {
+        ...config.props?.content
+      },
+      okButton: {
+        ...config.props?.okButton
+      },
+      cancelButton: {
+        ...config.props?.cancelButton
+      },
+    },
+    onOpenChange(open: boolean) {
+      if (!open) dismiss()
+    },
+  }
+  const dismiss = () => {
+    setTimeout(() => {
+      const index = state.value.items.indexOf(item)
+      state.value.items.splice(index, 1)
+    }, 500)
+  }
+  state.value.items.push(item)
 
   return {
     id,
     dismiss,
+  }
+}
+
+function alert(config: TDialog) {
+  return show({
+    ...config,
+    props: {
+      dialog: {
+        ...config.props?.dialog
+      },
+      content: {
+        size: 'xs',
+        ...config.props?.content
+      },
+      // okButton?: ButtonProps
+      // cancelButton?: ButtonProps
+    },
+  })
+}
+function confirm(config: TDialog) {
+  return show({
+    icon: CircleHelp,
+    ...config,
+    props: {
+      dialog: {
+        ...config.props?.dialog
+      },
+      content: {
+        size: 'xs',
+        ...config.props?.content
+      },
+      okButton: {
+        variant: 'soft',
+        ...config.props?.okButton
+      },
+      cancelButton: {
+        variant: 'ghost',
+        ...config.props?.cancelButton
+      }
+    },
+    okText: 'OK',
+    cancelText: 'Cancel',
+  })
+}
+function useDialog() {
+  return {
+    items: computed(() => state.value.items),
+    show,
+    alert,
+    confirm,
+    // dismiss: (id?: string) => dispatch({ type: actionTypes.DISMISS_TOAST, toastId }),
   }
 }
 

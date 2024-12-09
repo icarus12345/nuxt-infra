@@ -3,22 +3,23 @@ import { cn } from '@/lib/utils'
 import { useId } from 'radix-vue/utilities'
 import { type HTMLAttributes, provide } from 'vue'
 import { FORM_ITEM_INJECTION_KEY } from './injectionKeys'
+import { type FormItemVariants, formItemVariants } from './theme'
 
 const props = defineProps<{
   class?: HTMLAttributes['class'],
-  orientation?: 'vertical' | 'horizontal',
+  layout?: FormItemVariants['layout'],
 }>()
 
 const id = useId()
 provide(FORM_ITEM_INJECTION_KEY, id)
 provide('FormItem', {
-  orientation: props.orientation
+  layout: props.layout
 })
 </script>
 
 <template>
   <div :class="cn(
-      orientation === 'vertical' ? 'grid grid-cols-[12rem_1fr] gap-2' : 'space-y-2',
+      formItemVariants({ layout }),
       props.class
     )">
     <slot />

@@ -12,20 +12,27 @@ import {
   getCoreRowModel,
   getFacetedRowModel,
   getFacetedUniqueValues,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
   useVueTable,
 } from '@tanstack/vue-table'
 import { watchDebounced } from '@vueuse/core'
-import { IDataSource, Column, DataAdapter } from '@interfaces'
+import { IDataSource, Column, DataAdapter, FieldSchema } from '@interfaces'
+import { type DataTableVariants, dataTableVariants } from '../data/theme'
+import type { HTMLAttributes } from 'vue'
+import { ISchema } from '../data/schema'
 
 interface DataTableProps {
-  source: IDataSource
-  columns: Column[]
+  schema: ISchema,
+  variant?: DataTableVariants['variant']
+  props?: {
+    table?: {
+      class?: HTMLAttributes['class']
+    }
+  }
 }
 const props = defineProps<DataTableProps>()
-const columns = convertColumnDef(props.columns);
+
+const columns = convertColumnDef(props.schema.columns);
+const source = props.schema.source;
 const loading = ref<boolean>(false)
 const defaultFiltersState:ColumnFilter[] = []
 const visibilityState = {}
@@ -125,11 +132,11 @@ const getPinnedPos = ({columnDef}) => {
   const key = columnDef.id || columnDef.meta?.dataField
   return pinningState.position[key] || 0;
 }
-const dataAdapter = new DataAdapter(props.source)
+const dataAdapter = new DataAdapter(source)
 const fetchData = async () => {
   let sort, filter = {
   };
-  const extraParms = props.source.params || {}
+  const extraParms = source.params || {}
   if (sorting.value[0]) {
     sort = `${sorting.value[0].desc ? '-' : ''}${sorting.value[0].id}`
   }
@@ -162,12 +169,12 @@ const fetchData = async () => {
       },
       ...extraParms
     }
-    if (props.source.beforeSend) {
-      props.source.beforeSend(params)
+    if (source.beforeSend) {
+      source.beforeSend(params)
     }
-    const res = await dataAdapter.bind({ params })
-    if (props.source.beforeLoadComplete) {
-      props.source.beforeLoadComplete(res)
+    const res = await dataAdapter.bind(params)
+    if (source.beforeLoadComplete) {
+      source.beforeLoadComplete(res)
     }
     rowCount.value = res.total
     data.value = res.records
@@ -234,13 +241,19 @@ provide('DataTable', {
   },
   dataAdapter,
   refresh,
+  schema: props.schema.schema,
+  source: props.schema.source,
+  permissions: props.schema.permissions,
 })
 </script>
 
 <template>
-  <div class="space-y-3">
+  <div class="space-y-3" v-permission="schema.permissions.view">
     <DataTableToolbar/>
-    <div class="rounded-md border relative h-[calc(100dvh-26rem)] overflow-hidden">
+    <ScrollArea :class="[
+      dataTableVariants({variant}),
+      'data-table-scroller'
+    ]">
       <Table>
         <TableHeader>
           <TableRow v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id">
@@ -300,7 +313,7 @@ provide('DataTable', {
       <!--
       <DataTableSetting/>
       -->
-    </div>
+    </ScrollArea>
     <DataTablePagination/>
   </div>
 </template>

@@ -1,13 +1,11 @@
-import { DataSourceMapper } from '@mappers';
 import { $ApiClient } from '@gateways';
 import { IRoleAttribute, IRole, IEntity } from '@entities';
 import { IConditions, IConditionDto, IResource, IResourceList, IRepository } from '@interfaces';
 import { EntityMapper } from '@mappers';
 
 export const RoleRepository = {
-  async fetch(cond: IConditions): Promise<IResourceList<IRole>> {
+  async fetch(conditions: IConditions): Promise<IResourceList<IRole>> {
     try {
-      const conditions: IConditionDto = DataSourceMapper.toDataSource(cond)
       const result: IResourceList = await $ApiClient.get('/api/v1/roles', conditions);
       return EntityMapper.toEntities<IRole>(result)
     } catch (error) {

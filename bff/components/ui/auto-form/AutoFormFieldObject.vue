@@ -47,7 +47,7 @@ const shapes = computed(() => {
 const fieldContext = useField(props.fieldName)
 // @ts-expect-error ignore missing `id`
 provide(FieldContextKey, fieldContext)
-const { orientation } = inject('AutoForm')
+const { layout } = inject('AutoForm')
 
 </script>
 
@@ -55,7 +55,7 @@ const { orientation } = inject('AutoForm')
   <section>
     <slot v-bind="props">
       <Accordion type="single" as-child class="w-full" collapsible :disabled="disabled">
-        <FormItem :orientation="orientation">
+        <FormItem :layout="layout">
           <AccordionItem :value="fieldName" class="border-none">
             <AccordionTrigger>
               <AutoFormLabel class="text-base" :required="required">

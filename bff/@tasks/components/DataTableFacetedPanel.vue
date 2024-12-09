@@ -35,7 +35,7 @@ const isFilltered = computed(() => {
           <span class="absolute size-1.5 top-0.5 right-0.5 rounded-full bg-primary" v-if="isFilltered"></span>
         </Button>
       </PopoverTrigger>
-      <PopoverContent class="w-60 p-3" align="start">
+      <PopoverContent class="w-60 p-3 z-50" align="start">
         <DataTableFacetedTagsInputFilter
           v-if="column.columnDef.meta.filterType === 'TagsInput'"
           :column="column"

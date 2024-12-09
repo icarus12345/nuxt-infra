@@ -2,6 +2,7 @@
 
 namespace App\JsonApi\V1\Roles;
 
+use App\Models\Role;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
@@ -13,7 +14,7 @@ use LaravelJsonApi\Eloquent\Fields\Relations\HasMany;
 use App\JsonApi\Filters\WhereText;
 use App\JsonApi\Filters\WhereNumber;
 use App\JsonApi\Filters\WhereDate;
-use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
+use App\JsonApi\Filters\WhereAny;
 
 class RoleSchema extends Schema
 {
@@ -23,7 +24,7 @@ class RoleSchema extends Schema
      *
      * @var string
      */
-    public static string $model = \App\Models\Role::class;
+    public static string $model = Role::class;
     protected bool $selfLink = false;
     /**
      * Get the resource fields.
@@ -36,7 +37,7 @@ class RoleSchema extends Schema
             ID::make(),
             Str::make('name')->sortable(),
             Str::make('guardName')->sortable(),
-            BelongsToMany::make('permissions'),
+            BelongsToMany::make('permissions')->canCount()->countAs('totalPermissions'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];
@@ -56,6 +57,7 @@ class RoleSchema extends Schema
             WhereText::make('guardName'),
             WhereDate::make('createdAt'),
             WhereDate::make('updatedAt'),
+            WhereAny::make('q', ['name'])
         ];
     }
 

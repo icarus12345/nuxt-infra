@@ -13,22 +13,22 @@ const condition = computed(() => props.column.getFilterValue())
 const meta = props.column.columnDef.meta
 const options = ref([])
 onMounted(async () => {
-  if (isAsyncFunction(meta?.filterData)) {
-    meta.filterData()
-    .then(data => options.value = meta.filterData = data)
-  } else if (meta?.filterData instanceof Function) {
-    options.value = meta.filterData = meta.filterData()
-  } else if (meta?.filterData instanceof Array) {
-    options.value = meta.filterData
-  } else if (meta.dataSource) {
-    const dataAdapter = new DataAdapter(meta.dataSource)
-    const extraParms = meta.dataSource.params || {}
+  const dataSource = meta.dataSource || meta.schema.source
+  if (isAsyncFunction(dataSource)) {
+    dataSource().then(data => options.value = meta.dataSource = data)
+  } else if (dataSource instanceof Function) {
+    options.value = meta.dataSource = dataSource()
+  } else if (dataSource instanceof Array) {
+    options.value = dataSource
+  } else if (dataSource) {
+    const dataAdapter = new DataAdapter(dataSource)
+    const extraParms = dataSource.params || {}
     const params = { ... extraParms }
     const res = await dataAdapter.bind({ params })
-    if (meta.dataSource.beforeLoadComplete) {
-      meta.dataSource.beforeLoadComplete(res)
+    if (dataSource.beforeLoadComplete) {
+      dataSource.beforeLoadComplete(res)
     }
-    options.value = meta.filterData = res.records
+    options.value = meta.dataSource = res.records
   }
 })
 const isAllSelected = computed(() => {

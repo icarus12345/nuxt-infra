@@ -19,8 +19,8 @@ export const toastVariants = tv(
     variants: {
       variant: {
         default: 'bg-background/90 text-foreground',
-        destructive:
-          'destructive group bg-destructive text-destructive-foreground',
+        destructive: 'destructive bg-destructive text-destructive-foreground',
+        success: 'bg-background/90 text-foreground',
       },
     },
     defaultVariants: {

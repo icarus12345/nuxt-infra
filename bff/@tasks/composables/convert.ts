@@ -1,8 +1,10 @@
 import { h } from 'vue'
 import { ColumnDef } from "@tanstack/vue-table";
-import { Column } from "@interfaces";
+import { IEntity } from "@entities";
+import { Column, Field } from "@interfaces";
 import Checkbox from '@/components/ui/checkbox/CheckBox.vue';
 import DataTableRowActions from '@tasks/components/DataTableRowActions.vue';
+import { FieldSchema } from '../../@application/interfaces/data-source';
 
 export function convertColumnDef<T>(columns: Column[]): ColumnDef<T>[] {
   return columns.map(column => {
@@ -36,7 +38,7 @@ export function convertColumnDef<T>(columns: Column[]): ColumnDef<T>[] {
       enablePinning: !!column.pinned,
     }
 
-    if (column.columnType === 'Selection') {
+    if (column.fieldType === 'Selection') {
       columnDef.id = 'select'
       columnDef.header = ({ table }) => h(Checkbox, {
         'checked': table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && 'indeterminate'),
@@ -50,7 +52,7 @@ export function convertColumnDef<T>(columns: Column[]): ColumnDef<T>[] {
       })
       columnDef.enableSorting = false
       columnDef.enableHiding = false
-    } else if (column.columnType === 'Action') {
+    } else if (column.fieldType === 'Action') {
       columnDef.id = 'action'
       if (column.cellsRenderer) {
         columnDef.cell = column.cellsRenderer

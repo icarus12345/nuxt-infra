@@ -1,12 +1,10 @@
-import { DataSourceMapper } from '@mappers';
 import { $ApiClient } from '@gateways';
 import { IPostAttribute, IPost } from '@entities';
 import { IConditions, IConditionDto, IResource, IPostRepository } from '@interfaces';
 
 export const PostRepository: IPostRepository = {
-  async fetch(cond: IConditions): Promise<IResource<IPost[]>> {
+  async fetch(conditions: IConditions): Promise<IResource<IPost[]>> {
     try {
-      const conditions: IConditionDto = DataSourceMapper.toDataSource(cond)
       const result: IResource<IPost[]> = await $ApiClient.get('/api/v1/posts', conditions);
       return result
     } catch (error) {

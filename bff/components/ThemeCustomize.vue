@@ -85,7 +85,7 @@ const colorMode = useColorMode()
             @click="setTheme(color)"
           >
             <span class="h-4 w-4 flex items-center justify-center rounded-full" :style="{ backgroundColor: backgroundColor(color) }">
-              <Check v-if="theme === color" class="text-white size-4" />
+              <Check v-if="theme === color" class="text-white size-3" />
             </span>
             <span class="capitalize">{{ color }}</span>
           </Button>

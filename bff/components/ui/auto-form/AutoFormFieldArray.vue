@@ -11,7 +11,7 @@ import * as z from 'zod'
 import AutoFormField from './AutoFormField.vue'
 import AutoFormLabel from './AutoFormLabel.vue'
 import { beautifyObjectName, getBaseType } from './utils'
-
+const { layout } = inject('AutoForm')
 const props = defineProps<{
   fieldName: string
   required?: boolean
@@ -59,7 +59,7 @@ provide(FieldContextKey, fieldContext)
   <FieldArray v-slot="{ fields, remove, push }" as="section" :name="fieldName">
     <slot v-bind="props">
       <Accordion type="multiple" class="w-full" collapsible :disabled="disabled" as-child>
-        <FormItem :orientation="orientation">
+        <FormItem :layout="layout">
           <AccordionItem :value="fieldName" class="border-none">
             <AccordionTrigger>
               <AutoFormLabel class="text-base" :required="required">

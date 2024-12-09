@@ -1,160 +1,100 @@
 <script lang="ts" setup>
-import { type AlertDialogContentProps } from 'radix-vue/AlertDialog'
+import { type DialogContentProps } from 'radix-vue/Dialog'
 import { IEntity } from '@entities'
 import { useToast } from '@/components/ui/toast'
 import { h } from 'vue'
 import * as z from 'zod'
+import { FieldSchema, DataAdapter, IDataSource } from '@interfaces/data-source'
+import { getValueByPath } from '../composables/utils'
+import { AutoForm } from '@/components/ui/auto-form'
+import { toTypedSchema } from '@vee-validate/zod'
+import { useForm } from 'vee-validate'
+import DetailDIalogToolbar from './DetailDIalogToolbar.vue'
 const $Toast = useToast()
-
-type DetailDialogProps = AlertDialogContentProps & {
-  entity?: IEntity
+const dialog = inject('Dialog')
+type DetailDialogProps = DialogContentProps & {
+  entity?: IEntity,
+  schema: FieldSchema
+  source: IDataSource,
 }
 const props = defineProps<DetailDialogProps>()
-
-
-enum Sports {
-  Football = 'Football/Soccer',
-  Basketball = 'Basketball',
-  Baseball = 'Baseball',
-  Hockey = 'Hockey (Ice)',
-  None = 'I don\'t like sports',
-}
-
-const schema = z.object({
-  username: z
-    .string({
-      required_error: 'Username is required.',
-    })
-    .min(2, {
-      message: 'Username must be at least 2 characters.',
-    }),
-
-  password: z
-    .string({
-      required_error: 'Password is required.',
-    })
-    .min(8, {
-      message: 'Password must be at least 8 characters.',
-    }),
-
-  favouriteNumber: z.coerce
-    .number({
-      invalid_type_error: 'Favourite number must be a number.',
-    })
-    .min(1, {
-      message: 'Favourite number must be at least 1.',
-    })
-    .max(10, {
-      message: 'Favourite number must be at most 10.',
-    })
-    .default(1)
-    .optional(),
-
-  acceptTerms: z
-    .boolean()
-    .refine(value => value, {
-      message: 'You must accept the terms and conditions.',
-      path: ['acceptTerms'],
-    }),
-
-  sendMeMails: z.boolean().optional(),
-
-  birthday: z.coerce.date().optional(),
-
-  color: z.enum(['red', 'green', 'blue']).optional(),
-
-  // Another enum example
-  marshmallows: z
-    .enum(['not many', 'a few', 'a lot', 'too many']),
-
-  // Native enum example
-  sports: z.nativeEnum(Sports).describe('What is your favourite sport?'),
-
-  bio: z
-    .string()
-    .min(10, {
-      message: 'Bio must be at least 10 characters.',
-    })
-    .max(160, {
-      message: 'Bio must not be longer than 30 characters.',
-    })
-    .optional(),
-
-  customParent: z.string().optional(),
-
-  file: z.string().optional(),
+const obj = {}
+const fieldConfig = {}
+const schemas = props.schema.fields.filter(field => field.schema).map(field => field.schema)
+props.schema.fields.forEach(field => {
+  const dataField = field.dataField
+  obj[dataField] = field.shape
+  let value = getValueByPath(props.entity, field.displayField || dataField)
+  if (!value) {
+    if (field.shape instanceof z.ZodArray) {
+      value = []
+    }
+  }
+  if (value) {
+    obj[dataField] = field.shape.default(value)
+  }
+  fieldConfig[dataField] = {
+    component: field.fieldType,
+    field: field,
+    description: field.hint
+  }
 })
-
+const loading = ref(false);
+const formSchema = z.object(obj)
 function onSubmit(values: Record<string, any>) {
-  $Toast.alert({
-    title: 'You submitted the following values:',
-    description: h('pre', { class: 'mt-2 w-[340px] rounded-md bg-slate-950 p-4' }, h('code', { class: 'text-white' }, JSON.stringify(values, null, 2))),
+  const entity = objectToEntity(values, props.schema.fields)
+  loading.value = true;
+  props.source
+  .save({
+    id: props.entity?.id,
+    ...entity
   })
+  .then(() => {
+    $Toast.alert({
+      variant: 'success',
+      description: `${props.entity?.id ? 'Update' : 'Create a'} Entity Success!`,
+    })
+    dialog.open = false
+    dialog.callback()
+  })
+  .finally(() => (loading.value = false))
+  
+}
+const form = useForm({
+  // initialValues: EntityToObject({}, props.schema.fields),
+  validationSchema: toTypedSchema(formSchema),
+})
+const doSubmit = async ($event) => {
+  const isValid = await form.validate(); // Kiểm tra xem form hợp lệ
+  if (isValid) {
+    form.handleSubmit(onSubmit)(); // Gọi hàm submit
+  } else {
+    console.error('Form validation failed');
+  }
 }
 </script>
 <template>
-  <AlertDialogContent class="grid-rows-[auto_minmax(0,1fr)_auto]">
-    <AlertDialogHeader>
-      <AlertDialogTitle>Add / Edit Entity</AlertDialogTitle>
-      <AlertDialogDescription>There was a problem with your request</AlertDialogDescription>
-    </AlertDialogHeader>
-    <div class="grid gap-4 py-4 overflow-y-auto -mx-4 px-4">
-      <pre>{{ entity }}</pre>
+  <DialogContent class="grid-rows-[auto_minmax(0,1fr)_auto]">
+    <DialogHeader>
+      <DialogTitle>{{ entity?.id ? 'Edit ' : 'Create new a' }} {{ schema.name }}</DialogTitle>
+      <DialogDescription>{{ schema.description }}</DialogDescription>
+    </DialogHeader>
+    <div class="overflow-y-auto -mx-4">
       <AutoForm
-        class="grid gap-3"
-        :schema="schema"
-        :field-config="{
-          password: {
-            label: 'Your secure password',
-            inputProps: {
-              type: 'password',
-              placeholder: '••••••••',
-            },
-          },
-          favouriteNumber: {
-            description: 'Your favourite number between 1 and 10.',
-          },
-          acceptTerms: {
-            label: 'Accept terms and conditions.',
-            inputProps: {
-              required: true,
-            },
-          },
-
-          birthday: {
-            description: 'We need your birthday to send you a gift.',
-          },
-
-          sendMeMails: {
-            component: 'switch',
-          },
-
-          bio: {
-            component: 'textarea',
-          },
-
-          marshmallows: {
-            label: 'How many marshmallows fit in your mouth?',
-            component: 'radio',
-          },
-
-          file: {
-            label: 'Text file',
-            component: 'file',
-          },
-        }"
+        class="grid gap-3 px-4"
+        :form="form"
+        :schema="formSchema"
+        :field-config="fieldConfig"
         @submit="onSubmit"
       >
-        
-
-        <Button type="submit">
-          Submit
-        </Button>
       </AutoForm>
     </div>
-    <AlertDialogFooter>
-      <AlertDialogCancel>Cancel</AlertDialogCancel>
-      <AlertDialogAction>Continue</AlertDialogAction>
-    </AlertDialogFooter>
-  </AlertDialogContent>
+    <DialogFooter>
+      <DetailDIalogToolbar v-if="schemas.length" :schemas="schemas"/>
+      <DialogClose as-child class="ms-auto">
+        <Button variant="ghost">Close</Button>
+      </DialogClose>
+      <Button variant="soft" @click="doSubmit" :loading="loading">{{ entity ? 'Save' : 'Create' }}</Button>
+    </DialogFooter>
+  </DialogContent>
 </template>

@@ -10,13 +10,13 @@ defineOptions({
 })
 
 defineProps<FieldProps>()
-const { orientation } = inject('AutoForm')
+const { layout } = inject('AutoForm')
 
 </script>
 
 <template>
   <FormField v-slot="slotProps" :name="fieldName">
-    <FormItem :orientation="orientation">
+    <FormItem :layout="layout">
       <AutoFormLabel v-if="!config?.hideLabel" :required="required">
         {{ config?.label || beautifyObjectName(label ?? fieldName) }}
       </AutoFormLabel>

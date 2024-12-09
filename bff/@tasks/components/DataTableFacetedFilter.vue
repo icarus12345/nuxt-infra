@@ -16,23 +16,22 @@ const options = ref([])
 const oldValue = ref()
 const loadData = async () => {
   if (options.value.length) return
-  if (isAsyncFunction(meta?.filterData)) {
-    meta.filterData()
-    .then(data => options.value = meta.filterData = data)
-  } else if (meta?.filterData instanceof Function) {
-    options.value = meta.filterData = meta.filterData()
-  } else if (meta?.filterData instanceof Array) {
-    options.value = meta.filterData
-  } else if (meta.dataSource) {
-    const dataAdapter = new DataAdapter(meta.dataSource)
-    const extraParms = meta.dataSource.params || {}
+  const dataSource = meta.dataSource
+  if (isAsyncFunction(dataSource)) {
+    dataSource().then(data => options.value = meta.dataSource = data)
+  } else if (dataSource instanceof Function) {
+    options.value = meta.dataSource = dataSource()
+  } else if (dataSource instanceof Array) {
+    options.value = dataSource
+  } else if (dataSource) {
+    const dataAdapter = new DataAdapter(dataSource)
+    const extraParms = dataSource.params || {}
     const params = { ... extraParms }
     const res = await dataAdapter.bind({ params })
-    if (meta.dataSource.beforeLoadComplete) {
-      meta.dataSource.beforeLoadComplete(res)
+    if (dataSource.beforeLoadComplete) {
+      dataSource.beforeLoadComplete(res)
     }
-    console.log(res,'resres')
-    options.value = meta.filterData = res.records
+    options.value = meta.dataSource = res.records
   }
 }
 const onChange = (state) => {
@@ -66,7 +65,6 @@ const tags = computed(() => options.value.filter((option) => condition.value.val
 </script>
 
 <template>
-  
   <Popover @update:open="onChange">
     <PopoverTrigger as-child>
       <Button variant="outline" class="border-dashed justify-start w-full">

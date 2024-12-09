@@ -15,7 +15,7 @@ Route::middleware([])->prefix('v1')->group(function () {
         'prefix' => 'auth'
     ], function () {
         Route::post('/register', [AuthController::class, 'register'])->name('register');
-        Route::any('/login', [AuthController::class, 'login'])->name('login');
+        Route::post('/login', [AuthController::class, 'login'])->name('login');
         Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
         Route::middleware(['auth.jwt'])->group(function () {
             Route::post('/refresh', [AuthController::class, 'refresh'])->name('refresh');

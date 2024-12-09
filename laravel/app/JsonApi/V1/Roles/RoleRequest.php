@@ -2,10 +2,9 @@
 
 namespace App\JsonApi\V1\Roles;
 
-use Illuminate\Validation\Rule;
 use LaravelJsonApi\Laravel\Http\Requests\ResourceRequest;
 use LaravelJsonApi\Validation\Rule as JsonApiRule;
-// use LaravelJsonApi\Laravel\Http\Controllers\JsonApiController;
+
 class RoleRequest extends ResourceRequest
 {
 

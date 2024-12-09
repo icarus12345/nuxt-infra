@@ -8,10 +8,7 @@ const props = defineProps<{
 </script>
 
 <template>
-  <ScrollArea class="w-full h-full" type="scroll">
-    <table :class="cn('w-full caption-bottom text-sm', props.class)">
-      <slot />
-    </table>
-  </ScrollArea>
-  
+  <table :class="cn('w-full caption-bottom text-sm', props.class)">
+    <slot />
+  </table>
 </template>

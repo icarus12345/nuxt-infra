@@ -1,13 +1,11 @@
-import { DataSourceMapper } from '@mappers';
 import { $ApiClient } from '@gateways';
 import { IPermission } from '@entities';
 import { IConditions, IConditionDto, IResource, IResourceList } from '@interfaces';
 import { EntityMapper } from '@mappers';
 
 export const PermissionRepository = {
-  async fetch(cond: IConditions): Promise<IResourceList<IPermission>> {
+  async fetch(conditions: IConditions): Promise<IResourceList<IPermission>> {
     try {
-      const conditions: IConditionDto = DataSourceMapper.toDataSource(cond)
       const result: IResourceList = await $ApiClient.get('/api/v1/permissions', conditions);
       return EntityMapper.toEntities<IPermission>(result)
     } catch (error) {

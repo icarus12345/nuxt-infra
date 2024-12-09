@@ -7,15 +7,17 @@ export const containerClass = 'w-full h-full'
 </script>
 
 <script setup lang=ts>
-import { ChevronRight, ChevronsUpDown, Ellipsis, Github, Menu } from 'lucide-vue-next'
-import { useStorage } from '@vueuse/core'
+import { useToast } from '@/components/ui/toast'
+import { useDialog } from '@/components/ui/dialog'
+import { ChevronRight, ChevronsUpDown, MoreHorizontal, Frame, Building2, Plus, Folder, Forward, Trash2, LogOut, Bell, CreditCard,BadgeCheck,Sparkles, } from 'lucide-vue-next'
+import { $AuthRepository } from "@repositories";
+import { useAuthStore } from "@gateways";
+
+const $AuthStore = useAuthStore()
+const $Toast = useToast()
+const $Dialog = useDialog()
 // This is sample data.
 const data = {
-  user: {
-    name: 'shadcn',
-    email: 'm@example.com',
-    avatar: '',
-  },
   teams: [
     {
       name: 'Acme Inc',
@@ -144,7 +146,21 @@ const activeTeam = ref(data.teams[0])
 function setActiveTeam(team: typeof data.teams[number]) {
   activeTeam.value = team
 }
-const accessToken = useStorage('access_token', '')
+
+const confirmLogout = () => {
+  $Dialog.confirm({
+    title: 'Confirm logout?',
+    // description: 'There was a problem with your request',
+    content: `Do you want to logout`,
+    async callback() {
+      return $AuthRepository
+        .logout()
+        .then(() => {
+          $AuthStore.clear()
+        })
+    }
+  })
+}
 </script>
 
 <template>
@@ -161,7 +177,7 @@ const accessToken = useStorage('access_token', '')
                 >
                   <div class="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                     <Avatar class="h-8 w-8 rounded-lg">
-                      <AvatarImage :src="data.user.avatar" :alt="data.user.name" />
+                      <AvatarImage :src="$AuthStore.profile?.attributes.avatar" :alt="$AuthStore.profile?.attributes.name" />
                       <AvatarFallback class="rounded-lg">
                         CN
                       </AvatarFallback>
@@ -190,7 +206,7 @@ const accessToken = useStorage('access_token', '')
                   @click="setActiveTeam(team)"
                 >
                   <div class="flex size-6 items-center justify-center rounded-sm border">
-                    <Github />
+                    <Building2 class="size-4" />
                   </div>
                   {{ team.name }}
                   <DropdownMenuShortcut>⌘{{ index + 1 }}</DropdownMenuShortcut>
@@ -223,7 +239,7 @@ const accessToken = useStorage('access_token', '')
               <SidebarMenuItem>
                 <CollapsibleTrigger as-child>
                   <SidebarMenuButton :tooltip="item.title">
-                    <Menu />
+                    <Frame />
                     <span>{{ item.title }}</span>
                     <ChevronRight class="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90"/>
                   </SidebarMenuButton>
@@ -255,7 +271,7 @@ const accessToken = useStorage('access_token', '')
             >
               <SidebarMenuButton as-child>
                 <a :href="item.url">
-                  <Ellipsis />
+                  <Folder />
                   <span>{{ item.name }}</span>
                 </a>
               </SidebarMenuButton>
@@ -295,21 +311,21 @@ const accessToken = useStorage('access_token', '')
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            <DropdownMenu>
+            <DropdownMenu v-if="$AuthStore.profile">
               <DropdownMenuTrigger as-child>
                 <SidebarMenuButton
                   size="lg"
                   class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                 >
                   <Avatar class="h-8 w-8 rounded-lg">
-                    <AvatarImage :src="data.user.avatar" :alt="data.user.name" />
+                    <AvatarImage :src="$AuthStore.profile.attributes.avatar" :alt="$AuthStore.profile.attributes.name" />
                     <AvatarFallback class="rounded-lg">
                       CN
                     </AvatarFallback>
                   </Avatar>
                   <div class="grid flex-1 text-left text-sm leading-tight">
-                    <span class="truncate font-semibold">{{ data.user.name }}</span>
-                    <span class="truncate text-xs">{{ data.user.email }}</span>
+                    <span class="truncate font-semibold">{{ $AuthStore.profile.attributes.name }}</span>
+                    <span class="truncate text-xs">{{ $AuthStore.profile.attributes.email }}</span>
                   </div>
                   <ChevronsUpDown class="ml-auto size-4" />
                 </SidebarMenuButton>
@@ -318,14 +334,14 @@ const accessToken = useStorage('access_token', '')
                 <DropdownMenuLabel class="p-0 font-normal">
                   <div class="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                     <Avatar class="h-8 w-8 rounded-lg">
-                      <AvatarImage :src="data.user.avatar" :alt="data.user.name" />
+                      <AvatarImage :src="$AuthStore.profile.attributes.avatar" :alt="$AuthStore.profile.attributes.name" />
                       <AvatarFallback class="rounded-lg">
                         CN
                       </AvatarFallback>
                     </Avatar>
                     <div class="grid flex-1 text-left text-sm leading-tight">
-                      <span class="truncate font-semibold">{{ data.user.name }}</span>
-                      <span class="truncate text-xs">{{ data.user.email }}</span>
+                      <span class="truncate font-semibold">{{ $AuthStore.profile.attributes.name }}</span>
+                      <span class="truncate text-xs">{{ $AuthStore.profile.attributes.email }}</span>
                     </div>
                   </div>
                 </DropdownMenuLabel>
@@ -352,9 +368,8 @@ const accessToken = useStorage('access_token', '')
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <LogOut />
-                  Log out
+                <DropdownMenuItem @click="confirmLogout">
+                  <LogOut /> Log out
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -399,7 +414,7 @@ const accessToken = useStorage('access_token', '')
         </div>
         -->
         <div class="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min flex flex-col gap-3">
-          <slot v-if="accessToken" />
+          <slot v-if="$AuthStore.accessToken" />
           <AuthLogin v-else />
         </div>
       </div>

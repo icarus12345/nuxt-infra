@@ -14,7 +14,6 @@ use LaravelJsonApi\Eloquent\Filters\WhereHas;
 use App\JsonApi\Filters\WhereText;
 use App\JsonApi\Filters\WhereNumber;
 use App\JsonApi\Filters\WhereDate;
-use Illuminate\Support\Facades\Log;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
 use LaravelJsonApi\Eloquent\Fields\Relations\HasMany;
@@ -23,7 +22,6 @@ use LaravelJsonApi\Eloquent\Fields\Relations\HasManyThrough;
 use LaravelJsonApi\Eloquent\SoftDeletes;
 use LaravelJsonApi\Eloquent\Fields\SoftDelete;
 use LaravelJsonApi\Eloquent\Filters\OnlyTrashed;
-use LaravelJsonApi\Eloquent\Fields\Relations\MorphTo;
 
 class UserSchema extends Schema
 {
@@ -52,7 +50,7 @@ class UserSchema extends Schema
             //     Str::make('image'),
             // ])->on('profile'),
             BelongsToMany::make('roles'),
-            HasManyThrough::make('permissions'),
+            // HasManyThrough::make('permissions'),
             // MorphTo::make('permissions', 'roles'),
             // Attribute::('permissions')->serializeUsing(fn($user) => $user->all_permissions),
             DateTime::make('createdAt')->sortable()->readOnly(),

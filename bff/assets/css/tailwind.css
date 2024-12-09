@@ -2,6 +2,6 @@
 @import "./base.css";
 
 @import "tailwindcss/components";
-/* @import "./components/aggrid.css"; */
+@import "./components/transition.css";
 
 @import "tailwindcss/utilities";

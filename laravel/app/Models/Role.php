@@ -9,12 +9,8 @@ class Role extends Model
 {
     use HasFactory;
 
-    // Các thuộc tính có thể được gán giá trị hàng loạt
     protected $fillable = ['name', 'guard_name'];
 
-    /**
-     * Quan hệ nhiều-nhiều với model Permission
-     */
     public function permissions()
     {
         return $this->belongsToMany(Permission::class, 'role_permission');

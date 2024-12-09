@@ -10,6 +10,7 @@ export type ZodObjectOrWrapped =
  * e.g. "myString" -> "My String"
  */
 export function beautifyObjectName(string: string) {
+  if (typeof string !== 'string') return string
   // Remove bracketed indices
   // if numbers only return the string
   let output = string.replace(/\[\d+\]/g, '').replace(/([A-Z])/g, ' $1')

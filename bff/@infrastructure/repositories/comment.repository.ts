@@ -1,12 +1,10 @@
-import { DataSourceMapper } from '@mappers';
 import { $ApiClient } from '@gateways';
 import { ICommentAttribute, IComment } from '@entities';
 import { IConditions, IConditionDto, IResource, ICommentRepository } from '@interfaces';
 
 export const CommentRepository: ICommentRepository = {
-  async fetch(cond: IConditions): Promise<IResource<IComment[]>> {
+  async fetch(conditions: IConditions): Promise<IResource<IComment[]>> {
     try {
-      const conditions: IConditionDto = DataSourceMapper.toDataSource(cond)
       const result: IResource<IComment[]> = await $ApiClient.get('/api/v1/comments', conditions);
       return result
     } catch (error) {

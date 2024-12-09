@@ -9,12 +9,12 @@ import { beautifyObjectName } from './utils'
 
 const props = defineProps<FieldProps>()
 const inputComponent = computed(() => props.config?.component === 'textarea' ? Textarea : Input)
-const { orientation } = inject('AutoForm')
+const { layout } = inject('AutoForm')
 </script>
 
 <template>
   <FormField v-slot="slotProps" :name="fieldName">
-    <FormItem v-bind="$attrs" :orientation="orientation">
+    <FormItem v-bind="$attrs" :layout="layout">
       <AutoFormLabel v-if="!config?.hideLabel" :required="required">
         {{ config?.label || beautifyObjectName(label ?? fieldName) }}
       </AutoFormLabel>
@@ -31,7 +31,7 @@ const { orientation } = inject('AutoForm')
       <FormDescription v-if="config?.description">
         {{ config.description }}
       </FormDescription>
-      <FormMessage />
+      <FormMessage/>
     </FormItem>
   </FormField>
 </template>

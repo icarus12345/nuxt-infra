@@ -41,15 +41,21 @@ onMounted(async () => {
         {{ config?.label || beautifyObjectName(label ?? fieldName) }}
       </AutoFormLabel>
       <FormControl>
-        {{ config?.inputProps }}
         <slot v-bind="slotProps">
-          <Select :disabled="disabled" v-bind="{ ...slotProps.componentField, ...config?.inputProps }">
-            <SelectTrigger class="w-full" v-bind="{ ...slotProps.componentField, ...config?.inputProps }">
+          <RadioGroup v-if="config?.component === 'radio'" :disabled="disabled" :layout="'vertical'" v-bind="{ ...slotProps.componentField }">
+            <div v-for="(option, index) in options" :key="option" class="flex items-center gap-2">
+              <RadioGroupItem :id="`${option}-${index}`" :value="option" />
+              <Label :for="`${option}-${index}`">{{ beautifyObjectName(option.label || option) }}</Label>
+            </div>
+          </RadioGroup>
+
+          <Select v-else :disabled="disabled" v-bind="{ ...slotProps.componentField }">
+            <SelectTrigger class="w-full">
               <SelectValue :placeholder="config?.inputProps?.placeholder" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem v-for="option in options" :key="option" :value="option?.value || option">
-                {{ beautifyObjectName(option?.label || option) }}
+              <SelectItem v-for="option in options" :key="option" :value="option.value || option">
+                {{ beautifyObjectName(option.label || option) }}
               </SelectItem>
             </SelectContent>
           </Select>

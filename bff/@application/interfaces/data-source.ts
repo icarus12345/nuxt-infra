@@ -6,7 +6,10 @@ export interface IField {
   format?: string
   map?: string
 }
-export interface IDataSource<T> {
+export interface IDataSource<T = IEntity> {
+  id?: string
+  valueMember?: string
+  displayMember?: string
   data?: T[]
   root?: string
   total?: string
@@ -24,44 +27,52 @@ export interface IDataAdapter<T = IEntity> {
 }
 
 export class DataAdapter<T> {
+  private records: any []
+  private total: number
   constructor(private source: IDataSource<T>, options = {}) {}
   async bind(params: any) {
     const resource = await this.source.fetch(params)
     let records = getValueByPath(resource, this.source.root || 'data')
     const total = getValueByPath(resource, this.source.total || 'meta>page>total')
-    if (this.source.fields) {
-      records = records.map((entity: IEntity) => {
-        const row = {}
-        this.source.fields.forEach(field => {
-          row[field.name] = getValueByPath(entity, field.map || field.name)
-        })
-        return  row
-      })
-    }
+    records = this.parse(records)
+    this.source.data = records
     return {
       records,
       total,
     };
   }
+  parse(records: IEntity[] | IEntity) {
+    if (records instanceof Array) {
+      return records?.map((entity: IEntity) => this.parse(entity))
+    }
+
+    if (this.source.fields && typeof records === 'object') {
+      const entity = records
+      const row = {}
+      this.source.fields.forEach(field => {
+        row[field.name] = getValueByPath(entity, field.map || field.name)
+      })
+      return  row
+    }
+
+    return records
+  }
 }
 
-export type ColumnType = 'Number' | 'Checkbox' | 'Textbox' | 'Combobox' | 'DropdownList' | ''
-export type Column = {
+export type FieldType = 'Number' | 'Checkbox' | 'Textbox' | 'Combobox' | 'DropdownList' | 'CheckList' | 'List' | 'Date' | 'TagsInput'
+export type Field = {
   text?: string
   dataField?: string
   displayField?: string
-  columnType?: string
+  fieldType?: FieldType
+  dataSource: IDataSource
+  shape?: any
+}
+export type Column = Field & {
   sortable?: boolean
   filterable?: boolean
   filter?: any
-  filterType?: 'Textbox' | 'CheckList' | 'List' | 'Number' | 'Checkbox' | 'Date' | 'Range' | 'TagsInput'
-  // filterCondition?: string
-  // 'EMPTY', 'NOT_EMPTY', 'CONTAINS', 'CONTAINS_CASE_SENSITIVE', 
-  // possible conditions for string filter
-  // 'DOES_NOT_CONTAIN', 'DOES_NOT_CONTAIN_CASE_SENSITIVE', 'STARTS_WITH', 'STARTS_WITH_CASE_SENSITIVE', 
-  // 'ENDS_WITH', 'ENDS_WITH_CASE_SENSITIVE', 'EQUAL', 'EQUAL_CASE_SENSITIVE', 'NULL', 'NOT_NULL' 
-  // possible conditions for numeric filter: 'EQUAL', 'NOT_EQUAL', 'LESS_THAN', 'LESS_THAN_OR_EQUAL', 'GREATER_THAN', 'GREATER_THAN_OR_EQUAL', 'NULL', 'NOT_NULL
-  dataAdapter: IDataAdapter,
+  filterType?: FieldType
   filterData: any
   hideable?: boolean
   hide?: boolean
@@ -79,4 +90,8 @@ export type Column = {
   className?: string
   cellsClassName?: string
   pinned?: boolean
+}
+
+export type FieldSchema = {
+  fields: Field[]
 }

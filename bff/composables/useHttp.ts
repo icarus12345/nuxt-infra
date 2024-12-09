@@ -2,7 +2,7 @@ import { useStorage } from '@vueuse/core'
 export const useHttp = () => {
   const config = useRuntimeConfig()
   const accessToken = useStorage('access_token', null)
-  // const tokenStore = useTokenStore();
+  // const tokenStore = useAuthStore();
   const opts = {
     baseURL: config.public.apiBase,
     retryDelay: 500,

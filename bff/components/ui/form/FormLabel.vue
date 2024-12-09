@@ -8,7 +8,7 @@ import { useFormField } from './useFormField'
 const props = defineProps<LabelProps & { class?: HTMLAttributes['class'] }>()
 
 const { error, formItemId } = useFormField()
-const { orientation } = inject('AutoForm')
+const { layout } = inject('FormItem')
 
 </script>
 
@@ -20,7 +20,7 @@ const { orientation } = inject('AutoForm')
     )"
     :for="formItemId"
   >
-    <span :class="orientation === 'vertical' && 'min-h-8 grid items-center text-right'">
+    <span :class="layout === 'float' && 'min-h-8 grid items-center text-right'">
       <span><slot /></span>
     </span>
   </Label>
