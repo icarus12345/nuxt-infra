@@ -38,7 +38,7 @@ class MediaSchema extends Schema
     {
         return [
             Filter::make('path'),
-            // Filter::make('name'),
+            Filter::make('type'),
         ];
     }
 

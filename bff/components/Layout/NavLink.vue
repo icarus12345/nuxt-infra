@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ChevronRight } from 'lucide-vue-next';
 import { useRoute as useNativeRoute } from 'vue-router'
-// import { Button } from '@ui/components/button'
 const route = useNativeRoute()
 const navbar = useNavbar()
 const { hoveredNavItem, activeNavMenu } = navbar

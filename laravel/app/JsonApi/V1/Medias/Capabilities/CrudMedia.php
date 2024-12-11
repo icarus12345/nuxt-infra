@@ -27,7 +27,6 @@ class CrudMedia extends CrudResource
 
     public function read(Media $media)
     {
-        Log::info('RED');
         $filters = $this->queryParameters->filter();
 
         // if ($filters && $name = $filters->value('name')) {

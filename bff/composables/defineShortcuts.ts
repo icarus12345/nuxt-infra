@@ -18,7 +18,7 @@ export interface ShortcutsOptions {
   chainDelay?: number
 }
 
-interface Shortcut {
+interface IShortcut {
   handler: Function
   condition: ComputedRef<boolean>
   chained: boolean
@@ -99,7 +99,7 @@ export function defineShortcuts(config: ShortcutsConfig, options: ShortcutsOptio
     }
 
     // Parse key and modifiers
-    let shortcut: Partial<Shortcut>
+    let shortcut: Partial<IShortcut>
 
     if (key.includes('-') && key !== '-' && !key.match(chainedShortcutRegex)?.length) {
       console.trace(`[Shortcut] Invalid key: "${key}"`)

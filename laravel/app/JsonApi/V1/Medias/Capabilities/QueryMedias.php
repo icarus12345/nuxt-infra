@@ -21,6 +21,9 @@ class QueryMedias extends QueryAll
     {
       $filters = $this->queryParameters->filter();
       $path = $filters ? $filters->value('path', 'photos') : 'photos';
+      $type = $filters ? $filters->value('type', '') : '';
+      if ($type === 'folder') return $this->storage->allDirectories($path);
+      if ($type === 'file') return $this->storage->allFiles($path);
       return $this->storage->allDirectories($path)->merge($this->storage->allFiles($path));
     }
 

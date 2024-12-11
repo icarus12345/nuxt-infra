@@ -34,7 +34,7 @@ class MediaStorage
     }
 
 
-    public function allFiles($path = 'images')
+    public function allFiles($path = 'photos')
     {
         return collect(
                 Storage::disk($this->disk)
@@ -57,17 +57,17 @@ class MediaStorage
             });
     }
 
-    public function allDirectories($path = 'images')
+    public function allDirectories($path = 'photos')
     {
         return collect(
                 Storage::disk($this->disk)
-                ->directories($path)
+                ->directories($path, true)
             )
             ->map(function ($folder) {
                 $url = Storage::disk(name: $this->disk)->url($folder);
                 return new Media([
                     'type' => 'folder',
-                    'name' => $folder,
+                    'name' => basename($folder),
                     'path' => $this->getPath($url),
                     'url' => $url,
                 ]);
@@ -82,9 +82,11 @@ class MediaStorage
         $content = str_replace(' ', '+', $content);
         $content = base64_decode($content);
         if (Storage::disk($this->disk)->exists($name)) {
-            $dateSuffix = now()->format('Y-m-d_H-i-s'); // Ví dụ: "2024-11-12_15-30-45"
-            // Tạo tên file mới với suffix
-            $fileName = pathinfo($name, PATHINFO_FILENAME) . '_' . $dateSuffix . '.' . pathinfo($name, PATHINFO_EXTENSION);
+            $suffix = now()->format('ymd_His');
+            $ext = pathinfo($name, PATHINFO_EXTENSION);
+            $fileName = pathinfo($name, PATHINFO_FILENAME);
+            $path = pathinfo($name, PATHINFO_DIRNAME);
+            $name = "$path/{$fileName}_{$suffix}.{$ext}";
         }
         Storage::disk($this->disk)->put($name, $content, 'public');
         $url = Storage::disk(name: $this->disk)->url($name);

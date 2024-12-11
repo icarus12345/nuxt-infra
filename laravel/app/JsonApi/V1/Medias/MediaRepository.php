@@ -20,7 +20,6 @@ class MediaRepository extends AbstractRepository implements QueriesAll, CreatesR
 
     public function find(string $resourceId): ?object
     {
-        Log::info("FIND");
         return $this->storage->find($resourceId);
     }
 

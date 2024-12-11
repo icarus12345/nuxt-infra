@@ -43,6 +43,7 @@ class UserSchema extends Schema
         return [
             ID::make(),
             Str::make('name')->sortable(),
+            Str::make('avatar'),
             Str::make('email')->sortable(),
             Boolean::make('active')->sortable(),
             // Map::make('profile', [
@@ -50,7 +51,7 @@ class UserSchema extends Schema
             //     Str::make('image'),
             // ])->on('profile'),
             BelongsToMany::make('roles'),
-            // HasManyThrough::make('permissions'),
+            BelongsToMany::make('permissions')->canCount()->countAs('totalPermissions'),
             // MorphTo::make('permissions', 'roles'),
             // Attribute::('permissions')->serializeUsing(fn($user) => $user->all_permissions),
             DateTime::make('createdAt')->sortable()->readOnly(),

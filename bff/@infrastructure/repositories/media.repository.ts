@@ -5,11 +5,12 @@ import { IConditions, IConditionDto, IResource, IResourceList } from '@interface
 import { EntityMapper } from '@mappers';
 
 export const MediaRepository = {
-  async fetch(path?: string): Promise<IResourceList<IMedia>> {
+  async fetch(path?: string, type?: string): Promise<IResourceList<IMedia>> {
     try {
       const result: IResourceList = await $ApiClient.get('/api/v1/medias', {
         filter: {
-          path
+          path,
+          type,
         }
       });
       return EntityMapper.toEntities<IMedia>(result)

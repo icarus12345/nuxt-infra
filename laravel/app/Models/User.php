@@ -20,6 +20,7 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $fillable = [
         'name',
+        'avatar',
         'email',
         'password',
         'active',
@@ -66,6 +67,6 @@ class User extends Authenticatable implements JWTSubject
 
     public function permissions()
     {
-        return $this->belongsToMany(Permission::class, 'role_permission');
+        return $this->belongsToMany(Permission::class, 'user_permission');
     }
 }

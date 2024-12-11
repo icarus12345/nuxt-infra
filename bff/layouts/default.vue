@@ -1,14 +1,5 @@
 
-<script lang="ts">
-export const description
-  = 'A sidebar that collapses to icons.'
-export const iframeHeight = '800px'
-export const containerClass = 'w-full h-full'
-</script>
-
 <script setup lang=ts>
-import { useToast } from '@/components/ui/toast'
-import { useDialog } from '@/components/ui/dialog'
 import { ChevronRight, ChevronsUpDown, MoreHorizontal, Frame, Building2, Plus, Folder, Forward, Trash2, LogOut, Bell, CreditCard,BadgeCheck,Sparkles, } from 'lucide-vue-next'
 import { $AuthRepository } from "@repositories";
 import { useAuthStore } from "@gateways";
@@ -177,7 +168,7 @@ const confirmLogout = () => {
                 >
                   <div class="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                     <Avatar class="h-8 w-8 rounded-lg">
-                      <AvatarImage :src="$AuthStore.profile?.attributes.avatar" :alt="$AuthStore.profile?.attributes.name" />
+                      <AvatarImage :src="$AuthStore.profile?.attributes.avatar || ''" :alt="$AuthStore.profile?.attributes.name" />
                       <AvatarFallback class="rounded-lg">
                         CN
                       </AvatarFallback>
@@ -318,7 +309,7 @@ const confirmLogout = () => {
                   class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                 >
                   <Avatar class="h-8 w-8 rounded-lg">
-                    <AvatarImage :src="$AuthStore.profile.attributes.avatar" :alt="$AuthStore.profile.attributes.name" />
+                    <AvatarImage :src="$AuthStore.profile.attributes.avatar || ''" :alt="$AuthStore.profile.attributes.name" />
                     <AvatarFallback class="rounded-lg">
                       CN
                     </AvatarFallback>
@@ -334,7 +325,7 @@ const confirmLogout = () => {
                 <DropdownMenuLabel class="p-0 font-normal">
                   <div class="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                     <Avatar class="h-8 w-8 rounded-lg">
-                      <AvatarImage :src="$AuthStore.profile.attributes.avatar" :alt="$AuthStore.profile.attributes.name" />
+                      <AvatarImage :src="$AuthStore.profile.attributes.avatar || ''" :alt="$AuthStore.profile.attributes.name" />
                       <AvatarFallback class="rounded-lg">
                         CN
                       </AvatarFallback>

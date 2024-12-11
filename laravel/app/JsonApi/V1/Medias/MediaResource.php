@@ -11,7 +11,7 @@ class MediaResource extends JsonApiResource
 
     public function id(): string
     {
-        return $this->resource->name;
+        return $this->resource->path;
     }
     public function attributes($request): iterable
     {

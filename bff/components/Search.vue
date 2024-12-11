@@ -2,7 +2,6 @@
 import { Circle } from 'lucide-vue-next'
 import { navMenu } from '@/constants/menus'
 import type { NavGroup } from '~/types/nav'
-// import { default as Kbd } from '@/components/base/Kbd.vue'
 const { metaSymbol } = useShortcuts()
 
 const openCommand = ref(false)
@@ -38,17 +37,13 @@ function handleSelectLink(link: string) {
       <CommandGroup heading="Suggestions">
         <CommandItem value="Home" @select="handleSelectLink('/')">
           Home
-          <Shortcut>
             <Kbd>G</Kbd>
             <Kbd>H</Kbd>
-          </Shortcut>
         </CommandItem>
         <CommandItem value="email" @select="handleSelectLink('/email')">
           Email
-          <Shortcut>
             <Kbd>G</Kbd>
             <Kbd>E</Kbd>
-          </Shortcut>
         </CommandItem>
       </CommandGroup>
       <!--<CommandSeparator />-->

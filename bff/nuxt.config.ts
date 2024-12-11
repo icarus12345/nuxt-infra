@@ -12,7 +12,8 @@ export default defineNuxtConfig({
     "@repositories": resolve("./@infrastructure/repositories"),
   },
   extends: [
-    '@tasks',
+    '@ui',
+    '@dashboard',
   ],
   experimental: {
     inlineSSRStyles: false
@@ -28,11 +29,15 @@ export default defineNuxtConfig({
     'shadcn-nuxt',
     '@nuxtjs/color-mode',
     "@pinia/nuxt",
+    // '@vee-validate/nuxt',
   ],
   runtimeConfig: {
     apiSecret: '',
     public: {
       apiBase: '',
     }
+  },
+  pinia: {
+    storesDirs: ['./stores/**'],
   },
 })

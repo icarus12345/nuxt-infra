@@ -1,16 +1,6 @@
 <script setup lang="ts">
 import { useMediaQuery } from '@vueuse/core'
 import { Check, Menu, Monitor, Moon, Sun, UserCircle } from 'lucide-vue-next';
-// import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle } from '@ui/components/sheet'
-// import { ScrollArea } from '@ui/components/scroll-area'
-// import { Button } from '@ui/components/button'
-// import {
-//   DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuGroup, DropdownMenuItem, Shortcut,
-//   DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent, DropdownMenuPortal
-// } from '@ui/components/dropdown-menu'
-// import ThemePopover from '@/components/ThemePopover.vue'
-// import ThemeDrawer from '@/components/ThemeDrawer.vue'
-// import Search from '@/components/Search.vue'
 import { navMenu, navMenuBottom } from '~/constants/menus'
 import type { NavGroup, NavLink, NavSectionTitle } from '~/types/nav'
 const { toggle } = useNavbar()
@@ -97,15 +87,15 @@ const isMediumScreen = useMediaQuery('(min-width: 768px)')
             <DropdownMenuGroup>
               <DropdownMenuItem>
                 Profile
-                <Shortcut>⇧⌘P</Shortcut>
+                <Kbd>⇧⌘P</Kbd>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 Billing
-                <Shortcut>⌘B</Shortcut>
+                <Kbd>⌘B</Kbd>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 Settings
-                <Shortcut>⌘S</Shortcut>
+                <Kbd>⌘S</Kbd>
               </DropdownMenuItem>
               <DropdownMenuSub>
                 <DropdownMenuSubTrigger>
@@ -135,7 +125,7 @@ const isMediumScreen = useMediaQuery('(min-width: 768px)')
             <DropdownMenuSeparator />
             <DropdownMenuItem @click="handleLogout">
               Log out
-              <Shortcut>⇧⌘Q</Shortcut>
+              <Kbd>⇧⌘Q</Kbd>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
