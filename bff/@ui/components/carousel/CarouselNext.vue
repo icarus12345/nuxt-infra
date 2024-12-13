@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { WithClassAsProps } from './interface'
-// import { cn } from '@/lib/utils'
 import { ArrowRight } from 'lucide-vue-next'
 import { useCarousel } from './useCarousel'
 

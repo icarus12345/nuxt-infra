@@ -1,10 +1,14 @@
 <script setup lang="ts">
-import { MemberSchema } from '../data/member.schema'
-
+import { MemberSchema } from "../data/member.schema";
 </script>
 
 <template>
   <div class="h-full flex-1 flex-col space-y-4 p-4 flex">
+    <!-- <div style="max-width: 720px;">
+      <client-only>
+        <CKEditor />
+      </client-only>
+    </div> -->
     <div class="flex items-center justify-between space-y-2">
       <div>
         <h2 class="text-2xl font-bold tracking-tight">
@@ -16,6 +20,6 @@ import { MemberSchema } from '../data/member.schema'
         <UserNav />
       </div>
     </div>
-    <DataTable :schema="MemberSchema"/>
+    <DataTable :schema="MemberSchema" />
   </div>
 </template>

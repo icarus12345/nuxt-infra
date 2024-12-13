@@ -7,16 +7,17 @@ const handleOKClick = () => {
   const callback = props.item.callback
   if (isAsyncFunction(callback)) {
     loading.value = true
-    callback()
+    callback(promptValue.value)
       .then((status) => {
         if (status !== false) props.item.open = false
       })
       .finally(() => (loading.value = false))
   } else if (callback instanceof Function) {
-    if (callback() !== false) props.item.open = false
+    if (callback(promptValue.value) !== false) props.item.open = false
   }
 }
 provide('Dialog', props.item)
+const promptValue = ref('')
 </script>
 
 <template>
@@ -30,6 +31,7 @@ provide('Dialog', props.item)
       <DialogDescription v-if="item.description">{{ item.description }}</DialogDescription>
     </DialogHeader>
     <div class="text-wrap" v-if="item.content">{{ item.content }}</div>
+    <Input v-if="item.prompt" v-model="promptValue"/>
     <DialogFooter v-if="item.cancelText || item.okText">
       <DialogClose as-child v-if="item.cancelText">
         <Button v-bind="item.props?.cancelButton">{{ item.cancelText || 'Cancel' }}</Button>

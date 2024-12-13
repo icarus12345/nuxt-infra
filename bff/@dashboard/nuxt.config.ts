@@ -14,7 +14,9 @@ export default defineNuxtConfig({
   // plugins: [
   //   './plugins/permission',
   // ]
-  modules: ['@pinia/nuxt'],
+  modules: [
+    '@pinia/nuxt',
+  ],
   pinia: {
     storesDirs: ['./stores/**'],
   },

@@ -15,6 +15,7 @@ export const avatarVariant = tv(
         xl: 'size-32 text-5xl',
       },
       shape: {
+        none: '',
         circle: 'rounded-full',
         square: 'rounded-md',
       },

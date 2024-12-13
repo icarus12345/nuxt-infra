@@ -100,6 +100,18 @@ class MediaStorage
         ]);
     }
 
+    public function mkdir(string $path): Media
+    {
+        Storage::disk(name: $this->disk)->makeDirectory($path);
+        $url = Storage::disk(name: $this->disk)->url($path);
+        return new Media([
+            'type' => 'folder',
+            'name' => basename($path),
+            'path' => $path,
+            'url' => $url,
+        ]);
+    }
+
     public function remove($media): void
     {
 

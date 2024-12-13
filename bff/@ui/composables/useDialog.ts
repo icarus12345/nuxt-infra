@@ -13,6 +13,7 @@ export type IDialogProp = {
   id: string
   open: Ref<Boolean>
   title?: StringOrVNode
+  prompt?: boolean,
   icon?: StringOrVNode | Component | AsyncComponentLoader
   description?: StringOrVNode
   content?: StringOrVNode | Component | AsyncComponentLoader
@@ -124,12 +125,19 @@ function confirm(config: TDialog) {
     cancelText: 'Cancel',
   })
 }
+function prompt(config: TDialog) {
+  return confirm({
+    ...config,
+    prompt: true
+  })
+}
 function useDialog() {
   return {
     items: computed(() => state.value.items),
     show,
     alert,
     confirm,
+    prompt,
     // dismiss: (id?: string) => dispatch({ type: actionTypes.DISMISS_TOAST, toastId }),
   }
 }

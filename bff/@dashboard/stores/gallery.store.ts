@@ -11,6 +11,7 @@ export const useGalleryStore = defineStore('gallery', () => {
   const folders = ref()
   const activeFolder = ref()
   const files = ref()
+  const selectedFiles = ref()
   const mapper = new Map<string, IMedia[]>()
 
   type TreeNode = IMedia & {
@@ -27,7 +28,7 @@ export const useGalleryStore = defineStore('gallery', () => {
         const children = buildTreeRecursive(items, item.id)
         return {
           ...item,
-          children: children.length ? buildTreeRecursive(items, item.id) : undefined, // Gọi đệ quy
+          children: buildTreeRecursive(items, item.id), // Gọi đệ quy
         }
       });
   }
@@ -66,15 +67,20 @@ export const useGalleryStore = defineStore('gallery', () => {
         reader.onloadend = async () => {
           const paths = [path.value, file.name].filter(Boolean).join('/')
           const media = await MediaRepository.save(paths, reader.result as string)
-          console.log(media)
           files.value.push(media)
         };
 
         reader.readAsDataURL(file);
       })
   }
+  const mkdir = async (name) => {
+    const paths = [path.value, name].filter(Boolean).join('/')
+    const media = await MediaRepository.save(paths);
+    media.children = [];
+    (activeFolder.value?.children ?? folders.value).push(media)
+  }
   const path = computed(() => {
-    return activeFolder.value?.id || root
+    return activeFolder.value?.id ?? root
   })
 
   return {
@@ -84,5 +90,8 @@ export const useGalleryStore = defineStore('gallery', () => {
     activeFolder,
     files,
     upload,
+    mkdir,
+    path,
+    selectedFiles,
   }
 })

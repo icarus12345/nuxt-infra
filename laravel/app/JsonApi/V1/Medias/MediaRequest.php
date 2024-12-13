@@ -19,7 +19,7 @@ class MediaRequest extends ResourceRequest
 
         return [
             'name' => ['required', 'string'],
-            'content' => ['required', 'string'],
+            'content' => ['string'],
         ];
     }
 

@@ -20,9 +20,11 @@ class CrudMedia extends CrudResource
     public function create(array $data): Media
     {
         $name = $data['name'];
-        $content = $data['content'];
-
-        return $this->storage->store($name, $content);;
+        $content = $data['content'] ?? null;
+        if (empty($content)) {
+            return $this->storage->mkdir($name);
+        }
+        return $this->storage->store($name, $content);
     }
 
     public function read(Media $media)

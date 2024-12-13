@@ -157,13 +157,19 @@ export const schema: FieldSchema = {
     dataField: 'email',
     displayField: 'attributes>email',
     shape: Zod.string().email(),
-    fieldType: 'Textbox'
+    fieldType: 'RichText'
   }, {
     text: 'Avatar',
     dataField: 'avatar',
     displayField: 'attributes>avatar',
     shape: Zod.string(),
     fieldType: 'Media'
+  }, {
+    text: 'Avatar2',
+    dataField: 'avatar2',
+    displayField: 'relationships>roles>data:id',
+    shape: Zod.array(Zod.string()).max(3),
+    fieldType: 'Photos'
   }, {
     text: 'Roles',
     dataField: 'relationships>roles',

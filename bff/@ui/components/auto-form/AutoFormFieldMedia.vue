@@ -1,19 +1,26 @@
 <script setup lang="ts">
 import { Field as FormField } from 'vee-validate'
 import type { FieldProps } from './interface'
-import { Image, Trash2, TrashIcon } from 'lucide-vue-next'
+import { Image, ImagePlus } from 'lucide-vue-next'
+import { useField, useFieldArray } from 'vee-validate'
 
 const $Dialog = useDialog()
-defineProps<FieldProps>()
+const props = defineProps<FieldProps>()
+const field = useField<any>(() => props.fieldName)
 const showGalleryDialog = () => {
-  const DetailDialog = defineAsyncComponent(() => import('@dashboard/components/Gallery/GalleryDialog.vue'))
+  const GalleryDialog = defineAsyncComponent(() => import('@dashboard/components/Gallery/GalleryDialog.vue'))
   $Dialog.show({
-    component: shallowRef(DetailDialog),
+    component: shallowRef(GalleryDialog),
     props: {
       content: {
+        // multiple: true
       }
     },
     // okText: 'Save',
+    callback(photo) {
+      console.log(photo)
+      field.handleChange(photo)
+    }
   })
 }
 </script>
@@ -27,13 +34,20 @@ const showGalleryDialog = () => {
       <FormControl>
         <slot v-bind="slotProps">
           <div>
+            <Button size="none" variant="ghost" @click="showGalleryDialog" class="group relative overflow-hidden" v-bind="{ ...slotProps.componentField, ...config?.inputProps }">
+              <Avatar shape="none" class="">
+                <AvatarImage :src="slotProps.value" v-if="slotProps.value" />
+                <div :class="[
+                  'flex absolute group-focus:opacity-100 group-hover:opacity-100 inset-0 bg-muted/75',
+                  {
+                    'opacity-0': slotProps.value
+                  }
+                ]">
+                  <ImagePlus class="!size-5 m-auto"/>
+                </div>
+              </Avatar>
+            </Button>
           </div>
-          <Button size="none" @click="showGalleryDialog" class="group">
-            <Avatar shape="square" class="relative">
-              <AvatarImage src="https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?&w=128&h=128&dpr=2&q=80" />
-              <Image class="size-8 absolute opacity-0 group-focus:opacity-100 group-hover:opacity-100"/>
-            </Avatar>
-          </Button>
         </slot>
       </FormControl>
       <FormDescription v-if="config?.description">

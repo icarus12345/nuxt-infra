@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// import { cn } from '@/lib/utils'
 import { AccordionItem, type AccordionItemProps } from 'radix-vue/Accordion'
 import { useForwardProps } from 'radix-vue/utilities'
 import { computed, type HTMLAttributes } from 'vue'

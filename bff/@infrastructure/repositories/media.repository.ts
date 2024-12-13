@@ -19,7 +19,7 @@ export const MediaRepository = {
     }
   },
 
-  async save(name: string, content: string): Promise<IMedia> {
+  async save(name: string, content?: string): Promise<IMedia> {
     try {
       const result: IResource<IMedia> = await $ApiClient.post(`/api/v1/medias`, {
         data: {

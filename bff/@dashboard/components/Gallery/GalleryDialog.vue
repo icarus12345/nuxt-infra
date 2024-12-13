@@ -3,16 +3,14 @@ import { type DialogContentProps } from 'radix-vue/Dialog'
 import { TreeItem, TreeRoot } from 'radix-vue/Tree'
 import { menuItemVariants } from '@ui/components/theme/menu'
 import { ChevronRight, Folder, FolderOpen, Plus, Upload } from 'lucide-vue-next';
-import { MediaRepository } from '@repositories';
-import { IResourceList } from '@interfaces';
-import { IMedia } from '@entities';
-import { watch } from 'vue';
-import { cn } from '@/lib/utils'
 import { useGalleryStore } from '@dashboard/stores/gallery.store'
 
+const dialog = inject('Dialog')
 const $Toast = useToast()
+const $Dialog = useDialog()
 const $GalleryStore = useGalleryStore()
 type GalleryDialogProps = DialogContentProps & {
+  multiple?: boolean
 }
 const props = defineProps<GalleryDialogProps>()
 const loading = ref(false);
@@ -29,12 +27,26 @@ const handleFileChange = async (event) => {
   await $GalleryStore.upload(event.target.files)
   event.target.value = null
 };
+const showPromptAddNewFolder = () => {
+  console.log($GalleryStore.path)
+  $Dialog.prompt({
+    title: 'New Folder',
+    description: `Input sub folder in ${$GalleryStore.path}`,
+    async callback(name) {
+      await $GalleryStore.mkdir(name)
+    }
+  })
+}
+const handleOK = () => {
+  dialog.callback($GalleryStore.selectedFiles)
+  dialog.open = false
+}
 </script>
 <template>
   <DialogContent class="grid-rows-[auto_minmax(0,1fr)]" size="4xl">
     <DialogHeader>
       <DialogTitle>Gallery</DialogTitle>
-      <DialogDescription>{{ $GalleryStore.activeFolder?.id ?? $GalleryStore.root }}</DialogDescription>
+      <DialogDescription>{{ $GalleryStore.path }}</DialogDescription>
     </DialogHeader>
     <div class="h-[calc(100dvh-26rem)] grid grid-cols-[20rem_1fr] gap-3 ">
       <TreeRoot
@@ -63,23 +75,12 @@ const handleFileChange = async (event) => {
           </div>
         </TreeItem>
       </TreeRoot>
-      <div class="rounded bg-muted/10 overflow-y-auto">
-        <div class="grid gap-3 grid-cols-[repeat(auto-fill,_minmax(160px,_1fr))]">
-          <AspectRatio :ratio="1" v-for="(item, index) in $GalleryStore.files" class="rounded bg-muted/50">
-            <img :src="item.attributes.url" alt="Image" class="rounded object-contain w-full h-full">
-            <div class="absolute bottom-0 left-0 right-0 p-2 bg-muted/50 text-xs rounded-b">
-              <div class="flex flex-col">
-                <span class="flex-1 truncate">{{ item.attributes.name }}</span>
-                <span class="text-muted-foreground">{{ byteFormat(item.attributes.size) }}</span>
-              </div>
-            </div>
-            <Checkbox class="absolute top-1 left-1"/>
-          </AspectRatio>
-        </div>
+      <div class="rounded bg-muted/10 overflow-y-auto p-1">
+        <GalleryPhotos :photos="$GalleryStore.files" :multiple="multiple" v-if="$GalleryStore.files"/>
       </div>
     </div>
     <DialogFooter>
-      <Button variant="ghost" class="me-auto"><Plus />New Folder</Button>
+      <Button variant="ghost" class="me-auto" @click="showPromptAddNewFolder"><Plus />New Folder</Button>
       <Button variant="ghost" as="label">
         <Upload/> Upload
         <input
@@ -88,7 +89,7 @@ const handleFileChange = async (event) => {
         @change="handleFileChange"
         />
       </Button>
-      <Button variant="soft">OK</Button>
+      <Button variant="soft" @click="handleOK">OK</Button>
     </DialogFooter>
   </DialogContent>
 </template>

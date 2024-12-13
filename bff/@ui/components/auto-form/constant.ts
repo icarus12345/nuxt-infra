@@ -9,6 +9,8 @@ import AutoFormFieldInput from './AutoFormFieldInput.vue'
 import AutoFormFieldNumber from './AutoFormFieldNumber.vue'
 import AutoFormFieldObject from './AutoFormFieldObject.vue'
 import AutoFormFieldTagsInput from './AutoFormFieldTagsInput.vue'
+import AutoFormFieldPhotos from './AutoFormFieldPhotos.vue'
+import AutoFormFieldRichText from './AutoFormFieldRichText.vue'
 
 export const INPUT_COMPONENTS: InputComponents = {
   Radio: AutoFormFieldEnum,
@@ -16,9 +18,11 @@ export const INPUT_COMPONENTS: InputComponents = {
   Textarea: AutoFormFieldInput,
   String: AutoFormFieldInput,
   Media: AutoFormFieldMedia,
+  Photos: AutoFormFieldPhotos,
   Array: AutoFormFieldArray,
   Object: AutoFormFieldObject,
 
+  RichText: AutoFormFieldRichText,
   Number: AutoFormFieldNumber,
   Checkbox: AutoFormFieldBoolean,
   Textbox: AutoFormFieldInput,

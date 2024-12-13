@@ -28,8 +28,8 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     'shadcn-nuxt',
     '@nuxtjs/color-mode',
-    "@pinia/nuxt",
     // '@vee-validate/nuxt',
+    "@pinia/nuxt",
   ],
   runtimeConfig: {
     apiSecret: '',

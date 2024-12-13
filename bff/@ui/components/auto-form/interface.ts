@@ -20,14 +20,16 @@ export interface Shape {
 }
 
 export interface InputComponents {
-  Radio: Component;
-  Switch: Component;
-  Textarea: Component;
-  String: Component;
-  Media: Component;
-  Array: Component;
-  Object: Component;
+  Radio: Component
+  Switch: Component
+  Textarea: Component
+  String: Component
+  Media: Component
+  Photos: Component
+  Array: Component
+  Object: Component
 
+  RichText: Component
   Number: Component
   Checkbox: Component
   Textbox: Component

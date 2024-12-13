@@ -69,9 +69,24 @@ const doSubmit = async ($event) => {
     console.error('Form validation failed');
   }
 }
+const handleInteractOutside = (event) => {
+  // Ngăn đóng khi click outside
+  event.preventDefault();
+};
+const handleKeydown = (event) => {
+  if (event.key === 'Escape') {
+    // Ngăn đóng khi nhấn phím ESC
+    event.preventDefault();
+  }
+};
 </script>
 <template>
-  <DialogContent class="grid-rows-[auto_minmax(0,1fr)_auto]">
+  <DialogContent
+    class="grid-rows-[auto_minmax(0,1fr)_auto]"
+    :trapFocus="false"
+    :disableOutsidePointerEvents="false"
+    @keydown="handleKeydown"
+    @interact-outside="handleInteractOutside">
     <DialogHeader>
       <DialogTitle>{{ entity?.id ? 'Edit ' : 'Create new a' }} {{ schema.name }}</DialogTitle>
       <DialogDescription>{{ schema.description }}</DialogDescription>

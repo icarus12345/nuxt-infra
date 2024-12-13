@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { ComboboxContentEmits, ComboboxContentProps } from 'radix-vue/Combobox'
-// import { cn } from '@/lib/utils'
 import { ComboboxContent } from 'radix-vue/Combobox'
 import { useForwardPropsEmits } from 'radix-vue/utilities'
 import { computed, type HTMLAttributes } from 'vue'
