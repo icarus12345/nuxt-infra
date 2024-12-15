@@ -12,6 +12,8 @@ export default defineNuxtConfig({
     "@repositories": resolve("./@infrastructure/repositories"),
   },
   extends: [
+    // ['git@github.com:icarus12345/nuxt-ui.git#develop', { install: true }],
+    // '../package/nuxt-ui',
     '@ui',
     '@dashboard',
   ],

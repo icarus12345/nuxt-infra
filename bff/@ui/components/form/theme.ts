@@ -24,7 +24,7 @@ export const formItemVariants = tv(
     variants: {
       layout: {
         float: 'grid grid-cols-[12rem_1fr] gap-2',
-        default: 'space-y-2',
+        default: 'space-y-1',
       },
     },
     defaultVariants: {

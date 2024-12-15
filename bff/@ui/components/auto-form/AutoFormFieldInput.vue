@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { Field as FormField } from 'vee-validate'
 import type { FieldProps } from './interface'
-import { Input } from '@ui/components/input'
-import { Textarea } from '@ui/components/textarea'
+import { Input } from '../input'
+import { Textarea } from '../textarea'
 import { computed } from 'vue'
 
 const props = defineProps<FieldProps>()

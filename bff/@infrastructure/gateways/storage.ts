@@ -52,7 +52,7 @@ export const useAuthStore = defineStore('AuthStore', () => {
   const permissions = computed(() => {
     if (accessToken.value) {
       const clamp = decodeJwt(accessToken.value);
-      return clamp?.permissions || []
+      return Object.values(clamp?.permissions) || []
     }
     return [];
   });

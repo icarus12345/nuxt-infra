@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { TreeItem } from 'radix-vue/Tree'
-import { menuItemVariants } from '@ui/components/theme/menu'
+import { menuItemVariants } from '../theme/menu'
 // import { cn } from '@/lib/utils'
 
 interface TreeNode {

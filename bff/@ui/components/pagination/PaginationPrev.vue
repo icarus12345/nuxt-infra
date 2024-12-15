@@ -1,6 +1,4 @@
 <script setup lang="ts">
-// import { Button } from '@ui/components/button'
-// import { cn } from '@/lib/utils'
 import { ChevronLeft } from 'lucide-vue-next'
 import { PaginationPrev, type PaginationPrevProps } from 'radix-vue/Pagination'
 import { computed, type HTMLAttributes } from 'vue'

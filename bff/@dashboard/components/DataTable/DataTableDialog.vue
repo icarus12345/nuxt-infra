@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { type DialogContentProps } from 'radix-vue/Dialog'
-import { ISchema } from '../../data/schema';
+import { ISchema } from '../../types/schema.d';
 
 const $Toast = useToast()
 const dialog = inject('Dialog')

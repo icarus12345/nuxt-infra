@@ -12,6 +12,14 @@ interface DataTableFacetedFilter {
 const props = defineProps<DataTableFacetedFilter>()
 const condition = computed(() => props.column.getFilterValue())
 const meta = props.column.columnDef.meta
+const valueMember = computed(() => {
+  const dataSource = meta.dataSource || meta.schema.source
+  return dataSource.valueMember || 'value'
+})
+const displayMember = computed(() => {
+  const dataSource = meta.dataSource || meta.schema.source
+  return dataSource.displayMember || 'label'
+})
 const options = ref([])
 const oldValue = ref()
 const loadData = async () => {
@@ -23,6 +31,8 @@ const loadData = async () => {
     options.value = meta.dataSource = dataSource()
   } else if (dataSource instanceof Array) {
     options.value = dataSource
+  } else if (dataSource.data instanceof Array) {
+    options.value = dataSource.data
   } else if (dataSource) {
     const dataAdapter = new DataAdapter(dataSource)
     const extraParms = dataSource.params || {}
@@ -31,7 +41,7 @@ const loadData = async () => {
     if (dataSource.beforeLoadComplete) {
       dataSource.beforeLoadComplete(res)
     }
-    options.value = meta.dataSource = res.records
+    options.value = meta.dataSource.data = res.records
   }
 }
 const onChange = (state) => {
@@ -48,11 +58,12 @@ const onChange = (state) => {
 const toggleSelectItem = (e) => {
   const option = e.detail.value
   const cond = condition.value
-  const index = cond.value.indexOf(option.value)
+  const v = getValueByPath(option, valueMember.value)
+  const index = cond.value.indexOf(v)
   if (index >= 0) {
     cond.value.splice(index, 1)
   } else {
-    cond.value.push(option.value)
+    cond.value.push(v)
   }
   props.column?.setFilterValue(condition.value)
 }
@@ -60,7 +71,7 @@ const handleClearFilter = () => {
   condition.value.value = []
   props.column?.setFilterValue(condition.value)
 }
-const tags = computed(() => options.value.filter((option) => condition.value.value.includes(option.value)))
+const tags = computed(() => options.value.filter((option) => condition.value.value.includes(getValueByPath(option, valueMember.value))))
 
 </script>
 
@@ -90,11 +101,11 @@ const tags = computed(() => options.value.filter((option) => condition.value.val
             <template v-else>
               <Badge
                 v-for="option in tags"
-                :key="option.value"
+                :key="getValueByPath(option, valueMember)"
                 variant="outline"
                 class="rounded-sm px-1 font-normal"
               >
-                {{ option.label }}
+                {{ camelCase(getValueByPath(option, displayMember)) }}
               </Badge>
             </template>
           </div>
@@ -103,7 +114,7 @@ const tags = computed(() => options.value.filter((option) => condition.value.val
     </PopoverTrigger>
     <PopoverContent align="start" class="p-0 min-w-40 w-[var(--radix-popper-anchor-width)]">
       <Command
-        :filter-function="(list: DataTableFacetedFilter['options'], term) => list.filter(i => i.label.toLowerCase()?.includes(term)) "
+        :filter-function="(list: DataTableFacetedFilter['options'], term) => list.filter(i => getValueByPath(i, displayMember).toLowerCase()?.includes(term)) "
       >
         <CommandInput :placeholder="meta.text" />
         <CommandList>
@@ -111,21 +122,21 @@ const tags = computed(() => options.value.filter((option) => condition.value.val
           <CommandGroup>
             <CommandItem
               v-for="option in options"
-              :key="option.value"
+              :key="getValueByPath(option, valueMember)"
               :value="option"
               @select="toggleSelectItem"
             >
               <div
                 :class="cn(
                   'mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary',
-                  condition.value.includes(option.value)
+                  condition.value.includes(getValueByPath(option, valueMember))
                     ? 'bg-primary text-primary-foreground'
                     : 'opacity-50 [&_svg]:invisible',
                 )"
               >
                 <Check class="h-4 w-4" />
               </div>
-              <span>{{ option.label }}</span>
+              <span>{{ camelCase(getValueByPath(option, displayMember)) }}</span>
             </CommandItem>
           </CommandGroup>
 

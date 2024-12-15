@@ -1,10 +1,9 @@
-import { RoleRepository } from '@repositories'
-import { PermissionRepository } from '@repositories'
-import { FieldSchema } from '@interfaces';
+import { FieldSchema, IDataSource } from '@interfaces';
 import Zod from 'zod'
-import { ISchema } from './schema';
-import { IDataSource } from '@interfaces/data-source';
+import { ISchema } from '../types/schema';
 
+const RoleRepository = useRepository('roles')
+const PermissionRepository = useRepository('permissions')
 const columns = [{
   fieldType: 'Selection',
   width: 40,

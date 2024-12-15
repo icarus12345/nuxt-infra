@@ -39,6 +39,7 @@ const { isDisabled, isHidden, isRequired, overrideOptions } = useDependencies(pr
     :disabled="isDisabled"
     :config="config"
     v-bind="delegatedProps"
+    :class="config?.field.className || 'col-span-12'"
   >
     <slot />
   </component>

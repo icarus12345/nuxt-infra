@@ -4,7 +4,7 @@ import { type DialogRootProps, type DialogContentProps } from 'radix-vue/Dialog'
 import { ButtonProps } from '../components/button/Button.vue'
 import { CircleHelp } from 'lucide-vue-next'
 
-export type StringOrVNode =
+type StringOrVNode =
   | string
   | VNode
   | (() => VNode)

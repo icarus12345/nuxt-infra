@@ -18,7 +18,7 @@ import { watchDebounced } from '@vueuse/core'
 import { IDataSource, Column, DataAdapter, FieldSchema } from '@interfaces'
 import { type DataTableVariants, dataTableVariants } from './theme'
 import type { HTMLAttributes } from 'vue'
-import { ISchema } from '../../data/schema'
+import { ISchema } from '../../types/schema.d'
 
 interface DataTableProps {
   schema: ISchema,

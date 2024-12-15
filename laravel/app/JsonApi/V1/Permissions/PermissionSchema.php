@@ -12,6 +12,7 @@ use LaravelJsonApi\Eloquent\Fields\Str;
 use App\JsonApi\Filters\WhereText;
 use App\JsonApi\Filters\WhereNumber;
 use App\JsonApi\Filters\WhereDate;
+use App\JsonApi\Filters\WhereAny;
 
 class PermissionSchema extends Schema
 {
@@ -52,6 +53,7 @@ class PermissionSchema extends Schema
             WhereText::make('guardName'),
             WhereDate::make('createdAt'),
             WhereDate::make('updatedAt'),
+            WhereAny::make('q', ['name'])
         ];
     }
 

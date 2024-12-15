@@ -66,7 +66,8 @@ export type Field = {
   displayField?: string
   fieldType?: FieldType
   dataSource: IDataSource
-  shape?: any
+  shape?: any,
+  className?: string
 }
 export type Column = Field & {
   sortable?: boolean
@@ -93,5 +94,8 @@ export type Column = Field & {
 }
 
 export type FieldSchema = {
+  name: string
+  description: string
+  size?: string
   fields: Field[]
 }

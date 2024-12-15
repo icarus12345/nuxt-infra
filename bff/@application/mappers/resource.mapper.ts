@@ -10,10 +10,16 @@ export class EntityMapper {
     resource.data.map((entity: IEntity) => {
       const record: any = entity.relationships || {}
       Object.entries(record).forEach(([key, relationshipResource]: any) => {
-        (relationshipResource.data || []).map((simpleEntity: IEntity) => {
+        if (relationshipResource.data instanceof Array) {
+          return (relationshipResource.data).map((simpleEntity: IEntity) => {
+            const sourceEntity =  map.get(`${simpleEntity.type}${simpleEntity.id}`);
+            Object.assign(simpleEntity, sourceEntity)
+          })
+        } else if (relationshipResource.data instanceof Object) {
+          const simpleEntity = relationshipResource.data
           const sourceEntity =  map.get(`${simpleEntity.type}${simpleEntity.id}`);
           Object.assign(simpleEntity, sourceEntity)
-        })
+        }
       })
       return entity as T
     })

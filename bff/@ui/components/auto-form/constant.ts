@@ -42,12 +42,12 @@ export const INPUT_COMPONENTS: InputComponents = {
 export const DEFAULT_ZOD_HANDLERS: {
   [key: string]: keyof typeof INPUT_COMPONENTS
 } = {
-  ZodString: 'string',
-  ZodBoolean: 'checkbox',
-  ZodDate: 'date',
-  ZodEnum: 'select',
-  ZodNativeEnum: 'select',
-  ZodNumber: 'number',
-  ZodArray: 'array',
-  ZodObject: 'object',
+  ZodString: 'Textbox',
+  ZodBoolean: 'Checkbox',
+  ZodDate: 'Date',
+  ZodEnum: 'Select',
+  ZodNativeEnum: 'Select',
+  ZodNumber: 'Number',
+  ZodArray: 'Array',
+  ZodObject: 'Object',
 }

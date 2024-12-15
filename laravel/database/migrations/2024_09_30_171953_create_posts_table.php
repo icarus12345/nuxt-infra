@@ -18,7 +18,10 @@ return new class extends Migration
             $table->timestamp('published_at')->nullable();
             $table->string('title');
             $table->string('slug')->unique();
+            $table->string('thumb');
+            $table->string('photos');
             $table->text('content');
+            $table->timestamps();
         });
     }
 

@@ -28,6 +28,11 @@ class PermissionsSeeder extends Seeder
             'delete_permission',
             'view_permission',
 
+            'create_post',
+            'edit_post',
+            'delete_post',
+            'view_post',
+
             'create_media',
             'delete_media',
             'view_media',

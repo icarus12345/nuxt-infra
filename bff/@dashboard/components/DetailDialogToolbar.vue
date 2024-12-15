@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Ellipsis, FolderKanban } from 'lucide-vue-next'
-import { ISchema } from '../data/schema';
+import { ISchema } from '../types/schema.d';
 
 const $Toast = useToast()
 const $Dialog = useDialog()

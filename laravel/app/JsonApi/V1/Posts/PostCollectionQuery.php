@@ -16,42 +16,43 @@ class PostCollectionQuery extends ResourceQuery
     public function rules(): array
     {
         return [
-            'fields' => [
-                'nullable',
-                'array',
-                JsonApiRule::fieldSets(),
-            ],
-            'filter' => [
-                'nullable',
-                'array',
-                JsonApiRule::filter(),
-            ],
-            'filter.author' => 'array',
-            'filter.author.*' => 'integer',
-            'filter.id' => 'array',
-            'filter.id.*' => 'integer',
-            'include' => [
-                'nullable',
-                'string',
-                JsonApiRule::includePaths(),
-            ],
-            'page' => [
-                'nullable',
-                'array',
-                JsonApiRule::page(),
-            ],
-            'page.number' => ['integer', 'min:1'],
-            // 'page.size' => ['integer', 'between:1,100'],
-            'sort' => [
-                'nullable',
-                'string',
-                JsonApiRule::sort(),
-            ],
-            'withCount' => [
-                'nullable',
-                'string',
-                JsonApiRule::countable(),
-            ],
+            // 'fields' => [
+            //     'nullable',
+            //     'array',
+            //     JsonApiRule::fieldSets(),
+            // ],
+            // 'filter' => [
+            //     'nullable',
+            //     'array',
+            //     JsonApiRule::filter(),
+            // ],
+            // 'filter.author' => 'array',
+            // 'filter.author.*' => 'integer',
+            // 'filter.id' => 'string',
+            // 'filter.title' => 'string',
+            // 'filter.q' => 'string',
+            // 'include' => [
+            //     'nullable',
+            //     'string',
+            //     JsonApiRule::includePaths(),
+            // ],
+            // 'page' => [
+            //     'nullable',
+            //     'array',
+            //     JsonApiRule::page(),
+            // ],
+            // 'page.number' => ['integer', 'min:1'],
+            // // 'page.size' => ['integer', 'between:1,100'],
+            // 'sort' => [
+            //     'nullable',
+            //     'string',
+            //     JsonApiRule::sort(),
+            // ],
+            // 'withCount' => [
+            //     'nullable',
+            //     'string',
+            //     JsonApiRule::countable(),
+            // ],
         ];
     }
 }

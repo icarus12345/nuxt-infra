@@ -15,13 +15,21 @@ class Post extends Model
     /**
      * @var string[]
      */
-    protected $fillable = ['content', 'published_at', 'slug', 'title'];
+    protected $fillable = [
+        'content',
+        'published_at',
+        'slug',
+        'title',
+        'thumb',
+        'photos',
+    ];
 
     /**
      * @var array
      */
     protected $casts = [
         'published_at' => 'datetime',
+        'photos' => 'array',
     ];
 
     /**

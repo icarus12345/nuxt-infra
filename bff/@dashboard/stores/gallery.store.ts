@@ -48,30 +48,38 @@ export const useGalleryStore = defineStore('gallery', () => {
     const resource: IResourceList<IMedia> = await MediaRepository.fetch(root, 'folder')
     folders.value = buildTreeRecursive(resource.data)
   }
+  const upload = async (fileList: FileList | File, folder?: string) => {
+    
+    let fileArray: File[]
+    if (fileList instanceof File) {
+      return uploadOnce(fileList, folder)
+    } else {
+      fileArray = Array.from(fileList || [])
+    }
+    fileArray.map((file) => uploadOnce(file, folder))
+  }
+  const uploadOnce = async (file: File, folder?: string) => {
+    return new Promise((resolve, reject) => {
+      if (file.size > maxSize) {
+        $Toast.alert({
+          title: 'Warning',
+          type: 'warning',
+          description: `File ${file.name} is too large and will be skipped.`
+        })
+        reject(`File ${file.name} is too large and will be skipped.`)
+      }
+      const reader = new FileReader();
+      reader.onloadend = async () => {
+        const filePath = [folder || path.value, file.name].filter(Boolean).join('/')
+        MediaRepository.save(filePath, reader.result as string)
+          .then(media => {
+            mapper.get(folder!)?.push(media)
+            resolve(media)
+          })
+      };
 
-  const upload = async (fileList: FileList) => {
-    Array.from(fileList || [])
-      .filter((file) => {
-        if (file.size > maxSize) {
-          $Toast.alert({
-              title: 'Warning',
-              type: 'warning',
-              description: `File ${file.name} is too large and will be skipped.`
-            })
-            return false;
-        }
-        return true;
-      })
-      .map((file) => {
-        const reader = new FileReader();
-        reader.onloadend = async () => {
-          const paths = [path.value, file.name].filter(Boolean).join('/')
-          const media = await MediaRepository.save(paths, reader.result as string)
-          files.value.push(media)
-        };
-
-        reader.readAsDataURL(file);
-      })
+      reader.readAsDataURL(file);
+    })
   }
   const mkdir = async (name) => {
     const paths = [path.value, name].filter(Boolean).join('/')

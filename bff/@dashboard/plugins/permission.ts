@@ -6,7 +6,6 @@ export default defineNuxtPlugin(nuxtApp => {
       if (!$AuthStore.hasPermission(binding.value)) {
         el.style.display = 'none';
         el.remove()
-        console.log(el)
       }
     },
     beforeMount(el, binding, vnode) {

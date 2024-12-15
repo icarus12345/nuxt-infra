@@ -18,6 +18,9 @@ const showEditDialog = (clone?: IEntity) => {
   $Dialog.show({
     component: shallowRef(DetailDialog),
     props: {
+      dialog: {
+        modal: false
+      },
       content: {
         entity: clone ?? entity,
         schema: $DataTable.schema,

@@ -14,8 +14,13 @@ use LaravelJsonApi\Eloquent\Fields\Relations\HasMany;
 use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Filters\WhereIn;
+use LaravelJsonApi\Eloquent\Filters\WhereHas;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
+use App\JsonApi\Filters\WhereText;
+use App\JsonApi\Filters\WhereNumber;
+use App\JsonApi\Filters\WhereDate;
+use App\JsonApi\Filters\WhereAny;
 
 class PostSchema extends Schema
 {
@@ -44,7 +49,7 @@ class PostSchema extends Schema
         return [
             ID::make(),
             BelongsTo::make('author')->type('users')->readOnly(),
-            HasMany::make('comments')->readOnly(),
+            HasMany::make('comments')->readOnly()->canCount()->countAs('totalComments'),
             Str::make('content'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('publishedAt')->sortable(),
@@ -63,8 +68,11 @@ class PostSchema extends Schema
     public function filters(): array
     {
         return [
-            WhereIdIn::make($this),
+            WhereNumber::make('id'),
+            WhereText::make('title'),
             WhereIn::make('author', 'author_id'),
+            WhereAny::make('q', ['title']).
+            WhereHas::make($this, 'tags'),
         ];
     }
 

@@ -61,7 +61,7 @@ const toggleSelectItem = ({ value, handleChange, setValue }, option) => {
 <template>
   
   <FormField v-slot="slotProps" :name="fieldName">
-    <FormItem :layout="layout">
+    <FormItem v-bind="$attrs" :layout="layout">
       <AutoFormLabel v-if="!config?.hideLabel" :required="required">
         {{ config?.field?.text || config?.label || camelCase(label ?? fieldName) }}
       </AutoFormLabel>

@@ -77,8 +77,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <FormField v-slot="slotProps" :name="fieldName">
-    <FormItem :layout="layout">
+  <FormField v-slot="slotProps" :name="fieldName" class="col-span-12">
+    <FormItem v-bind="$attrs" :layout="layout">
       <div class="flex items-center justify-between">
         <AutoFormLabel v-if="!config?.hideLabel" :required="required">
           {{ config?.field?.text || config?.label || camelCase(label ?? fieldName) }}

@@ -14,7 +14,12 @@ const showAddEntryDialog = () => {
   $Dialog.show({
     component: shallowRef(DetailDialog),
     props: {
+      dialog: {
+        // modal: false
+      },
       content: {
+        trapFocus: false,
+        // disableOutsidePointerEvents: false,
         schema: $DataTable.schema,
         source: $DataTable.source,
       }

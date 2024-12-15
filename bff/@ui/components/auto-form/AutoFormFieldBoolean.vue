@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { Field as FormField } from 'vee-validate'
 import type { FieldProps } from './interface'
-import { Checkbox } from '@ui/components/checkbox'
-// import { FormControl, FormDescription, FormField, FormItem, FormMessage } from '@ui/components/form'
-import { Switch } from '@ui/components/switch'
+import { Checkbox } from '../checkbox'
+import { Switch } from '../switch'
 import { computed } from 'vue'
 import AutoFormLabel from './AutoFormLabel.vue'
 
@@ -15,7 +14,7 @@ const booleanComponent = computed(() => props.config?.component === 'Switch' ? S
 
 <template>
   <FormField v-slot="slotProps" :name="fieldName">
-    <FormItem :layout="layout">
+    <FormItem v-bind="$attrs" :layout="layout">
       <div class="flex items-center gap-2 col-start-2">
         <FormControl>
           <slot v-bind="slotProps">

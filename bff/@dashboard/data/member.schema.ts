@@ -1,11 +1,13 @@
 import { h } from 'vue'
 import Badge from '@ui/components/badge/Badge.vue';
-import { UserRepository, RoleRepository, PermissionRepository } from '@repositories'
 import { DataAdapter, Field, FieldSchema } from '@interfaces';
 import Zod from 'zod'
 import { RoleSchema } from './role.schema';
-import { ISchema } from './schema';
+import { ISchema } from '../types/schema';
 
+const UserRepository = useRepository('users')
+const RoleRepository = useRepository('roles')
+const PermissionRepository = useRepository('permissions')
 export const columns = [{
   fieldType: 'Selection',
   width: 40,
@@ -46,15 +48,8 @@ export const columns = [{
   filterCondition: 'IN',
   dataSource: {
     root: 'data',
-    fields: [{
-      type: 'number',
-      name: 'value',
-      map: 'id',
-    }, {
-      type: 'string',
-      name: 'label',
-      map: 'attributes>name'
-    }],
+    valueMember: 'id',
+    displayMember: 'attributes>name',
     fetch: RoleRepository.fetch
   },
   // async filterData() {
@@ -146,6 +141,7 @@ export const columns = [{
 export const schema: FieldSchema = {
   name: 'User Entity',
   description: 'Associate users with roles and permissions',
+  size: 'lg',
   fields: [{
     text: 'Name',
     dataField: 'name',
@@ -157,19 +153,13 @@ export const schema: FieldSchema = {
     dataField: 'email',
     displayField: 'attributes>email',
     shape: Zod.string().email(),
-    fieldType: 'RichText'
+    fieldType: 'Textbox'
   }, {
     text: 'Avatar',
     dataField: 'avatar',
     displayField: 'attributes>avatar',
     shape: Zod.string(),
     fieldType: 'Media'
-  }, {
-    text: 'Avatar2',
-    dataField: 'avatar2',
-    displayField: 'relationships>roles>data:id',
-    shape: Zod.array(Zod.string()).max(3),
-    fieldType: 'Photos'
   }, {
     text: 'Roles',
     dataField: 'relationships>roles',
@@ -178,62 +168,6 @@ export const schema: FieldSchema = {
     shape: Zod.array(Zod.any()).min(1),
     fieldType: 'TagsInput',
     schema: RoleSchema,
-    // dataSource: {
-    //   root: 'data',
-    //   valueMember: 'id,type',
-    //   displayMember: 'attributes>name',
-    //   // fields: [{
-    //   //   name: 'value',
-    //   //   map: 'id,type',
-    //   // }, {
-    //   //   name: 'label',
-    //   //   map: 'attributes>name'
-    //   // }],
-    //   fetch: RoleRepository.fetch
-    // },
-  // }, {
-  //   text: 'Roles3',
-  //   dataField: 'roles3',
-  //   displayField: 'relationships>roles>data:id,type',
-  //   shape: Zod.array(Zod.any()).min(1),
-  //   fieldType: 'CheckList',
-  //   dataSource: {
-  //     root: 'data',
-  //     valueMember: 'id,type',
-  //     displayMember: 'attributes>name',
-  //     // fields: [{
-  //     //   name: 'value',
-  //     //   map: 'id',
-  //     // }, {
-  //     //   name: 'label',
-  //     //   map: 'attributes>name'
-  //     // }],
-  //     fetch: RoleRepository.fetch
-  //   },
-  // }, {
-  //   text: 'Roles4',
-  //   dataField: 'roles4',
-  //   displayField: 'relationships>roles>data',
-  //   shape: Zod.array(Zod.any()).min(1),
-  //   fieldType: 'array',
-  // }, {
-  //   text: 'Roles2',
-  //   dataField: 'roles2',
-  //   displayField: 'relationships>roles>data>id',
-  //   shape: Zod.array(Zod.any()).min(1),
-  //   fieldType: 'CheckList',
-  //   dataSource: {
-  //     root: 'data',
-  //     valueMember: 'id',
-  //     displayMember: 'attributes>name',
-  //     // fields: [{
-  //     //   name: 'value',
-  //     //   map: 'id,type',
-  //     // }, {
-  //     //   name: 'label',
-  //     //   map: 'attributes>name'
-  //     // }],
-  //     fetch: RoleRepository.fetch
   }, {
     text: 'Permission',
     dataField: 'relationships>permissions',
@@ -245,13 +179,6 @@ export const schema: FieldSchema = {
       root: 'data',
       valueMember: 'id,type',
       displayMember: 'attributes>name',
-      // fields: [{
-      //   name: 'value',
-      //   map: 'id,type',
-      // }, {
-      //   name: 'label',
-      //   map: 'attributes>name'
-      // }],
       fetch: PermissionRepository.fetch
     },
   }, {
@@ -260,38 +187,6 @@ export const schema: FieldSchema = {
     displayField: 'attributes>active',
     shape: Zod.boolean().optional(),
     fieldType: 'Checkbox'
-  // }, {
-  //   text: 'Active2',
-  //   dataField: 'Active2',
-  //   displayField: 'relationships>roles>data>id',
-  //   shape: Zod.array(Zod.string()).min(1),
-  //   fieldType: 'CheckList',
-  //   dataSource: ['0', '1', '2']
-  // }, {
-  //   text: 'Active3',
-  //   dataField: 'Active3',
-  //   displayField: 'relationships>roles>data>id',
-  //   shape: Zod.string(),
-  //   fieldType: 'Select',
-  //   dataSource: ['0', '1', '2']
-  // }, {
-  //   text: 'Active4',
-  //   dataField: 'Active4',
-  //   displayField: 'relationships>roles>data>id',
-  //   shape: Zod.string(),
-  //   fieldType: 'Select',
-  //   dataSource: {
-  //     root: 'data',
-  //     fields: [{
-  //       name: 'value',
-  //       map: 'id',
-  //     },{
-  //       name: 'label',
-  //       map: 'attributes>name'
-  //     }],
-  //     fetch: RoleRepository.fetch
-  //   },
-  // }
   }]
 }
 

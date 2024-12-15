@@ -5,7 +5,7 @@ import { computed, ref } from 'vue'
 const TOAST_LIMIT = 5
 const TOAST_REMOVE_DELAY = 10000
 
-export type StringOrVNode =
+type StringOrVNode =
   | string
   | VNode
   | (() => VNode)
