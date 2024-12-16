@@ -6,6 +6,8 @@ import { object, type ZodArray, type ZodRawShape } from 'zod'
 import { CirclePlus, Check, AppWindow, Settings2, NotepadText, FolderKanban } from 'lucide-vue-next'
 import { useField, useFieldArray } from 'vee-validate'
 import { onMounted } from 'vue'
+
+const $Dialog = useDialog()
 const options = ref([])
 const props = defineProps<FieldProps & {
   schema?: any
@@ -69,11 +71,21 @@ const handleClearFilter = ({ value, handleChange, setValue }) => {
 }
 onMounted(() => {
   loadData()
-  // if (field.dataSource instanceof Object) {
-  //   const dataAdapter = new DataAdapter(field.dataSource)
-  //   value = dataAdapter.parse(value)
-  // }
 })
+const showDataTableDialog = () => {
+  const DataTableDialog = defineAsyncComponent(() => import('@dashboard/components/DataTable/DataTableDialog.vue'))
+  $Dialog.show({
+    component: shallowRef(DataTableDialog),
+    props: {
+      content: {
+        schema: props.config.field.schema
+      }
+    },
+    callback() {
+
+    }
+  })
+}
 </script>
 
 <template>
@@ -83,7 +95,7 @@ onMounted(() => {
         <AutoFormLabel v-if="!config?.hideLabel" :required="required">
           {{ config?.field?.text || config?.label || camelCase(label ?? fieldName) }}
         </AutoFormLabel>
-        <Button size="xs" :icon="true" variant="ghost" >
+        <Button size="xs" :icon="true" variant="ghost" @click="showDataTableDialog" v-if="config.field.schema">
           <FolderKanban class="size-4"/>
         </Button>
       </div>

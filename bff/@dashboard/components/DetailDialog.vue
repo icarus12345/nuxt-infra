@@ -81,35 +81,31 @@ const handleKeydown = (event) => {
 };
 </script>
 <template>
-  <!-- <DialogOverlay -->
-      <!-- class="fixed inset-0 z-50 grid place-items-center overflow-y-auto bg-black/80  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" -->
-    <!-- > -->
-    <DialogContent
-      :size="schema.size ?? 'xs'"
-      class="grid-rows-[auto_minmax(0,1fr)_auto]"
-      @keydown="handleKeydown"
-      @interact-outside="handleInteractOutside">
-      <DialogHeader>
-        <DialogTitle>{{ entity?.id ? 'Edit ' : 'Create new a' }} {{ schema.name }}</DialogTitle>
-        <DialogDescription>{{ schema.description }}</DialogDescription>
-      </DialogHeader>
-      <div class="overflow-y-auto -mx-4">
-        <AutoForm
-          class="grid grid-cols-12 gap-3 px-4 py-1"
-          :form="form"
-          :schema="formSchema"
-          :field-config="fieldConfig"
-          @submit="onSubmit"
-        >
-        </AutoForm>
-      </div>
-      <DialogFooter>
-        <DetailDIalogToolbar v-if="schemas.length" :schemas="schemas"/>
-        <DialogClose as-child class="ms-auto">
-          <Button variant="ghost">Close</Button>
-        </DialogClose>
-        <Button variant="soft" @click="doSubmit" :loading="loading">{{ entity ? 'Save' : 'Create' }}</Button>
-      </DialogFooter>
-    </DialogContent>
-  <!-- </DialogOverlay> -->
+  <DialogContent
+    :size="schema.size ?? 'xs'"
+    class="grid-rows-[auto_minmax(0,1fr)_auto]"
+    @keydown="handleKeydown"
+    @interact-outside="handleInteractOutside">
+    <DialogHeader>
+      <DialogTitle>{{ entity?.id ? 'Edit ' : 'Create new a' }} {{ schema.name }}</DialogTitle>
+      <DialogDescription>{{ schema.description }}</DialogDescription>
+    </DialogHeader>
+    <div class="overflow-y-auto -mx-4">
+      <AutoForm
+        class="grid grid-cols-12 gap-3 px-4 py-1"
+        :form="form"
+        :schema="formSchema"
+        :field-config="fieldConfig"
+        @submit="onSubmit"
+      >
+      </AutoForm>
+    </div>
+    <DialogFooter>
+      <DetailDIalogToolbar v-if="schemas.length" :schemas="schemas"/>
+      <DialogClose as-child class="ms-auto">
+        <Button variant="ghost">Close</Button>
+      </DialogClose>
+      <Button variant="soft" @click="doSubmit" :loading="loading">{{ entity ? 'Save' : 'Create' }}</Button>
+    </DialogFooter>
+  </DialogContent>
 </template>

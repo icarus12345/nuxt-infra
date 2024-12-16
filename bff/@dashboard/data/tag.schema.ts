@@ -72,7 +72,7 @@ const columns = [{
 }]
 
 const schema: FieldSchema = {
-  name: 'Role Entity',
+  name: 'Tag Entity',
   description: 'Associate users with roles and permissions',
   fields: [{
     text: 'Name',
@@ -107,7 +107,7 @@ export const TagDataSource: IDataSource = {
 }
 
 export const TagSchema: ISchema = {
-  name: 'Role Management',
+  name: 'Tag Management',
   description: 'Associate users with roles and permissions',
   source: TagDataSource,
   columns,

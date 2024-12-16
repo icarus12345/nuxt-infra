@@ -1,8 +1,10 @@
 
 <script setup lang=ts>
-import { ChevronRight, ChevronsUpDown, MoreHorizontal, Frame, Building2, Plus, Folder, Forward, Trash2, LogOut, Bell, CreditCard,BadgeCheck,Sparkles, } from 'lucide-vue-next'
+import { ChevronRight, ChevronsUpDown, MoreHorizontal, Frame, Building2, Plus, Folder, Forward, Trash2, LogOut, Bell, CreditCard,BadgeCheck,Sparkles, Settings, Users, Home, Newspaper, Tags, } from 'lucide-vue-next'
 import { $AuthRepository } from "@repositories";
 import { useAuthStore } from "@gateways";
+import { TreeItem, TreeRoot } from 'radix-vue/Tree'
+import { menuItemVariants } from '@ui/components/theme/menu'
 
 const $AuthStore = useAuthStore()
 const $Toast = useToast()
@@ -28,11 +30,10 @@ const data = {
   ],
   navMain: [
     {
-      title: 'Playground',
-      url: '#',
-      icon: 'home',
+      title: 'Content Owner',
+      icon: Home,
       isActive: true,
-      items: [
+      children: [
         {
           title: 'History',
           url: '#',
@@ -48,29 +49,23 @@ const data = {
       ],
     },
     {
-      title: 'Models',
-      url: '#',
-      icon: 'home',
-      items: [
+      title: 'Content Provider',
+      icon: Newspaper,
+      children: [
         {
-          title: 'Genesis',
-          url: '#',
+          title: 'Posts',
+          url: '/content-provider/posts',
         },
         {
-          title: 'Explorer',
-          url: '#',
-        },
-        {
-          title: 'Quantum',
-          url: '#',
+          title: 'Tags',
+          url: '/content-provider/tags',
         },
       ],
     },
     {
-      title: 'Documentation',
-      url: '#',
-      icon: 'home',
-      items: [
+      title: 'Service Operator',
+      icon: Tags,
+      children: [
         {
           title: 'Introduction',
           url: '#',
@@ -90,13 +85,34 @@ const data = {
       ],
     },
     {
-      title: 'Settings',
-      url: '#',
-      icon: 'home',
-      items: [
+      title: 'System Settings',
+      icon: Settings,
+      children: [
         {
           title: 'General',
           url: '#',
+        },
+        {
+          title: 'Team',
+          url: '#',
+        },
+        {
+          title: 'Billing',
+          url: '#',
+        },
+        {
+          title: 'Limits',
+          url: '#',
+        },
+      ],
+    },
+    {
+      title: 'Users/Permission',
+      icon: Users,
+      children: [
+        {
+          title: 'Users',
+          url: '/user-management/users',
         },
         {
           title: 'Team',
@@ -152,6 +168,8 @@ const confirmLogout = () => {
     }
   })
 }
+
+const actives = ref([])
 </script>
 
 <template>
@@ -217,6 +235,34 @@ const confirmLogout = () => {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
+        <TreeRoot
+          v-slot="{ flattenItems }"
+          class="list-none select-none p-2 flex flex-col gap-0.5"
+          :items="data.navMain"
+          :get-key="(item) => item.url || item.title"
+          v-model="actives"
+          as="div"
+        >
+          <TreeItem
+            v-for="item in flattenItems"
+            v-slot="{ isExpanded }"
+            :key="item._id"
+            v-bind="item.bind"
+            :class="cn(
+              menuItemVariants({}),
+              ''
+            )"
+            as-child
+          >
+            <NuxtLink :to="item.value.url">
+              <div :style="{ 'padding-left': `${item.level - 1 + (item.hasChildren ? 0 : 1.6)}rem` }" class="flex items-center gap-2 w-full">
+                <component :is="item.value.icon" class="size-4 min-w-4" />
+                <span class="flex-1">{{ item.value.title }}</span>
+                <ChevronRight :class="['h-4 w-4 ms-auto', {'rotate-90': isExpanded}]" v-if="item.hasChildren" />
+              </div>
+            </NuxtLink>
+          </TreeItem>
+        </TreeRoot>
         <SidebarGroup>
           <SidebarGroupLabel>Platform</SidebarGroupLabel>
           <SidebarMenu>
@@ -230,7 +276,7 @@ const confirmLogout = () => {
               <SidebarMenuItem>
                 <CollapsibleTrigger as-child>
                   <SidebarMenuButton :tooltip="item.title">
-                    <Frame />
+                    <component :is="item.icon" class="size-4" />
                     <span>{{ item.title }}</span>
                     <ChevronRight class="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90"/>
                   </SidebarMenuButton>
@@ -238,7 +284,7 @@ const confirmLogout = () => {
                 <CollapsibleContent>
                   <SidebarMenuSub>
                     <SidebarMenuSubItem
-                      v-for="subItem in item.items"
+                      v-for="subItem in item.children"
                       :key="subItem.title"
                     >
                       <SidebarMenuSubButton as-child>
