@@ -261,7 +261,7 @@ provide('DataTable', {
               v-for="header in headerGroup.headers"
               :key="header.id"
               :class="{
-                'sticky z-[2]': header.column.columnDef.meta?.pinned,
+                'sticky z-2': header.column.columnDef.meta?.pinned,
               }"
               :style="{
                 minWidth: (header.column.columnDef.minSize || header.column.columnDef.size) + 'px',
@@ -288,7 +288,7 @@ provide('DataTable', {
                 v-for="cell in row.getVisibleCells()"
                 :key="cell.id"
                 :class="{
-                  'sticky z-[1]': cell.column.columnDef.meta?.pinned,
+                  'sticky z-1': cell.column.columnDef.meta?.pinned,
                 }"
                 :style="{
                   left: cell.column.columnDef.meta?.pinned == 'left' ? getPinnedPos(cell.column) + 'px': null,

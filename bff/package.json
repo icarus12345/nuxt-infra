@@ -12,10 +12,10 @@
   "dependencies": {
     "@ckeditor/ckeditor5-vue": "^7.3.0",
     "@nuxtjs/color-mode": "^3.5.2",
-    "@nuxtjs/tailwindcss": "^6.12.2",
     "@pinia/nuxt": "^0.7.0",
+    "@tailwindcss/postcss": "^4.0.0-beta.6",
+    "@tailwindcss/vite": "^4.0.0-beta.6",
     "@tanstack/vue-table": "^8.20.5",
-    "@thoughtbot/tailwindcss-aria-attributes": "^0.2.0",
     "@umoteam/editor": "^4.5.0",
     "@vee-validate/zod": "^4.14.7",
     "@vueuse/core": "^11.2.0",
@@ -25,16 +25,14 @@
     "ckeditor5": "^44.0.0",
     "clsx": "^2.1.1",
     "embla-carousel-vue": "^8.4.0",
-    "install": "^0.13.0",
     "lucide-vue-next": "^0.460.0",
-    "npm": "^10.9.2",
     "nuxt": "^3.14.159",
     "pinia": "^2.2.6",
+    "postcss": "^8.4.49",
+    "postcss-nested": "^7.0.2",
     "radix-vue": "file:radix-vue-1.9.10.tgz",
-    "shadcn-nuxt": "^0.11.2",
-    "tailwind-merge": "^2.5.4",
     "tailwind-variants": "^0.3.0",
-    "tailwindcss-animate": "^1.0.7",
+    "tailwindcss": "^4.0.0-beta.7",
     "vaul-vue": "^0.2.0",
     "vee-validate": "^4.14.7",
     "vue": "latest",
@@ -43,9 +41,6 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "postcss-import": "^16.1.0",
-    "postcss-nested": "^7.0.2",
-    "sass-embedded": "^1.82.0",
     "typescript": "^5.6.3"
   }
 }

@@ -33,7 +33,7 @@ const isActive = computed(() => {
         'select-none',
         'data-[highlighted]:ring-green9- data-[highlighted]:ring-1-',
         'data-[state=checked]:bg-green9- data-[state=checked]:text-primary-',
-        'data-[disabled]:opacity-50',
+        'data-disabled:opacity-50',
        
       )
     "
@@ -47,7 +47,7 @@ const isActive = computed(() => {
         ]"
         >
         <span class="group-hover:bg-foreground/[0.05] rounded-full md:py-0.5 transition-all inline-flex md:px-3">
-          <!-- <Icon v-if="item.icon" :name="item.icon" class="!w-4 !h-4 md:!w-5 md:!h-5" /> -->
+          <!-- <Icon v-if="item.icon" :name="item.icon" class="w-4! h-4! md:w-5! md:h-5!" /> -->
         </span>
         <span class="md:text-xxs">{{ item.title }}</span>
         <ChevronRight class="ms-auto md:hidden" v-if="item.children?.length"/>

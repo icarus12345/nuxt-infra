@@ -105,7 +105,7 @@ const unSetHover = () => {
                   :aria-label="nav.title"
                 >
                   <RouterLink :to="nav.link">
-                    <Scan class="!w-3 !h-3" />
+                    <Scan class="w-3! h-3!" />
                     <span>
                       {{ nav.title }}
                     </span>

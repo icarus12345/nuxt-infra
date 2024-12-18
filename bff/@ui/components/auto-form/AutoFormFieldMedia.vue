@@ -43,7 +43,7 @@ const showGalleryDialog = () => {
                     'opacity-0': slotProps.value
                   }
                 ]">
-                  <ImagePlus class="!size-5 m-auto"/>
+                  <ImagePlus class="size-5! m-auto"/>
                 </div>
               </Avatar>
             </Button>

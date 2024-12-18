@@ -1,7 +1,81 @@
-@import "tailwindcss/base";
-@import "./base.css";
+@import 'tailwindcss';
+@import './base.css' layer(themes);
+@import './components/transition.css' layer(components);
 
-@import "tailwindcss/components";
-@import "./components/transition.css";
+@config '../../tailwind.config.ts';
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-border, currentColor);
+  }
+}
+@theme {
+  --font-sans: 'Google Sans';
+  --spacing: 0.4rem;
+  /* --color-*: initial; */
 
-@import "tailwindcss/utilities";
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --color-sidebar: hsl(var(--sidebar-background));
+  --color-foreground: hsl(var(--sidebar-foreground));
+  --color-sidebar-primary: hsl(var(--sidebar-primary));
+  --color-sidebar-primary-foreground: hsl(var(--sidebar-primary-foreground));
+  --color-sidebar-accent: hsl(var(--sidebar-accent));
+  --color-sidebar-accent-foreground: hsl(var(--sidebar-accent-foreground));
+  --color-sidebar-border: hsl(var(--sidebar-border));
+  --color-sidebar-ring: var(--color-ring);
+
+  --text-xxs: 0.8rem;
+  --text-xxs--line-height: 1.25;
+  --text-xs: 1.0rem;
+  --text-xs--line-height: 1.2;
+  --text-sm: 1.15rem;
+  --text-sm1--line-height: 1.2173913;
+  --text-base: 1.3rem;
+  --text-base--line-height: 1.23076923;
+  --text-md: 1.45rem;
+  --text-md--line-height: 1.24137931;
+  --text-lg: 1.6rem;
+  --text-lg--line-height: 1.25;
+  --text-xl: 1.8rem;
+  --text-xl--line-height: 1.22222222;
+
+  --max-width-xs: min(32rem, calc(100dvw - 3.2rem));
+  --max-width-sm: min(40rem, calc(100dvw - 3.2rem));
+  --max-width-md: min(48rem, calc(100dvw - 3.2rem));
+  --max-width-lg: min(56rem, calc(100dvw - 3.2rem));
+  --max-width-xl: min(64rem, calc(100dvw - 3.2rem));
+  --max-width-2xl: min(72rem, calc(100dvw - 3.2rem));
+  --max-width-3xl: min(84rem, calc(100dvw - 3.2rem));
+  --max-width-4xl: min(96rem, calc(100dvw - 3.2rem));
+
+  --border-radius-xs: calc(var(--radius) * 0.75);
+  --border-radius-sm: calc(var(--radius) * 0.875);
+  --border-radius: var(--radius, 0.6rem);
+  --border-radius-md: calc(var(--radius, 0.6rem) * 1.125);
+  --border-radius-lg: calc(var(--radius, 0.6rem) * 1.25);
+  --border-radius-xl: calc(var(--radius, 0.6rem) * 1.375);
+}

@@ -9,7 +9,7 @@ import { Paintbrush } from 'lucide-vue-next';
         <Paintbrush />
       </Button>
     </PopoverTrigger>
-    <PopoverContent class="w-92" align="end">
+    <PopoverContent class="w-80 max-h-[var(--radix-popper-available-height)] overflow-y-auto" align="end">
       <ThemeCustomize />
     </PopoverContent>
   </Popover>

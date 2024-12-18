@@ -13,5 +13,5 @@ const delegatedProps = computed(() => {
 </script>
 
 <template>
-  <ToastViewport v-bind="delegatedProps" :class="cn('fixed top-4 z-[100] flex max-h-screen w-full gap-2  right-4 flex-col md:max-w-[320px]', props.class)" />
+  <ToastViewport v-bind="delegatedProps" :class="cn('fixed top-4 z-100 flex max-h-screen w-full gap-2  right-4 flex-col md:max-w-[320px]', props.class)" />
 </template>

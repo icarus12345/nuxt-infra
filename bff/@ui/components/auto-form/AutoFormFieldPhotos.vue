@@ -45,12 +45,12 @@ const removePhoto = (photo) => {
               <Avatar shape="none" class="">
                 <AvatarImage :src="photo" v-if="photo"/>
                 <AvatarFallback>
-                  <Image class="!size-5 m-auto"/>
+                  <Image class="size-5! m-auto"/>
                 </AvatarFallback>
                 <div :class="[
                   'flex absolute group-focus:opacity-100 group-hover:opacity-100 inset-0 bg-muted/75 opacity-0',
                 ]">
-                  <Trash2 class="!size-4 m-auto"/>
+                  <Trash2 class="size-4! m-auto"/>
                 </div>
               </Avatar>
             </Button>
@@ -64,7 +64,7 @@ const removePhoto = (photo) => {
                 <div :class="[
                   'flex absolute inset-0 bg-muted/75',
                 ]">
-                  <ImagePlus class="!size-5 m-auto"/>
+                  <ImagePlus class="size-5! m-auto"/>
                 </div>
               </Avatar>
             </Button>

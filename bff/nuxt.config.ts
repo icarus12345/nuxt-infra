@@ -24,11 +24,16 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   css: [
     '~/assets/css/tailwind.css',
-    '~/assets/css/themes.css',
+    // '~/assets/css/themes.css',
   ],
+  postcss: {
+    plugins: {
+      '@tailwindcss/postcss': {},
+    },
+  },
   modules: [
-    '@nuxtjs/tailwindcss',
-    'shadcn-nuxt',
+    // '@nuxtjs/tailwindcss',
+    // 'shadcn-nuxt',
     '@nuxtjs/color-mode',
     // '@vee-validate/nuxt',
     "@pinia/nuxt",

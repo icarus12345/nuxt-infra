@@ -12,7 +12,7 @@ export { default as Dialoger } from './Dialoger.vue'
 import { tv, type VariantProps } from 'tailwind-variants';
 export const dialogVariants = tv(
   {
-    base: 'fixed left-1/2 top-1/2 z-50 grid w-full -translate-x-1/2 -translate-y-1/2 border p-4 gap-3 rounded bg-background shadow max-h-[calc(100dvh_-_32px)]',
+    base: 'fixed left-1/2 top-1/2 z-50 grid w-full -translate-x-1/2 -translate-y-1/2 border p-4 gap-3 rounded bg-background shadow-sm max-h-[calc(100dvh_-_32px)]',
     variants: {
       size: {
         xs: 'max-w-xs',

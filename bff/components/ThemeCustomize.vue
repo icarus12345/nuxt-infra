@@ -1,98 +1,84 @@
 <script setup lang="ts">
 import { themes } from '@/utils/registry/themes'
 import { Check, Monitor, Sun, Moon } from 'lucide-vue-next'
-const { theme, radius, setTheme, setRadius } = useCustomize()
+const { primary, radius, neutral } = useCustomize()
+import colors from 'tailwindcss/colors'
+const colorMode = useColorMode()
 
-type Color =
-  | 'zinc'
-  | 'slate'
-  | 'stone'
-  | 'gray'
-  | 'neutral'
-  | 'red'
-  | 'rose'
-  | 'orange'
-  | 'green'
-  | 'blue'
-  | 'yellow'
-  | 'violet'
+const neutralColors = ['slate', 'gray', 'zinc', 'neutral', 'stone']
 
-// Create an array of color values
-const allColors: Color[] = [
-  'zinc',
-  'rose',
-  'blue',
-  'green',
-  'orange',
-  'red',
-  'slate',
-  'stone',
-  'gray',
-  'neutral',
-  'yellow',
-  'violet',
-]
+const colorsToOmit = ['inherit', 'current', 'transparent', 'black', 'white', ...neutralColors]
+const primaryColors = Object.keys(omit(colors, colorsToOmit as any))
 
 const RADII = [0, 0.4, 0.6, 1.0, 1.6]
 
 // Whenever the theme value changes, update the document class list
-watch(theme, () => {
-  setClassTheme()
+watch([primary, neutral, radius], ([primary, neutral, radius]) => {
+  // document.documentElement.classList.add(`theme-${primary.value}`)
+  document.documentElement.style.setProperty('--color-primary', colors[primary][[500]])
+  document.documentElement.style.setProperty('--color-primary-foreground', colors[primary][[100]])
+  document.documentElement.style.setProperty('--color-ring', colors[primary][[400]])
+  document.documentElement.style.setProperty('--color-secondary', colors[neutral][[500]])
+  document.documentElement.style.setProperty('--color-secondary-foreground', colors[neutral][[100]])
+  document.documentElement.style.setProperty('--radius', `${radius}rem`)
 })
 
-// Whenever the radius value changes, update the document style
-watch(radius, () => {
-  setStyleRadius()
+function backgroundColor(color: string) {
+  return colors[color][[500]]
+}
+
+onMounted(() => {
+  console.log(colors, 'colors')
 })
-
-function setClassTheme() {
-  document.documentElement.classList.remove(
-    ...allColors.map(color => `theme-${color}`),
-  )
-  document.documentElement.classList.add(`theme-${theme.value}`)
-}
-
-function setStyleRadius() {
-  document.documentElement.style.setProperty('--radius', `${radius.value}rem`)
-}
-
-function backgroundColor(color: Color) {
-  const bg = themes.find(theme => theme.name === color)
-  return `hsl(${bg?.activeColor.light})`
-}
-
-const colorMode = useColorMode()
 </script>
 
 <template>
-  <div class="grid gap-6">
+  <div class="grid gap-3">
     <div class="grid space-y-1">
       <h1 class="text-md text-foreground font-semibold">
         Customize
-      </h1><p class="text-xs text-muted-foreground">
+      </h1>
+      <p class="text-xs text-muted-foreground">
         Pick a style and color for your components.
       </p>
     </div>
-    <div class="space-y-1.5">
-      <Label>Color</Label>
+    <div class="space-y-1">
+      <Label>Primary</Label>
       <div class="grid grid-cols-3 gap-2">
-        <template v-for="color in allColors" :key="color">
+        <template v-for="color in primaryColors" :key="color">
           <Button
             class="justify-start gap-2"
             variant="outline"
             size="sm"
-            :class="{ 'border-primary': theme === color }"
-            @click="setTheme(color)"
+            @click="primary = color"
+            :data-active="primary === color || undefined"
           >
-            <span class="h-4 w-4 flex items-center justify-center rounded-full" :style="{ backgroundColor: backgroundColor(color) }">
-              <Check v-if="theme === color" class="text-white size-3" />
-            </span>
+            <span class="size-3 flex items-center justify-center rounded-full" :style="{ backgroundColor: backgroundColor(color) }"></span>
             <span class="capitalize">{{ color }}</span>
           </Button>
         </template>
       </div>
     </div>
-    <div class="space-y-1.5">
+
+    <div class="space-y-1">
+      <Label>Neutral</Label>
+      <div class="grid grid-cols-3 gap-2">
+        <template v-for="color in neutralColors" :key="color">
+          <Button
+            class="justify-start gap-2"
+            variant="outline"
+            size="sm"
+            @click="neutral = color"
+            :data-active="neutral === color || undefined"
+          >
+            <span class="size-3 flex items-center justify-center rounded-full" :style="{ backgroundColor: backgroundColor(color) }"></span>
+            <span class="capitalize">{{ color }}</span>
+          </Button>
+        </template>
+      </div>
+    </div>
+    
+    <div class="space-y-1">
       <Label>Radius</Label>
       <div class="grid grid-cols-5 gap-2">
         <template v-for="r in RADII" :key="r">
@@ -100,22 +86,22 @@ const colorMode = useColorMode()
             class="justify-center gap-2"
             variant="outline"
             size="sm"
-            :class="{ 'border-primary': radius === r }"
-            @click="setRadius(r)"
+            :data-active="r === radius || undefined"
+            @click="radius = r"
           >
             <span class="capitalize">{{ r }}</span>
           </Button>
         </template>
       </div>
     </div>
-    <div class="space-y-1.5">
+    <div class="space-y-1">
       <Label>Theme</Label>
       <div class="grid grid-cols-3 gap-2">
         <Button
           class="justify-center gap-2"
           variant="outline"
           size="sm"
-          :class="{ 'border-primary': colorMode.preference === 'light' }"
+          :data-active="colorMode.preference === 'light' || undefined"
           @click="colorMode.preference = 'light'"
         >
           <Sun />
@@ -125,7 +111,7 @@ const colorMode = useColorMode()
           class="justify-center gap-2"
           variant="outline"
           size="sm"
-          :class="{ 'border-primary': colorMode.preference === 'dark' }"
+          :data-active="colorMode.preference === 'dark' || undefined"
           @click="colorMode.preference = 'dark'"
         >
           <Moon />
@@ -135,7 +121,7 @@ const colorMode = useColorMode()
           class="justify-center gap-2"
           variant="outline"
           size="sm"
-          :class="{ 'border-primary': colorMode.preference === 'system' }"
+          :data-active="colorMode.preference === 'system' || undefined"
           @click="colorMode.preference = 'system'"
         >
           <Monitor />

@@ -18,7 +18,7 @@ const delegatedProps = computed(() => {
   <ScrollAreaScrollbar
     v-bind="delegatedProps"
     :class="
-      cn('flex touch-none select-none transition-colors z-[2]',
+      cn('flex touch-none select-none transition-colors z-2',
          orientation === 'vertical'
            && 'h-full w-2.5 border-l border-l-transparent p-px',
          orientation === 'horizontal'

@@ -200,7 +200,7 @@ const actives = ref([])
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
               <DropdownMenuContent
-                class="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+                class="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
                 align="start"
                 side="bottom"
                 :side-offset="4"
@@ -367,7 +367,7 @@ const actives = ref([])
                   <ChevronsUpDown class="ml-auto size-4" />
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
-              <DropdownMenuContent class="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg" side="bottom" align="end" :side-offset="4">
+              <DropdownMenuContent class="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg" side="bottom" align="end" :side-offset="4">
                 <DropdownMenuLabel class="p-0 font-normal">
                   <div class="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                     <Avatar class="h-8 w-8 rounded-lg">
@@ -416,7 +416,7 @@ const actives = ref([])
       <SidebarRail />
     </Sidebar>
     <SidebarInset>
-      <header class="flex min-h-16 gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:min-h-12">
+      <header class="flex min-h-16 gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:min-h-12">
         <div class="flex items-center gap-2 px-4 flex-1">
           <SidebarTrigger class="-ml-1" />
           <Separator orientation="vertical" class="mr-2 h-4" />
