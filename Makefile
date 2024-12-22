@@ -90,5 +90,5 @@ composer-u: ## Updates dependencies packages
 migrate: ## Execute the migrate Artisan command
 	cd infrastructure && $(DOCKER_EXEC_TOOLS_APP) -c "php artisan migrate"
 
-seed: ## E the db:seed Artisan command to seed your database
+seed: ## Execute the db seed Artisan command to seed your database
 	cd infrastructure && $(DOCKER_EXEC_TOOLS_APP) -c "php artisan db:seed"
