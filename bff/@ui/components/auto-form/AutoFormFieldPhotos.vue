@@ -17,7 +17,7 @@ const showGalleryDialog = () => {
       }
     },
     callback(photos) {
-      field.handleChange(photos)
+      field.handleChange([...field.value.value,...photos])
     }
   })
 }
@@ -39,6 +39,7 @@ const removePhoto = (photo) => {
             <Button
               v-for="photo in slotProps.value"
               size="none"
+              type="button"
               variant="ghost"
               @click="removePhoto(photo)"
               class="group relative overflow-hidden">
@@ -56,6 +57,7 @@ const removePhoto = (photo) => {
             </Button>
             <Button
               size="none"
+              type="button"
               variant="ghost"
               @click="showGalleryDialog"
               class="group relative overflow-hidden"

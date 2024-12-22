@@ -1,4 +1,5 @@
 export default function (value: any, format?: string): string {
+  if (value === '' || value === undefined) return ''
   if (!format) {
     return value
   }

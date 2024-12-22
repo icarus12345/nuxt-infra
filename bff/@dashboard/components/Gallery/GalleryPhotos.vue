@@ -15,7 +15,7 @@ $GalleryStore.selectedFiles = props.multiple ? [] : undefined
 
 <template>
   <ListboxRoot v-model="$GalleryStore.selectedFiles" :multiple="multiple">
-    <ListboxContent class="grid gap-3 grid-cols-[repeat(auto-fill,minmax(160px,1fr))]">
+    <ListboxContent class="grid gap-3 grid-cols-[repeat(auto-fill,minmax(150px,1fr))]">
       <ListboxItem
         v-for="photo in photos"
         :key="photo.url"

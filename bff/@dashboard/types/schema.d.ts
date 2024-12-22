@@ -4,6 +4,6 @@ export interface ISchema {
   description: string
   source: IDataSource
   columns: Column[]
-  schema: FieldSchema,
+  schema: FieldSchema
   permissions: Record<string, string>
 } 

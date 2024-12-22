@@ -14,9 +14,6 @@ const showAddEntryDialog = () => {
   $Dialog.show({
     component: shallowRef(DetailDialog),
     props: {
-      dialog: {
-        // modal: false
-      },
       content: {
         trapFocus: false,
         // disableOutsidePointerEvents: false,
@@ -25,6 +22,9 @@ const showAddEntryDialog = () => {
       }
     },
     okText: 'Save',
+    callback() {
+      $DataTable.refresh()
+    }
   })
 }
 
@@ -50,12 +50,12 @@ const quickFilterColumns = computed(() => table.getAllColumns()
         </span>
       </div>
       <div v-for="(column, index) in quickFilterColumns" :key="index">
-        <DataTableFacetedFilter :column="column" />
+        <DataTableFacetedFilter :column="column"/>
       </div>
       <Button
         v-if="hasFiltered"
         variant="ghost"
-        class="h-8 px-2 lg:px-3"
+        class="h-8 px-2 lg:px-3 max-lg:hidden"
         @click="$DataTable.resetFilter"
       >
         Reset

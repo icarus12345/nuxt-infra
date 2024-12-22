@@ -10,15 +10,17 @@ import DetailDIalogToolbar from './DetailDIalogToolbar.vue'
 const $Toast = useToast()
 const dialog = inject('Dialog')
 type DetailDialogProps = DialogContentProps & {
-  entity?: IEntity,
+  entity?: IEntity
   schema: FieldSchema
-  source: IDataSource,
+  source: IDataSource
 }
 const props = defineProps<DetailDialogProps>()
 const obj = {}
 const fieldConfig = {}
-const schemas = props.schema.fields.filter(field => field.schema).map(field => field.schema)
-props.schema.fields.forEach(field => {
+// const tabs = 
+let fields = props.schema.fields
+const schemas = fields.filter(field => field.schema).map(field => field.schema)
+fields.forEach(field => {
   const dataField = field.dataField
   obj[dataField] = field.shape
   let value = getValueByPath(props.entity, field.displayField || dataField)
@@ -31,7 +33,7 @@ props.schema.fields.forEach(field => {
     obj[dataField] = field.shape.default(value)
   }
   fieldConfig[dataField] = {
-    component: field.fieldType,
+    component: field.component || field.fieldType,
     field: field,
     description: field.hint
   }
@@ -39,7 +41,7 @@ props.schema.fields.forEach(field => {
 const loading = ref(false);
 const formSchema = z.object(obj)
 function onSubmit(values: Record<string, any>) {
-  const entity = objectToEntity(values, props.schema.fields)
+  const entity = objectToEntity(values, fields)
   loading.value = true;
   props.source
   .save({
@@ -58,7 +60,7 @@ function onSubmit(values: Record<string, any>) {
   
 }
 const form = useForm({
-  // initialValues: EntityToObject({}, props.schema.fields),
+  // initialValues: EntityToObject({}, fields),
   validationSchema: toTypedSchema(formSchema),
 })
 const doSubmit = async ($event) => {
@@ -95,6 +97,7 @@ const handleKeydown = (event) => {
         class="grid grid-cols-12 gap-3 px-4 py-1"
         :form="form"
         :schema="formSchema"
+        :tabs="schema.tabs"
         :field-config="fieldConfig"
         @submit="onSubmit"
       >

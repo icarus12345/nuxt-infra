@@ -34,7 +34,7 @@ const showGalleryDialog = () => {
       <FormControl>
         <slot v-bind="slotProps">
           <div>
-            <Button size="none" variant="ghost" @click="showGalleryDialog" class="group relative overflow-hidden" v-bind="{ ...slotProps.componentField, ...config?.inputProps }">
+            <Button type="button" size="none" variant="ghost" @click="showGalleryDialog" class="group relative overflow-hidden" v-bind="{ ...slotProps.componentField, ...config?.inputProps }">
               <Avatar shape="none" class="">
                 <AvatarImage :src="slotProps.value" v-if="slotProps.value" />
                 <div :class="[

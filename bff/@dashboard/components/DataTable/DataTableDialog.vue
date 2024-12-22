@@ -17,7 +17,7 @@ const loading = ref(false);
       <DialogTitle>{{ schema.name }}</DialogTitle>
       <DialogDescription>{{ schema.description }}</DialogDescription>
     </DialogHeader>
-    <div class="min-h-[calc(100dvh-26rem)] [&_.data-table-scroller]:-mx-4">
+    <div class="min-h-[calc(100dvh-26rem)] [&_.data-table-scroller]:-mx-4 [&_.data-table-scroller]:max-w-[calc(100dvw_-_3.2rem_-_2px)]">
       <DataTable :schema="schema" variant="none"/>
     </div>
     <!-- <DialogFooter>

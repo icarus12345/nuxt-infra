@@ -20,7 +20,7 @@ export const badgeVariants = tv(
       color: {
         default: '',
         muted: 'bg-muted/50 before:bg-muted',
-        success: 'bg-green-500/30 before:bg-green-500',
+        success: 'bg-green/30 before:bg-green',
       }
     },
     compoundVariants: [

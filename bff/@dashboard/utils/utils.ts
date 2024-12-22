@@ -66,7 +66,7 @@ export function objectToEntity<T = IEntity>(input, fields: Field[]): T {
       let [key, fields] = segment.split(':');
       if (i === pathSegments.length - 1) {
         // At the last segment, set the value
-        if (Array.isArray(input[dataField])) {
+        if (Array.isArray(input[dataField]) && dataSource) {
           // Special handling for arrays (e.g., roles)
           target[key] = input[dataField].map(item => getValueByPath(item, dataSource?.valueMember || fields));
         } else {

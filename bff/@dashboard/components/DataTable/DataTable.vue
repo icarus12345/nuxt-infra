@@ -248,72 +248,74 @@ provide('DataTable', {
 </script>
 
 <template>
-  <div class="space-y-3" v-permission="schema.permissions.view">
-    <DataTableToolbar/>
-    <ScrollArea :class="[
-      dataTableVariants({variant}),
-      'data-table-scroller'
-    ]">
-      <Table>
-        <TableHeader>
-          <TableRow v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id">
-            <TableHead
-              v-for="header in headerGroup.headers"
-              :key="header.id"
-              :class="{
-                'sticky z-2': header.column.columnDef.meta?.pinned,
-              }"
-              :style="{
-                minWidth: (header.column.columnDef.minSize || header.column.columnDef.size) + 'px',
-                maxWidth: (header.column.columnDef.maxSize  || header.column.columnDef.size) + 'px',
-                width: header.column.columnDef.size + 'px',
-                left: header.column.columnDef.meta?.pinned == 'left' ? getPinnedPos(header.column) + 'px': null,
-                right: header.column.columnDef.meta?.pinned == 'right' ? getPinnedPos(header.column) + 'px': null,
-              }">
-              <DataTableColumnHeader :column="header.column" v-if="header.column.columnDef.enableSorting !== false || header.column.columnDef.enableHiding !== false"/>
-              <FlexRender v-else="!header.isPlaceholder" :render="header.column.columnDef.header" :props="header.getContext()" />
-            </TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody :class="{
-          'opacity-50': loading
-        }">
-          <template v-if="table.getRowModel().rows?.length">
-            <TableRow
-              v-for="row in table.getRowModel().rows"
-              :key="row.id"
-              :data-state="row.getIsSelected() && 'selected'"
-            >
-              <TableCell
-                v-for="cell in row.getVisibleCells()"
-                :key="cell.id"
+  <SlotPermission :permission="schema.permissions.view">
+    <div class="space-y-3">
+      <DataTableToolbar/>
+      <ScrollArea :class="[
+        dataTableVariants({variant}),
+        'data-table-scroller'
+      ]">
+        <Table>
+          <TableHeader>
+            <TableRow v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id">
+              <TableHead
+                v-for="header in headerGroup.headers"
+                :key="header.id"
                 :class="{
-                  'sticky z-1': cell.column.columnDef.meta?.pinned,
+                  'sticky z-2': header.column.columnDef.meta?.pinned,
                 }"
                 :style="{
-                  left: cell.column.columnDef.meta?.pinned == 'left' ? getPinnedPos(cell.column) + 'px': null,
-                  right: cell.column.columnDef.meta?.pinned == 'right' ? getPinnedPos(cell.column) + 'px': null,
-                }"
-                >
-                <FlexRender :render="cell.column.columnDef.cell" :props="cell.getContext()" />
+                  minWidth: (header.column.columnDef.minSize || header.column.columnDef.size) + 'px',
+                  maxWidth: (header.column.columnDef.maxSize  || header.column.columnDef.size) + 'px',
+                  width: header.column.columnDef.size + 'px',
+                  left: header.column.columnDef.meta?.pinned == 'left' ? getPinnedPos(header.column) + 'px': null,
+                  right: header.column.columnDef.meta?.pinned == 'right' ? getPinnedPos(header.column) + 'px': null,
+                }">
+                <DataTableColumnHeader :column="header.column" v-if="header.column.columnDef.enableSorting !== false || header.column.columnDef.enableHiding !== false"/>
+                <FlexRender v-else="!header.isPlaceholder" :render="header.column.columnDef.header" :props="header.getContext()" />
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody :class="{
+            'opacity-50': loading
+          }">
+            <template v-if="table.getRowModel().rows?.length">
+              <TableRow
+                v-for="row in table.getRowModel().rows"
+                :key="row.id"
+                :data-state="row.getIsSelected() && 'selected'"
+              >
+                <TableCell
+                  v-for="cell in row.getVisibleCells()"
+                  :key="cell.id"
+                  :class="{
+                    'sticky z-1': cell.column.columnDef.meta?.pinned,
+                  }"
+                  :style="{
+                    left: cell.column.columnDef.meta?.pinned == 'left' ? getPinnedPos(cell.column) + 'px': null,
+                    right: cell.column.columnDef.meta?.pinned == 'right' ? getPinnedPos(cell.column) + 'px': null,
+                  }"
+                  >
+                  <FlexRender :render="cell.column.columnDef.cell" :props="cell.getContext()" />
+                </TableCell>
+              </TableRow>
+            </template>
+
+            <TableRow v-else>
+              <TableCell
+                :colspan="columns.length"
+                class="h-24 text-center text-muted-foreground"
+              >
+                No results.
               </TableCell>
             </TableRow>
-          </template>
-
-          <TableRow v-else>
-            <TableCell
-              :colspan="columns.length"
-              class="h-24 text-center text-muted-foreground"
-            >
-              No results.
-            </TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-      <!--
-      <DataTableSetting/>
-      -->
-    </ScrollArea>
-    <DataTablePagination/>
-  </div>
+          </TableBody>
+        </Table>
+        <!--
+        <DataTableSetting/>
+        -->
+      </ScrollArea>
+      <DataTablePagination/>
+    </div>
+  </SlotPermission>
 </template>

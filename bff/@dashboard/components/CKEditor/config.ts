@@ -192,11 +192,11 @@ export const CKEditorConfig = {
   },
   heading: {
     options: [
-      { model: 'paragraph', title: 'Paragraph', class: 'ck-heading-paragraph' },
-      { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading-heading1' },
-      { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading-heading2' },
-      { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading-heading3' },
-      { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading-heading4' },
+      { model: 'paragraph', title: 'Paragraph', class: 'ck-heading-paragraph', view: { name: 'p', classes: 'ck-heading-paragraph'} },
+      { model: 'heading1', view: { name: 'h1', classes: 'ck-heading-heading1'}, title: 'Heading 1', class: 'ck-heading-heading1', },
+      { model: 'heading2', view: { name: 'h2', classes: 'ck-heading-heading2'}, title: 'Heading 2', class: 'ck-heading-heading2', },
+      { model: 'heading3', view: { name: 'h3', classes: 'ck-heading-heading3'}, title: 'Heading 3', class: 'ck-heading-heading3', },
+      { model: 'heading4', view: { name: 'h4', classes: 'ck-heading-heading4'}, title: 'Heading 4', class: 'ck-heading-heading4', },
     ]
   },
   licenseKey: 'GPL',

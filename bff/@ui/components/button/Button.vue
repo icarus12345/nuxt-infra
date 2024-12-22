@@ -13,6 +13,7 @@ export interface ButtonProps extends PrimitiveProps {
 
 const props = withDefaults(defineProps<ButtonProps>(), {
   as: 'button',
+  type: 'button',
 })
 </script>
 

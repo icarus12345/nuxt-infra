@@ -6,13 +6,13 @@ const table = $DataTable.table
 
 <template>
   <div class="flex items-center justify-between">
-    <div class="flex-1 text-sm text-muted-foreground">
+    <div class="flex-1 text-sm text-muted-foreground max-lg:hidden">
       {{ table.getFilteredSelectedRowModel().rows.length }} of
       {{ table.getFilteredRowModel().rows.length }} row(s) selected.
     </div>
-    <div class="flex items-center space-x-2 lg:space-x-4">
+    <div class="flex items-center space-x-2 lg:space-x-4 max-lg:ms-auto">
       <div class="flex items-center space-x-2">
-        <p class="text-sm font-medium text-nowrap">
+        <p class="text-sm font-medium text-nowrap max-md:hidden">
           Rows per page
         </p>
         <Select

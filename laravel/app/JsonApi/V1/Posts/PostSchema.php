@@ -11,6 +11,7 @@ use LaravelJsonApi\Eloquent\Fields\ID;
 use LaravelJsonApi\Eloquent\Fields\Relations\BelongsTo;
 use LaravelJsonApi\Eloquent\Fields\Relations\BelongsToMany;
 use LaravelJsonApi\Eloquent\Fields\Relations\HasMany;
+use LaravelJsonApi\Eloquent\Fields\ArrayList;
 use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Filters\WhereIn;
@@ -56,6 +57,8 @@ class PostSchema extends Schema
             Str::make('slug'),
             BelongsToMany::make('tags'),
             Str::make('title')->sortable(),
+            Str::make('thumb'),
+            ArrayList::make('photos'),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];
     }
@@ -71,7 +74,7 @@ class PostSchema extends Schema
             WhereNumber::make('id'),
             WhereText::make('title'),
             WhereIn::make('author', 'author_id'),
-            WhereAny::make('q', ['title']).
+            WhereAny::make('q', ['title']),
             WhereHas::make($this, 'tags'),
         ];
     }

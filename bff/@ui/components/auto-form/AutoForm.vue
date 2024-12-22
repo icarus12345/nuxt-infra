@@ -1,7 +1,7 @@
 <script setup lang="ts" generic="T extends ZodObjectOrWrapped">
 import type { FormContext, GenericObject } from 'vee-validate'
 import type { z, ZodAny } from 'zod'
-import type { Config, ConfigItem, Dependency, Shape } from './interface'
+import type { Config, ConfigItem, Dependency, FieldTab, Shape } from './interface'
 import { toTypedSchema } from '@vee-validate/zod'
 import { computed, toRefs } from 'vue'
 import AutoFormField from './AutoFormField.vue'
@@ -12,6 +12,7 @@ const props = withDefaults(defineProps<{
   schema: T
   form?: FormContext<GenericObject>
   fieldConfig?: Config<z.infer<T>>
+  tabs?: FieldTab[]
   dependencies?: Dependency<z.infer<T>>[]
   layout?: string,
 }>(), {
@@ -46,6 +47,34 @@ const shapes = computed(() => {
   })
   return val
 })
+
+const shapeTabs = computed(() => {
+  // @ts-expect-error ignore {} not assignable to object
+  const tabs: { [key in keyof T]: { [key in keyof T]: Shape } } = {}
+  props.tabs?.forEach(({ name, fields }) => {
+    tabs[name] = {}
+    fields.forEach((key) => {
+      const shape = shapes.value[key]
+      tabs[name][key] = shape
+    })
+  })
+  return tabs
+})
+
+const defaultShapes = computed(() => {
+  // @ts-expect-error ignore {} not assignable to object
+  const val: { [key in keyof T]: Shape } = {}
+  const keys: string[] = props.tabs?.map(tab => tab.fields).flat() || []
+
+  for (const key in shapes.value) {
+    const shape = shapes.value[key]
+    if (!keys.includes(key)) {
+      val[key] = shape
+    }
+  }
+  return val
+})
+
 
 const fields = computed(() => {
   // @ts-expect-error ignore {} not assignable to object
@@ -103,7 +132,7 @@ defineExpose({
     ref="formRef"
   >
     <slot name="customAutoForm" :fields="fields">
-      <template v-for="(shape, key) of shapes" :key="key">
+      <template v-for="(shape, key) of defaultShapes" :key="key">
         <slot
           :shape="shape"
           :name="key.toString() as keyof z.infer<T>"
@@ -117,6 +146,29 @@ defineExpose({
           />
         </slot>
       </template>
+      <Tabs class="col-span-12" :unmountOnHide="false">
+        <TabsList class="flex">
+          <TabsTrigger v-for="(shapes, key) of shapeTabs" :key="key" :value="key" class="flex-1">
+            {{ key }}
+          </TabsTrigger>
+        </TabsList>
+        <TabsContent v-for="(shapes, name) of shapeTabs" :key="name" :value="name" forceMount class="mt-2">
+          <template v-for="(shape, key) of shapes" :key="key">
+            <slot
+              :shape="shape"
+              :name="key.toString() as keyof z.infer<T>"
+              :field-name="key.toString()"
+              :config="fieldConfig?.[key as keyof typeof fieldConfig] as ConfigItem"
+            >
+              <AutoFormField
+                :config="fieldConfig?.[key as keyof typeof fieldConfig] as ConfigItem"
+                :field-name="key.toString()"
+                :shape="shape"
+              />
+            </slot>
+          </template>
+        </TabsContent>
+      </Tabs>
     </slot>
 
     <slot :shapes="shapes" />

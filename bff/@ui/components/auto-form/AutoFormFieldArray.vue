@@ -73,7 +73,6 @@ provide(FieldContextKey, fieldContext)
 
                   <div class="my-4! flex justify-end">
                     <Button
-                      type="button"
                       :icon="true"
                       variant="secondary"
                       @click="remove(index)"
@@ -86,7 +85,6 @@ provide(FieldContextKey, fieldContext)
               </template>
 
               <Button
-                type="button"
                 variant="secondary"
                 class="mt-4 flex items-center"
                 @click="push(null)"

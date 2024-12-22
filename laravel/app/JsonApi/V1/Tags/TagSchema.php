@@ -30,8 +30,9 @@ class TagSchema extends Schema
     {
         return [
             ID::make(),
+            Str::make('name')->sortable(),
+            Str::make('guardName')->sortable(),
             DateTime::make('createdAt')->sortable()->readOnly(),
-            Str::make('name'),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];
     }

@@ -3,6 +3,7 @@ import Badge from '@ui/components/badge/Badge.vue';
 import { DataAdapter, Field, FieldSchema } from '@interfaces';
 import Zod from 'zod'
 import { RoleSchema } from './role.schema';
+import { PermissionSchema } from './permission.schema';
 import { ISchema } from '../types/schema';
 
 const UserRepository = useRepository('users')
@@ -174,13 +175,15 @@ export const schema: FieldSchema = {
     displayField: 'relationships>permissions>data:id,type',
     hint: 'Associate users with roles and permissions',
     shape: Zod.array(Zod.any()).min(1),
-    fieldType: 'CheckList',
-    dataSource: {
-      root: 'data',
-      valueMember: 'id,type',
-      displayMember: 'attributes>name',
-      fetch: PermissionRepository.fetch
-    },
+    // fieldType: 'CheckList', sử dụng common component 
+    component: defineAsyncComponent(() => import('../components/AutoForm/PermissionCheckList.vue')), // tự custom component
+    schema: PermissionSchema, // load từ schema
+    // dataSource: { // load từ data source
+    //   root: 'data',
+    //   valueMember: 'id,type',
+    //   displayMember: 'attributes>name',
+    //   fetch: PermissionRepository.fetch
+    // },
   }, {
     text: 'Active',
     dataField: 'active',

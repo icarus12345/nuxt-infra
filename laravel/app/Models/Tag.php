@@ -13,7 +13,7 @@ class Tag extends Model
     /**
      * @var string[]
      */
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'guard_name'];
 
     /**
      * @return BelongsToMany

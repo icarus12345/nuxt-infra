@@ -4,6 +4,7 @@ import { IEntity } from '@entities'
 import { Check } from 'lucide-vue-next'
 import { DataAdapter } from '@interfaces'
 import { CirclePlus } from 'lucide-vue-next'
+import { breakpointsTailwind, useBreakpoints } from '@vueuse/core'
 
 const $DataTable = inject('DataTable')
 interface DataTableFacetedFilter {
@@ -72,13 +73,13 @@ const handleClearFilter = () => {
   props.column?.setFilterValue(condition.value)
 }
 const tags = computed(() => options.value.filter((option) => condition.value.value.includes(getValueByPath(option, valueMember.value))))
-
+const breakpoints = useBreakpoints(breakpointsTailwind)
 </script>
 
 <template>
   <Popover @update:open="onChange">
     <PopoverTrigger as-child>
-      <Button variant="outline" class="border-dashed justify-start w-full">
+      <Button variant="outline" class="border-dashed justify-start w-full max-lg:hidden">
         <CirclePlus class="size-4" />
         {{ meta.text }}
         <template v-if="condition.value.length > 0">
@@ -131,7 +132,7 @@ const tags = computed(() => options.value.filter((option) => condition.value.val
                   'mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary',
                   condition.value.includes(getValueByPath(option, valueMember))
                     ? 'bg-primary text-primary-foreground'
-                    : 'opacity-50 [&_svg]:invisible',
+                    : '[&_svg]:invisible',
                 )"
               >
                 <Check class="h-4 w-4" />

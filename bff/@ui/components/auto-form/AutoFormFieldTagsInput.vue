@@ -3,7 +3,7 @@ import { Field as FormField } from 'vee-validate'
 import type { FieldProps } from './interface'
 import { DataAdapter } from '@interfaces/data-source'
 import { object, type ZodArray, type ZodRawShape } from 'zod'
-import { CirclePlus, Check, AppWindow, Settings2, NotepadText, FolderKanban } from 'lucide-vue-next'
+import { CirclePlus, Check, FolderKanban } from 'lucide-vue-next'
 import { useField, useFieldArray } from 'vee-validate'
 import { onMounted } from 'vue'
 
@@ -95,7 +95,7 @@ const showDataTableDialog = () => {
         <AutoFormLabel v-if="!config?.hideLabel" :required="required">
           {{ config?.field?.text || config?.label || camelCase(label ?? fieldName) }}
         </AutoFormLabel>
-        <Button size="xs" :icon="true" variant="ghost" @click="showDataTableDialog" v-if="config.field.schema">
+        <Button size="xs" :icon="true" variant="ghost" @click="showDataTableDialog" v-if="config.field.schema" type="button">
           <FolderKanban class="size-4"/>
         </Button>
       </div>
@@ -104,6 +104,7 @@ const showDataTableDialog = () => {
           <Popover @update:open="onChange">
             <PopoverTrigger as-child>
               <Button
+                type="button"
                 variant="outline"
                 class="border-dashed justify-start w-full"
                 v-bind="{ ...slotProps.componentField, ...config?.inputProps }"
@@ -167,7 +168,7 @@ const showDataTableDialog = () => {
                       <span>{{ camelCase(getValueByPath(option, dataSource.displayMember)) }}</span>
                     </CommandItem>
                   </CommandGroup>
-
+                  <!--
                   <template v-if="slotProps.value?.length > 0">
                     <CommandSeparator />
                     <CommandGroup>
@@ -180,6 +181,7 @@ const showDataTableDialog = () => {
                       </CommandItem>
                     </CommandGroup>
                   </template>
+                  -->
                 </CommandList>
               </Command>
             </PopoverContent>

@@ -117,6 +117,13 @@ export const schema: FieldSchema = {
   name: 'Post Entity',
   description: 'Associate users with roles and permissions',
   size: '2xl',
+  tabs: [{
+    name: 'General',
+    fields: ['title', 'thumb', 'photos', 'relationships>tags', 'publishedAt']
+  }, {
+    name: 'Content',
+    fields: ['content']
+  }],
   fields: [{
     text: 'Title',
     dataField: 'title',
@@ -134,13 +141,15 @@ export const schema: FieldSchema = {
     dataField: 'thumb',
     displayField: 'attributes>thumb',
     shape: Zod.string(),
-    fieldType: 'Media'
+    fieldType: 'Media',
+    className: 'sm:col-span-3',
   }, {
     text: 'Photos',
     dataField: 'photos',
     displayField: 'attributes>photos',
     shape: Zod.array(Zod.string()).min(2).max(5),
-    fieldType: 'Photos'
+    fieldType: 'Photos',
+    className: 'sm:col-span-9',
   }, {
     text: 'Tags',
     dataField: 'relationships>tags',
@@ -149,7 +158,7 @@ export const schema: FieldSchema = {
     shape: Zod.array(Zod.any()).min(1),
     fieldType: 'TagsInput',
     schema: TagSchema,
-    className: 'col-span-6',
+    className: 'sm:col-span-6',
     // dataSource: {
     //   root: 'data',
     //   valueMember: 'id,type',
@@ -210,9 +219,9 @@ export const schema: FieldSchema = {
     text: 'Published At',
     dataField: 'publishedAt',
     displayField: 'attributes>publishedAt',
-    shape: Zod.boolean().optional(),
+    shape: Zod.string().optional(),
     fieldType: 'Date',
-    className: 'col-span-4'
+    className: 'sm:col-span-3'
   // }, {
   //   text: 'Active2',
   //   dataField: 'Active2',
@@ -245,7 +254,7 @@ export const schema: FieldSchema = {
   //     fetch: RoleRepository.fetch
   //   },
   // }
-  }]
+  }],
 }
 
 export const PostDataSource = {

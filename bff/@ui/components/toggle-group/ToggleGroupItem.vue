@@ -1,20 +1,18 @@
 <script setup lang="ts">
-import type { VariantProps } from 'class-variance-authority'
-import { toggleVariants } from '../toggle'
+import { ToggleVariants, toggleVariants } from '../toggle'
 // import { cn } from '@/lib/utils'
 import { ToggleGroupItem, type ToggleGroupItemProps } from 'radix-vue/ToggleGroup'
 import { useForwardProps } from 'radix-vue/utilities'
 import { computed, type HTMLAttributes, inject } from 'vue'
 
-type ToggleGroupVariants = VariantProps<typeof toggleVariants>
 
 const props = defineProps<ToggleGroupItemProps & {
   class?: HTMLAttributes['class']
-  variant?: ToggleGroupVariants['variant']
-  size?: ToggleGroupVariants['size']
+  variant?: ToggleVariants['variant']
+  size?: ToggleVariants['size']
 }>()
 
-const context = inject<ToggleGroupVariants>('toggleGroup')
+const context = inject<ToggleVariants>('toggleGroup')
 
 const delegatedProps = computed(() => {
   const { class: _, variant, size, ...delegated } = props

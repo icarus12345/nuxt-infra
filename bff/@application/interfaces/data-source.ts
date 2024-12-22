@@ -93,9 +93,15 @@ export type Column = Field & {
   pinned?: boolean
 }
 
+export type FieldTab = {
+  name: string,
+  fields: string[]
+}
+
 export type FieldSchema = {
   name: string
   description: string
   size?: string
+  tabs?: FieldTab[]
   fields: Field[]
 }

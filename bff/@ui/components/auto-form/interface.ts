@@ -11,6 +11,11 @@ export interface FieldProps {
   disabled?: boolean
 }
 
+export type FieldTab = {
+  name: string,
+  fields: string[]
+}
+
 export interface Shape {
   type: string
   default?: any

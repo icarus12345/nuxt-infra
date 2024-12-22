@@ -24,5 +24,4 @@ class PermissionPolicy
     {
         return $this->hasPermissionTo('view_permission');
     }
-
 }

@@ -4,7 +4,8 @@ import type { FieldProps } from './interface'
 import { DataAdapter } from '@interfaces/data-source'
 import type { ZodArray, ZodRawShape } from 'zod'
 import { useField, useFieldArray } from 'vee-validate'
-
+import { FolderKanban } from 'lucide-vue-next'
+const $Dialog = useDialog()
 const options = ref([])
 const props = defineProps<FieldProps & {
   schema?: any
@@ -56,33 +57,55 @@ const toggleSelectItem = ({ value, handleChange, setValue }, option) => {
   }
   handleChange(arr)
 };
+
+const showDataTableDialog = () => {
+  const DataTableDialog = defineAsyncComponent(() => import('@dashboard/components/DataTable/DataTableDialog.vue'))
+  $Dialog.show({
+    component: shallowRef(DataTableDialog),
+    props: {
+      content: {
+        schema: props.config.field.schema
+      }
+    },
+    callback() {
+
+    }
+  })
+}
 </script>
 
 <template>
   
   <FormField v-slot="slotProps" :name="fieldName">
     <FormItem v-bind="$attrs" :layout="layout">
-      <AutoFormLabel v-if="!config?.hideLabel" :required="required">
-        {{ config?.field?.text || config?.label || camelCase(label ?? fieldName) }}
-      </AutoFormLabel>
-      <FormField
-        v-for="(option, index) in options"
-        :key="index" type="checkbox" 
-        :value="option" 
-        :name="fieldName"
-        >
-        <FormItem class="flex flex-row items-center space-x-3 space-y-0 px-3">
-          <FormControl>
-            <Checkbox
-              :checked="isChecked(slotProps, option)"
-              @update:checked="toggleSelectItem(slotProps, option)"
-            />
-          </FormControl>
-          <FormLabel class="font-normal">
-            {{ camelCase(getValueByPath(option, dataSource?.displayMember)) }}
-          </FormLabel>
-        </FormItem>
-      </FormField>
+      <div class="flex items-center justify-between">
+        <AutoFormLabel v-if="!config?.hideLabel" :required="required">
+          {{ config?.field?.text || config?.label || camelCase(label ?? fieldName) }}
+        </AutoFormLabel>
+        <Button size="xs" :icon="true" variant="ghost" @click="showDataTableDialog" v-if="config.field.schema">
+          <FolderKanban class="size-4"/>
+        </Button>
+      </div>
+      <div class="flex flex-col gap-1 max-h-[24rem] overflow-y-auto">
+        <FormField
+          v-for="(option, index) in options"
+          :key="index" type="checkbox" 
+          :value="option" 
+          :name="fieldName"
+          >
+          <FormItem class="flex flex-row items-center gap-2 ps-3">
+            <FormControl>
+              <Checkbox
+                :checked="isChecked(slotProps, option)"
+                @update:checked="toggleSelectItem(slotProps, option)"
+              />
+            </FormControl>
+            <FormLabel class="font-normal">
+              {{ camelCase(getValueByPath(option, dataSource?.displayMember)) }}
+            </FormLabel>
+          </FormItem>
+        </FormField>
+      </div>
       <FormDescription v-if="config?.description">
         {{ config.description }}
       </FormDescription>

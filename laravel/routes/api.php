@@ -26,6 +26,7 @@ Route::middleware([])->prefix('v1')->group(function () {
         JsonApiRoute::server('v1')
             ->resources(function (ResourceRegistrar $server) {
             $server->resource('medias', JsonApiController::class);
+            $server->resource('tags', JsonApiController::class);
             $server->resource('users', JsonApiController::class);
             $server->resource('roles', JsonApiController::class);
             $server->resource('permissions', JsonApiController::class);

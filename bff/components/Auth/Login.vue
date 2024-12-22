@@ -21,7 +21,7 @@ const onSubmit = handleSubmit((formValue) => {
     .then((success: boolean) => {
       if (success) {
         alert({
-          title: 'You submitted the following values:',
+          title: 'Login Success !',
           description: h('pre', { class: 'mt-2 w-[340px] rounded-md bg-slate-950 p-4' }, h('code', { class: 'text-white' }, JSON.stringify(formValue, null, 2))),
         })
       }
