@@ -146,7 +146,7 @@ defineExpose({
           />
         </slot>
       </template>
-      <Tabs class="col-span-12" :unmountOnHide="false">
+      <Tabs class="col-span-12" :unmountOnHide="false" v-if="Object.keys(shapeTabs).length">
         <TabsList class="flex">
           <TabsTrigger v-for="(shapes, key) of shapeTabs" :key="key" :value="key" class="flex-1">
             {{ key }}
