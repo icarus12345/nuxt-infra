@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { PrimitiveProps } from 'radix-vue/Primitive'
+import type { PrimitiveProps } from 'reka-ui/utilities'
 import type { HTMLAttributes } from 'vue'
 // import { cn } from '@/lib/utils'
-import { Primitive } from 'radix-vue/Primitive'
+import { Primitive } from 'reka-ui/utilities'
 
 const props = defineProps<PrimitiveProps & {
   class?: HTMLAttributes['class']

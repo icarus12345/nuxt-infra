@@ -3,8 +3,8 @@ import {
   NavigationMenuRoot,
   type NavigationMenuRootEmits,
   type NavigationMenuRootProps,
-} from 'radix-vue/NavigationMenu'
-import { useForwardPropsEmits } from 'radix-vue/utilities'
+} from 'reka-ui/NavigationMenu'
+import { useForwardPropsEmits } from 'reka-ui/utilities'
 import NavigationMenuViewport from './NavigationMenuViewport.vue'
 
 const props = defineProps<NavigationMenuRootProps & { class?: HTMLAttributes['class'] }>()

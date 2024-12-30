@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { IMedia } from '@entities';
 import { Check } from 'lucide-vue-next';
-import { ListboxContent, ListboxItem, ListboxRoot } from 'radix-vue/Listbox'
+import { ListboxContent, ListboxItem, ListboxRoot } from 'reka-ui/ListBox';
 import { useGalleryStore } from '@dashboard/stores/gallery.store'
 
 const $GalleryStore = useGalleryStore()

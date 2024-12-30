@@ -3,7 +3,7 @@
 import {
   DropdownMenuSeparator,
   type DropdownMenuSeparatorProps,
-} from 'radix-vue/DropdownMenu'
+} from 'reka-ui/DropdownMenu'
 import { computed, type HTMLAttributes } from 'vue'
 
 const props = defineProps<DropdownMenuSeparatorProps & {

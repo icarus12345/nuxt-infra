@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { TreeItem } from 'radix-vue/Tree'
+import { TreeItem } from 'reka-ui/Tree'
 import { menuItemVariants } from '../theme/menu'
 // import { cn } from '@/lib/utils'
 

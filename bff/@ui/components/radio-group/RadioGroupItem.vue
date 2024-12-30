@@ -5,8 +5,8 @@ import {
   RadioGroupIndicator,
   RadioGroupItem,
   type RadioGroupItemProps,
-} from 'radix-vue/RadioGroup'
-import { useForwardProps } from 'radix-vue/utilities'
+} from 'reka-ui'
+import { useForwardProps } from 'reka-ui/utilities'
 import { computed, type HTMLAttributes } from 'vue'
 
 const props = defineProps<RadioGroupItemProps & { class?: HTMLAttributes['class'] }>()

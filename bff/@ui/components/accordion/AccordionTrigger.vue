@@ -4,7 +4,7 @@ import {
   AccordionHeader,
   AccordionTrigger,
   type AccordionTriggerProps,
-} from 'radix-vue/Accordion'
+} from 'reka-ui/Accordion'
 import { computed, type HTMLAttributes } from 'vue'
 
 const props = defineProps<AccordionTriggerProps & { class?: HTMLAttributes['class'] }>()

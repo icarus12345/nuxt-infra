@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import type { StepperTriggerProps } from 'radix-vue/Stepper'
+import type { StepperTriggerProps } from 'reka-ui/Steper'
 // import { cn } from '@/lib/utils'
-import { StepperTrigger } from 'radix-vue/Stepper'
-import { useForwardProps } from 'radix-vue/utilities'
+import { StepperTrigger } from 'reka-ui/Steper'
+import { useForwardProps } from 'reka-ui/utilities'
 
 import { computed, type HTMLAttributes } from 'vue'
 

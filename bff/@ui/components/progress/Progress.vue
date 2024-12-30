@@ -4,7 +4,7 @@ import {
   ProgressIndicator,
   ProgressRoot,
   type ProgressRootProps,
-} from 'radix-vue/Progress'
+} from 'reka-ui/Progress'
 import { computed, type HTMLAttributes } from 'vue'
 
 const props = withDefaults(

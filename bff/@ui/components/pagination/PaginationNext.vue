@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ChevronRight } from 'lucide-vue-next'
-import { PaginationNext, type PaginationNextProps } from 'radix-vue/Pagination'
+import { PaginationNext, type PaginationNextProps } from 'reka-ui/Pagination'
 import { computed, type HTMLAttributes } from 'vue'
 
 const props = withDefaults(defineProps<PaginationNextProps & { class?: HTMLAttributes['class'] }>(), {

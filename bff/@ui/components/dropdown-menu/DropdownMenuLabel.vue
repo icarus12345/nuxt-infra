@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // import { cn } from '@/lib/utils'
-import { DropdownMenuLabel, type DropdownMenuLabelProps } from 'radix-vue/DropdownMenu'
-import { useForwardProps } from 'radix-vue/utilities'
+import { DropdownMenuLabel, type DropdownMenuLabelProps } from 'reka-ui/DropdownMenu'
+import { useForwardProps } from 'reka-ui/utilities'
 import { computed, type HTMLAttributes } from 'vue'
 
 const props = defineProps<DropdownMenuLabelProps & { class?: HTMLAttributes['class'], inset?: boolean }>()

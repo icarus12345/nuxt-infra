@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { NavigationMenuIndicator, type NavigationMenuIndicatorProps } from 'radix-vue/NavigationMenu'
-import { useForwardProps } from 'radix-vue/utilities'
+import { NavigationMenuIndicator, type NavigationMenuIndicatorProps } from 'reka-ui/NavigationMenu'
+import { useForwardProps } from 'reka-ui/utilities'
 import { computed, type HTMLAttributes } from 'vue'
 
 const props = defineProps<NavigationMenuIndicatorProps & { class?: HTMLAttributes['class'] }>()

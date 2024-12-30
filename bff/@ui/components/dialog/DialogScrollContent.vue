@@ -7,8 +7,8 @@ import {
   type DialogContentProps,
   DialogOverlay,
   DialogPortal,
-} from 'radix-vue/Dialog'
-import { useForwardPropsEmits } from 'radix-vue/utilities'
+} from 'reka-ui'
+import { useForwardPropsEmits } from 'reka-ui/utilities'
 import { computed, type HTMLAttributes } from 'vue'
 
 const props = defineProps<DialogContentProps & { class?: HTMLAttributes['class'] }>()

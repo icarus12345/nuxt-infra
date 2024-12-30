@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { type DialogContentProps } from 'radix-vue/Dialog'
-import { TreeItem, TreeRoot } from 'radix-vue/Tree'
+import { type DialogContentProps } from 'reka-ui'
+import { TreeItem, TreeRoot } from 'reka-ui/Tree'
 import { menuItemVariants } from '@ui/components/theme/menu'
 import { ChevronRight, Folder, FolderOpen, Plus, Upload } from 'lucide-vue-next';
 import { useGalleryStore } from '@dashboard/stores/gallery.store'

@@ -2,8 +2,8 @@
 import {
   NavigationMenuViewport,
   type NavigationMenuViewportProps,
-} from 'radix-vue/NavigationMenu'
-import { useForwardProps } from 'radix-vue/utilities'
+} from 'reka-ui/NavigationMenu'
+import { useForwardProps } from 'reka-ui/utilities'
 
 const props = defineProps<NavigationMenuViewportProps & { class?: HTMLAttributes['class'] }>()
 
@@ -22,8 +22,8 @@ const forwardedProps = useForwardProps(delegatedProps)
       v-bind="forwardedProps"
       :class="
         cn(
-          'origin-top-center relative mt-1.5 h-[var(--radix-navigation-menu-viewport-height)] w-full overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-lg',
-          'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-90 w-[var(--radix-navigation-menu-viewport-width)]',
+          'origin-top-center relative mt-1.5 h-[var(--reka-navigation-menu-viewport-height)] w-full overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-lg',
+          'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-90 w-[var(--reka-navigation-menu-viewport-width)]',
           props.class,
         )
       "

@@ -6,8 +6,8 @@ import {
   SelectItemIndicator,
   type SelectItemProps,
   SelectItemText,
-} from 'radix-vue/Select'
-import { useForwardProps } from 'radix-vue/utilities'
+} from 'reka-ui/Select'
+import { useForwardProps } from 'reka-ui/utilities'
 import { computed, type HTMLAttributes } from 'vue'
 
 const props = defineProps<SelectItemProps & { class?: HTMLAttributes['class'] }>()

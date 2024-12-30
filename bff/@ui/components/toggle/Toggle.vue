@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // import { cn } from '@/lib/utils'
-import { Toggle, type ToggleEmits, type ToggleProps } from 'radix-vue/Toggle'
-import { useForwardPropsEmits } from 'radix-vue/utilities'
+import { Toggle, type ToggleEmits, type ToggleProps } from 'reka-ui/Toggle'
+import { useForwardPropsEmits } from 'reka-ui/utilities'
 import { computed, type HTMLAttributes } from 'vue'
 import { type ToggleVariants, toggleVariants } from '.'
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { SelectValue, type SelectValueProps } from 'radix-vue/Select'
+import { SelectValue, type SelectValueProps } from 'reka-ui/Select'
 
 const props = defineProps<SelectValueProps>()
 </script>

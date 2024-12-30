@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // import { cn } from '@/lib/utils'
-import { PinInputInput, type PinInputInputProps } from 'radix-vue/PinInput'
-import { useForwardProps } from 'radix-vue/utilities'
+import { PinInputInput, type PinInputInputProps } from 'reka-ui/PinInput'
+import { useForwardProps } from 'reka-ui/utilities'
 import { computed, type HTMLAttributes } from 'vue'
 
 const props = defineProps<PinInputInputProps & { class?: HTMLAttributes['class'] }>()

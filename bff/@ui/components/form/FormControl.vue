@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Slot } from 'radix-vue/Primitive'
+import { Slot } from 'reka-ui/utilities'
 import { useFormField } from './useFormField'
 
 const { error, formItemId, formDescriptionId, formMessageId } = useFormField()

@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { NumberFieldIncrementProps } from 'radix-vue/NumberField'
+import type { NumberFieldIncrementProps } from 'reka-ui/NumberField'
 // import { cn } from '@/lib/utils'
 import { Plus } from 'lucide-vue-next'
-import { NumberFieldIncrement } from 'radix-vue/NumberField'
-import { useForwardProps } from 'radix-vue/utilities'
+import { NumberFieldIncrement } from 'reka-ui/NumberField'
+import { useForwardProps } from 'reka-ui/utilities'
 import { computed, type HTMLAttributes } from 'vue'
 
 const props = defineProps<NumberFieldIncrementProps & { class?: HTMLAttributes['class'] }>()

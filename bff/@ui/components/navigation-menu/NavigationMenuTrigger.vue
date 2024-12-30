@@ -3,8 +3,8 @@ import { ChevronDown } from 'lucide-vue-next'
 import {
   NavigationMenuTrigger,
   type NavigationMenuTriggerProps,
-} from 'radix-vue/NavigationMenu'
-import { useForwardProps } from 'radix-vue/utilities'
+} from 'reka-ui/NavigationMenu'
+import { useForwardProps } from 'reka-ui/utilities'
 // import { navigationMenuTriggerStyle } from '.'
 
 const props = defineProps<NavigationMenuTriggerProps & { class?: HTMLAttributes['class'] }>()

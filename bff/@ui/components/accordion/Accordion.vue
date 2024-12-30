@@ -3,8 +3,9 @@ import {
   AccordionRoot,
   type AccordionRootEmits,
   type AccordionRootProps,
-} from 'radix-vue/Accordion'
-import { useForwardPropsEmits } from 'radix-vue/utilities'
+} from 'reka-ui/Accordion'
+import { useForwardPropsEmits } from 'reka-ui/utilities'
+
 const props = defineProps<AccordionRootProps>()
 const emits = defineEmits<AccordionRootEmits>()
 

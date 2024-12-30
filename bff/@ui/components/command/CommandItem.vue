@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ComboboxItem, type ComboboxItemEmits, type ComboboxItemProps } from 'radix-vue/Combobox'
-import { useForwardPropsEmits } from 'radix-vue/utilities'
+import { ComboboxItem, type ComboboxItemEmits, type ComboboxItemProps } from 'reka-ui/Combobox'
+import { useForwardPropsEmits } from 'reka-ui/utilities'
 import { computed, type HTMLAttributes } from 'vue'
 
 const props = defineProps<ComboboxItemProps & { class?: HTMLAttributes['class'] }>()

@@ -93,7 +93,7 @@ const applyFilter = (v) => {
         </TagsInputItem>
       </TagsInput>
     </div>
-    <PopoverContent align="start" class="p-0 min-w-40 w-[var(--radix-popper-anchor-width)]">
+    <PopoverContent align="start" class="p-0 min-w-40 w-[var(--reka-popper-anchor-width)]">
       <Command
         :filter-function="(list: DataTableFacetedFilter['options'], term) => list.filter(i => getValueByPath(i, displayMember).toLowerCase()?.includes(term)) "
       >

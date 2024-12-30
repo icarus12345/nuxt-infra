@@ -5,8 +5,8 @@ import {
   type PopoverContentEmits,
   type PopoverContentProps,
   PopoverPortal,
-} from 'radix-vue/Popover'
-import { useForwardPropsEmits } from 'radix-vue/utilities'
+} from 'reka-ui'
+import { useForwardPropsEmits } from 'reka-ui/utilities'
 import { computed, type HTMLAttributes } from 'vue'
 
 defineOptions({

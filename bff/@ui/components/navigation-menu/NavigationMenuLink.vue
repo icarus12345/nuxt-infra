@@ -3,8 +3,8 @@ import {
   NavigationMenuLink,
   type NavigationMenuLinkEmits,
   type NavigationMenuLinkProps,
-} from 'radix-vue/NavigationMenu'
-import { useForwardPropsEmits } from 'radix-vue/utilities'
+} from 'reka-ui/NavigationMenu'
+import { useForwardPropsEmits } from 'reka-ui/utilities'
 
 const props = defineProps<NavigationMenuLinkProps>()
 const emits = defineEmits<NavigationMenuLinkEmits>()

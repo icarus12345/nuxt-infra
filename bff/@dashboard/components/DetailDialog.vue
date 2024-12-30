@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { type DialogContentProps } from 'radix-vue/Dialog'
+import { type DialogContentProps } from 'reka-ui'
 import { IEntity } from '@entities'
 import { h } from 'vue'
 import * as z from 'zod'

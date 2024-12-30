@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // import { cn } from '@/lib/utils'
-import { TreeRoot, type TreeRootEmits, type TreeRootProps } from 'radix-vue/Tree'
-import { useForwardPropsEmits } from 'radix-vue/utilities'
+import { TreeRoot, type TreeRootEmits, type TreeRootProps } from 'reka-ui/Tree'
+import { useForwardPropsEmits } from 'reka-ui/utilities'
 import { computed, type HTMLAttributes, provide } from 'vue'
 
 

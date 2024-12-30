@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // import { cn } from '@/lib/utils'
-import { PinInputRoot, type PinInputRootEmits, type PinInputRootProps } from 'radix-vue/PinInput'
-import { useForwardPropsEmits } from 'radix-vue/utilities'
+import { PinInputRoot, type PinInputRootEmits, type PinInputRootProps } from 'reka-ui/PinInput'
+import { useForwardPropsEmits } from 'reka-ui/utilities'
 import { computed, type HTMLAttributes } from 'vue'
 
 const props = withDefaults(defineProps<PinInputRootProps & { class?: HTMLAttributes['class'] }>(), {

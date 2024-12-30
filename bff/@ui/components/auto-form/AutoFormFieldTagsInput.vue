@@ -141,7 +141,7 @@ const showDataTableDialog = () => {
                 </template>
               </Button>
             </PopoverTrigger>
-            <PopoverContent align="start" class="z-50 p-0 min-w-40 w-[var(--radix-popper-anchor-width)]">
+            <PopoverContent align="start" class="z-50 p-0 min-w-40 w-[var(--reka-popper-anchor-width)]">
               <Command
                 :filter-function="(list: any, term) => list.filter(i => getValueByPath(i, dataSource.displayMember).toLowerCase()?.includes(term)) "
               >

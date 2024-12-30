@@ -1,6 +1,6 @@
 import type { AsyncComponentLoader, Component, VNode } from 'vue'
 import { computed, ref } from 'vue'
-import { type DialogRootProps, type DialogContentProps } from 'radix-vue/Dialog'
+import { type DialogRootProps, type DialogContentProps } from 'reka-ui'
 import { ButtonProps } from '../components/button/Button.vue'
 import { CircleHelp } from 'lucide-vue-next'
 

@@ -5,8 +5,8 @@ import {
   type SwitchRootEmits,
   type SwitchRootProps,
   SwitchThumb,
-} from 'radix-vue/Switch'
-import { useForwardPropsEmits } from 'radix-vue/utilities'
+} from 'reka-ui'
+import { useForwardPropsEmits } from 'reka-ui/utilities'
 import { computed, type HTMLAttributes } from 'vue'
 
 const props = defineProps<SwitchRootProps & { class?: HTMLAttributes['class'] }>()

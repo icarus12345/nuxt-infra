@@ -1,5 +1,5 @@
 import type { ComputedRef, Ref } from 'vue'
-import { createContext } from 'radix-vue/utilities'
+import { createContext } from 'reka-ui/utilities'
 
 export const SIDEBAR_COOKIE_NAME = 'sidebar:state'
 export const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
