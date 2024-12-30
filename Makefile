@@ -70,10 +70,11 @@ clear: ## Removes container from Docker running containers
 # -------------------------------------------------------------------------------------------------
 #  Container Application
 # -------------------------------------------------------------------------------------------------
-.PHONY: npm-i npm-build npm-build-package vite composer-i composer-u migrate seed
+.PHONY: npm-i npm-build npm-build-package vite composer-i composer-u migrate seed unzip
 
 npm-i: ## Installs the application an dependencies packages
 	cd infrastructure && $(DOCKER_EXEC_TOOLS_APP) -c "npm install"
+	cd $(MAKE) unzip
 
 vite-dev: ## Run Vite dev
 	cd infrastructure && $(DOCKER_EXEC_TOOLS_APP) -c "npm run dev"
@@ -92,3 +93,9 @@ migrate: ## Execute the migrate Artisan command
 
 seed: ## Execute the db seed Artisan command to seed your database
 	cd infrastructure && $(DOCKER_EXEC_TOOLS_APP) -c "php artisan db:seed"
+
+unzip: ## unzip the ui and dashboard common components
+	@mkdir -p "bff/.ui"
+	@unzip -o 'bff/ui.zip' -d "bff/.ui"
+	@mkdir -p "bff/.dashboard"
+	@unzip -o 'bff/dashboard.zip' -d "bff/.dashboard"

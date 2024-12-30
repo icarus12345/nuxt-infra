@@ -4,7 +4,7 @@ import { DataAdapter } from '@interfaces/data-source'
 import type { ZodArray, ZodRawShape } from 'zod'
 import { FolderKanban } from 'lucide-vue-next'
 import { useField, useFieldArray } from 'vee-validate'
-import { FieldProps } from '../../../@ui/components/auto-form/interface';
+import { FieldProps } from '../../../.ui/components/auto-form/interface';
 const $Dialog = useDialog()
 
 const options = ref([])
@@ -59,7 +59,7 @@ const toggleSelectItem = ({ value, handleChange, setValue }, option) => {
   handleChange(arr)
 };
 const showDataTableDialog = () => {
-  const DataTableDialog = defineAsyncComponent(() => import('@dashboard/components/DataTable/DataTableDialog.vue'))
+  const DataTableDialog = defineAsyncComponent(() => import('#dashboard/components/DataTable/DataTableDialog.vue'))
   $Dialog.show({
     component: shallowRef(DataTableDialog),
     props: {
@@ -86,7 +86,7 @@ const showDataTableDialog = () => {
           <FolderKanban class="size-4"/>
         </Button>
       </div>
-      <div class="flex flex-col gap-1 max-h-[24rem] overflow-y-auto">
+      <div class="flex flex-col gap-1 h-60 max-h-60 overflow-y-auto">
         <FormField
           v-for="(option, index) in options"
           :key="index" type="checkbox" 

@@ -12,7 +12,8 @@ module.exports = {
     "./utils/**/*.{ts}",
 
     "./@dashboard/**/*.{vue,ts}",
-    "./@ui/**/*.{vue,ts}",
+    "./.dashboard/**/*.{vue,ts}",
+    "./.ui/**/*.{vue,ts}",
 
     "./app.vue",
     "./error.vue",

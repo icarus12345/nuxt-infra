@@ -14,7 +14,8 @@ export default defineNuxtConfig({
   extends: [
     // ['git@github.com:icarus12345/nuxt-ui.git#develop', { install: true }],
     // '../package/nuxt-ui',
-    '@ui',
+    '.ui',
+    '.dashboard',
     '@dashboard',
   ],
   experimental: {

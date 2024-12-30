@@ -1,5 +1,5 @@
 import { h } from 'vue'
-import Badge from '@ui/components/badge/Badge.vue';
+import Badge from '#ui/components/badge/Badge.vue';
 import { DataAdapter, Field, FieldSchema } from '@interfaces';
 import Zod from 'zod'
 import { TagSchema } from './tag.schema';
