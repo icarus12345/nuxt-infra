@@ -16,15 +16,7 @@ export interface IFilterMod {
   operator?: string
 }
 
-export interface IConditions {
-  startRow?: number
-  endRow?: number
-  sortModel?: ISortMod[]
-  filterModel?: {[colId: string]: IFilterMod}
-  archived?: boolean
-  include?: string,
-  params?: {[key: string]: any}
-}
+export type IConditions  = {[key: string]: any}
 
 export interface IResource<T> {
   meta?: {
@@ -50,7 +42,8 @@ export interface IResourceList<T = IEntity> {
 }
 
 export interface IRepository<T = IEntity> {
-  fetch(cond: IConditions): Promise<IResourceList<T>>
+  get(id: string, params?: IConditions): Promise<IResource<T>>
+  fetch(params: IConditions): Promise<IResourceList<T>>
   save(entity: T): Promise<T>
   post(entity: T): Promise<T>
   patch(entity: T): Promise<T>

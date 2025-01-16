@@ -1,4 +1,4 @@
-import { IUser, IRole } from "@entities"
+import { IUser, IUserAttribute } from "@entities"
 
 export interface IAuthIdentity {
   user: IUser
@@ -15,5 +15,8 @@ export interface IdentityResource {
 }
 
 export interface IAuthRepository {
+  updateProfile(profile: Partial<IUserAttribute>): Promise<IUser>
+  updatePassword(oldPassword: string, password: string): Promise<boolean>
+  logout(): Promise<boolean>
   login(email: string, password: string): Promise<Nullable<IAuthIdentity>>
 }

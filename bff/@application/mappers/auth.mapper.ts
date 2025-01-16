@@ -30,4 +30,11 @@ export class AuthMapper {
       token,
     };
   }
+  static toUser(data: any): IUser {
+    return {
+      id: data.id,
+      type: data.type,
+      attributes: data.attributes
+    }
+  }
 }

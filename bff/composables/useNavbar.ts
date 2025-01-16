@@ -21,7 +21,6 @@ export const _useNavbar = () => {
   watch(
     () => route.path,
     (path: string) => {
-      console.log(path,'pathpathpath')
     },
   );
 

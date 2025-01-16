@@ -32,6 +32,12 @@ class Post extends Model
         'photos' => 'array',
     ];
 
+    // Optionally, format the date when accessed
+    // protected function serializeDate(\DateTimeInterface $date)
+    // {
+    //     return $date->format(\DateTime::ATOM); // ISO 8601 format
+    // }
+
     /**
      * @return BelongsTo
      */

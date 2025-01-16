@@ -1,20 +1,18 @@
 <?php
 
-namespace App\JsonApi\V1\Tags;
+namespace App\JsonApi\V1\Settings;
 
-use App\Models\Tag;
+use App\Models\Setting;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
-use LaravelJsonApi\Eloquent\Fields\Relations\BelongsTo;
-use LaravelJsonApi\Eloquent\Fields\Relations\BelongsToMany;
-use LaravelJsonApi\Eloquent\Fields\Relations\HasMany;
-use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
+use LaravelJsonApi\Eloquent\Fields\Str;
+use LaravelJsonApi\Eloquent\Fields\ArrayHash;
 
-class TagSchema extends Schema
+class SettingSchema extends Schema
 {
 
     /**
@@ -22,7 +20,7 @@ class TagSchema extends Schema
      *
      * @var string
      */
-    public static string $model = Tag::class;
+    public static string $model = Setting::class;
 
     /**
      * Get the resource fields.
@@ -32,12 +30,11 @@ class TagSchema extends Schema
     public function fields(): array
     {
         return [
-            ID::make(),
+            ID::make()->matchAs('[0-9a-zA-Z_]+'),
             Str::make('name')->sortable(),
-            Str::make('guardName')->sortable(),
+            ArrayHash::make('data')->sortable(),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
-            BelongsToMany::make('posts')->readOnly()->canCount()->countAs('totalPosts'),
         ];
     }
 

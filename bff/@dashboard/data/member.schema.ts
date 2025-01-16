@@ -53,7 +53,7 @@ export const columns = [{
     displayMember: 'attributes>name',
     fetch: RoleRepository.fetch
   },
-  // async filterData() {
+  // async dataSource() {
   //   const resource = await RoleRepository.fetch()
   //   return resource.data.map(({id, attributes: {name}}) => {
   //     return  {
@@ -175,7 +175,7 @@ export const schema: FieldSchema = {
     displayField: 'relationships>permissions>data:id,type',
     hint: 'Associate users with roles and permissions',
     shape: Zod.array(Zod.any()).min(1),
-    // fieldType: 'CheckList', sử dụng common component 
+    // fieldType: 'CheckList', //sử dụng common component 
     component: defineAsyncComponent(() => import('../components/AutoForm/PermissionCheckList.vue')), // tự custom component
     schema: PermissionSchema, // load từ schema
     // dataSource: { // load từ data source
@@ -196,6 +196,14 @@ export const schema: FieldSchema = {
 export const MemberDataSource = {
   root: 'data',
   params: {
+    // filter: {
+    //   roles: {
+    //     id: {
+    //       operator: 'equals',
+    //       value: 1
+    //     }
+    //   }
+    // },
     include: 'roles,permissions',
     withCount: 'permissions'
   },

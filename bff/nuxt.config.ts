@@ -2,6 +2,11 @@
 import { createResolver } from '@nuxt/kit'
 const { resolve } = createResolver(import.meta.url)
 export default defineNuxtConfig({
+  app: {
+    head: {
+      title: 'RekaUI',
+    }
+  },
   alias: {
     "@application/*": resolve("./@application/*"),
     "@entities": resolve("./@application/entities"),

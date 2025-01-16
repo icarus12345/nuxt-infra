@@ -53,7 +53,7 @@ class PostSchema extends Schema
             HasMany::make('comments')->readOnly()->canCount()->countAs('totalComments'),
             Str::make('content'),
             DateTime::make('createdAt')->sortable()->readOnly(),
-            DateTime::make('publishedAt')->sortable(),
+            DateTime::make('publishedAt')->sortable(),//->serializeUsing(fn($value) => $value->format(DATE_ATOM)),
             Str::make('slug'),
             BelongsToMany::make('tags'),
             Str::make('title')->sortable(),

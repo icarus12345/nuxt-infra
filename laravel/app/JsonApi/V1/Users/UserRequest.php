@@ -19,7 +19,7 @@ class UserRequest extends ResourceRequest
 
         return [
             'name' => ['string'],
-            'avatar' => ['string'],
+            'avatar' => ['nullable', 'string'],
             'email' => ['email'],
             'active' => JsonApiRule::boolean(),
             'roles' => JsonApiRule::toMany(),

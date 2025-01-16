@@ -96,8 +96,8 @@ const showDataTableDialog = () => {
           <FormItem class="flex flex-row items-center gap-2 ps-3">
             <FormControl>
               <Checkbox
-                :checked="isChecked(slotProps, option)"
-                @update:checked="toggleSelectItem(slotProps, option)"
+                :modelValue="isChecked(slotProps, option)"
+                @update:modelValue="toggleSelectItem(slotProps, option)"
               />
             </FormControl>
             <FormLabel class="font-normal">

@@ -35,10 +35,10 @@ function setActiveTeam(team: typeof teams[number]) {
             size="lg"
             class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
           >
-            <div class="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-              <Avatar class="h-8 w-8 rounded-lg">
+            <div class="flex aspect-square size-8 items-center justify-center rounded">
+              <Avatar class="h-8 w-8 rounded">
                 <AvatarImage src="https://reka-ui.com/logo.svg" />
-                <AvatarFallback class="rounded-lg">
+                <AvatarFallback>
                   CN
                 </AvatarFallback>
               </Avatar>
@@ -51,7 +51,7 @@ function setActiveTeam(team: typeof teams[number]) {
           </SidebarMenuButton>
         </DropdownMenuTrigger>
         <DropdownMenuContent
-          class="w-(--reka-dropdown-menu-trigger-width) min-w-56 rounded-lg"
+          class="w-(--reka-dropdown-menu-trigger-width) min-w-56 rounded"
           align="start"
           side="bottom"
           :side-offset="4"

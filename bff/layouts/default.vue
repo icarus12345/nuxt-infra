@@ -6,12 +6,12 @@ import DashboardNav from '../components/Layout/DashboardNav.vue';
 import AccountMenu from '../components/Layout/AccountMenu.vue';
 import TeamMenu from '../components/Layout/TeamMenu.vue';
 import ActiveBreadcrumb from '../components/Layout/ActiveBreadcrumb.vue';
-
+import Basic from './basic.vue';
 const $AuthStore = useAuthStore()
 </script>
 
 <template>
-  <SidebarProvider>
+  <SidebarProvider v-if="$AuthStore.accessToken" >
     <Sidebar collapsible="icon">
       <SidebarHeader>
         <TeamMenu />
@@ -26,7 +26,7 @@ const $AuthStore = useAuthStore()
       <SidebarRail />
     </Sidebar>
     <SidebarInset>
-      <header class="flex min-h-16 gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:min-h-12">
+      <header class="flex min-h-12 border-b gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:min-h-12 bg-muted/10">
         <div class="flex items-center gap-2 px-4 flex-1">
           <SidebarTrigger class="-ml-1" />
           <Separator orientation="vertical" class="mr-2 h-4" />
@@ -39,13 +39,14 @@ const $AuthStore = useAuthStore()
           </nav>
         </div>
       </header>
-      <div class="flex flex-1 flex-col gap-4 p-4 pt-0">
-        <div class="flex-1 rounded bg-muted/50  flex flex-col gap-3">
-          <slot v-if="$AuthStore.accessToken" />
-          <AuthLogin v-else />
+      <div class="flex flex-1 flex-col gap-4">
+        <div class="flex-1 flex flex-col gap-3">
+          <slot />
         </div>
       </div>
     </SidebarInset>
   </SidebarProvider>
-  
+  <Basic v-else>
+    <AuthLogin/>
+  </Basic>
 </template>

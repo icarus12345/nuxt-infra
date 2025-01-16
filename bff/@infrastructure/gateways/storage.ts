@@ -40,6 +40,10 @@ export const useAuthStore = defineStore('AuthStore', () => {
     profile.value = identity.user;
     localStorage.setItem('profile', JSON.stringify(identity.user));
   };
+  const setProfile = (user) => {
+    profile.value = user;
+    localStorage.setItem('profile', JSON.stringify(user));
+  };
 
   const clear = () => {
     accessToken.value = null;
@@ -82,6 +86,7 @@ export const useAuthStore = defineStore('AuthStore', () => {
   return {
     accessToken,
     profile,
+    setProfile,
     setIdentity,
     clear,
     permissions,

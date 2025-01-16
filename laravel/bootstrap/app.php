@@ -21,10 +21,18 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function (\Exception $exception, Request $request) {
+            $status = 500; // Giá trị mặc định nếu không xác định được
+            if (method_exists($exception, 'getStatusCode')) {
+                $status = $exception->getStatusCode(); // Lấy status code từ exception
+            } elseif ($exception instanceof \Illuminate\Validation\ValidationException) {
+                $status = 422; // Xử lý lỗi validation riêng
+            } elseif ($exception instanceof \Illuminate\Auth\AuthenticationException) {
+                $status = 401; // Lỗi authentication
+            } elseif ($exception instanceof \Symfony\Component\HttpKernel\Exception\HttpExceptionInterface) {
+                $status = $exception->getStatusCode(); // Symfony HTTP exception
+            }
             
             if ($request->is('api/*')) {
-                $status = method_exists($exception, 'getStatusCode') ? $exception->getStatusCode() : 500;
-
                 return response()->json([
                     'error' => true,
                     'message' => $exception->getMessage() ?: 'An unexpected error occurred',

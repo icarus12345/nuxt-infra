@@ -60,12 +60,12 @@ export const navMenu = [
   },
   {
     title: 'System Settings',
-    url: '/system-setting',
+    url: '/system-settings',
     icon: Settings,
     children: [
       {
         title: 'General',
-        url: '#',
+        url: '/system-settings/general',
       },
       {
         title: 'Team',

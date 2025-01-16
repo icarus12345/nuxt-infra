@@ -1,5 +1,5 @@
 <script setup lang=ts>
-import { ChevronsUpDown, LogOut, Bell, CreditCard,BadgeCheck,Sparkles } from 'lucide-vue-next'
+import { ChevronsUpDown, LogOut, Bell, User,BadgeCheck,Sparkles, Settings } from 'lucide-vue-next'
 import { $AuthRepository } from "@repositories";
 import { useAuthStore } from "@gateways";
 
@@ -12,6 +12,7 @@ const confirmLogout = () => {
     title: 'Confirm logout?',
     // description: 'There was a problem with your request',
     content: `Do you want to logout`,
+    okText: 'Logout',
     async callback() {
       return $AuthRepository
         .logout()
@@ -32,9 +33,9 @@ const confirmLogout = () => {
             size="lg"
             class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
           >
-            <Avatar class="h-8 w-8 rounded-lg">
+            <Avatar class="h-8 w-8 rounded">
               <AvatarImage :src="$AuthStore.profile.attributes.avatar || ''" :alt="$AuthStore.profile.attributes.name" />
-              <AvatarFallback class="rounded-lg">
+              <AvatarFallback>
                 CN
               </AvatarFallback>
             </Avatar>
@@ -45,12 +46,12 @@ const confirmLogout = () => {
             <ChevronsUpDown class="ml-auto size-4" />
           </SidebarMenuButton>
         </DropdownMenuTrigger>
-        <DropdownMenuContent class="w-(--reka-dropdown-menu-trigger-width) min-w-56 rounded-lg" side="bottom" align="end" :side-offset="4">
+        <DropdownMenuContent class="w-(--reka-dropdown-menu-trigger-width) min-w-56 rounded" side="bottom" align="end" :side-offset="4">
           <DropdownMenuLabel class="p-0 font-normal">
             <div class="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-              <Avatar class="h-8 w-8 rounded-lg">
+              <Avatar class="h-8 w-8 rounded">
                 <AvatarImage :src="$AuthStore.profile.attributes.avatar || ''" :alt="$AuthStore.profile.attributes.name" />
-                <AvatarFallback class="rounded-lg">
+                <AvatarFallback>
                   CN
                 </AvatarFallback>
               </Avatar>
@@ -69,13 +70,17 @@ const confirmLogout = () => {
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
-            <DropdownMenuItem>
-              <BadgeCheck />
-              Account
+            <DropdownMenuItem as-child>
+              <NuxtLink to="/account/profile">
+                <User />
+                Account
+              </NuxtLink>
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              <CreditCard />
-              Billing
+            <DropdownMenuItem as-child>
+              <NuxtLink to="/account/setting">
+                <Settings />
+                Settings
+              </NuxtLink>
             </DropdownMenuItem>
             <DropdownMenuItem>
               <Bell />

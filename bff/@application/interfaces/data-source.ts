@@ -104,4 +104,5 @@ export type FieldSchema = {
   size?: string
   tabs?: FieldTab[]
   fields: Field[]
+  config?: any
 }

@@ -16,6 +16,7 @@ const { handleSubmit } = useForm({
 })
 
 const onSubmit = handleSubmit((formValue) => {
+  console.log(formValue,'formValue')
   LoginUseCase
     .execute(formValue.email, formValue.password)
     .then((success: boolean) => {
@@ -34,30 +35,36 @@ const onSubmit = handleSubmit((formValue) => {
 </script>
 
 <template>
-  <form class="p-4 w-full max-w-xs self-center m-auto space-y-3" @submit="onSubmit">
-    <h3>Login</h3>
-    <small>Deploy your new project in one-click.</small>
-    <FormField v-slot="{ componentField }" name="email">
-      <FormItem>
-        <FormLabel>Email</FormLabel>
-        <FormControl>
-          <Input type="email" placeholder="admin@email.com" v-bind="componentField" />
-        </FormControl>
-        <FormMessage />
-      </FormItem>
-    </FormField>
-    <FormField v-slot="{ componentField }" name="password">
-      <FormItem>
-        <FormLabel>Password</FormLabel>
-        <FormControl>
-          <Input type="password" placeholder="Password" v-bind="componentField" />
-        </FormControl>
-        <FormMessage />
-      </FormItem>
-    </FormField>
-    <div class="flex justify-between">
-      <Button variant="ghost">Cancel</Button>
-      <Button variant="soft" color="primary">Login</Button>
-    </div>
-  </form>
+  <Card class="w-full max-w-xs self-center m-auto">
+    <CardHeader>
+      <CardTitle>Login</CardTitle>
+      <CardDescription>Deploy your new project in one-click.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <form class="space-y-3" @submit="onSubmit">
+        <FormField v-slot="{ componentField }" name="email">
+          <FormItem>
+            <FormLabel>Email</FormLabel>
+            <FormControl>
+              <Input type="email" placeholder="admin@email.com" v-bind="componentField" />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        </FormField>
+        <FormField v-slot="{ componentField }" name="password">
+          <FormItem>
+            <FormLabel>Password</FormLabel>
+            <FormControl>
+              <Input type="password" placeholder="Password" v-bind="componentField" />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        </FormField>
+        <div class="flex justify-between">
+          <Button variant="ghost">Cancel</Button>
+          <Button variant="soft" color="primary" type="submit">Login</Button>
+        </div>
+      </form>
+    </CardContent>
+  </Card>
 </template>

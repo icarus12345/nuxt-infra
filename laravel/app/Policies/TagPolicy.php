@@ -25,6 +25,11 @@ class TagPolicy
         return true; // $this->hasPermissionTo('view_role');
     }
 
+    public function viewPosts(?User $user, Tag $model): bool
+    {
+        return $this->view($user, $model);
+    }
+
     /**
      * Determine whether the user can create models.
      */

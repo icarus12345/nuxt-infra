@@ -19,6 +19,7 @@
   --ck-table-column-resizer-width: 7px;
   --ck-todo-list-checkmark-size: 16px;
   --ck-z-default: 1;
+  --ck-font-face: inherit;
 }
 .ck-content blockquote {
   display: block;

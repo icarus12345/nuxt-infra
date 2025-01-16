@@ -45,6 +45,7 @@ class Server extends BaseServer
             Roles\RoleSchema::class,
             Permissions\PermissionSchema::class,
             Medias\MediaSchema::class,
+            Settings\SettingSchema::class,
         ];
     }
 }

@@ -260,6 +260,17 @@ export const schema: FieldSchema = {
 export const PostDataSource = {
   root: 'data',
   params: {
+    filter: {
+      tags: {
+        id: {
+          operator: 'equals',
+          value: 1
+        }
+      }
+    },
+    fields: {
+      posts: 'title,thumb,tags,createdAt,publishedAt,updatedAt',
+    },
     include: 'author,tags',
     withCount: 'comments'
   },
@@ -267,6 +278,14 @@ export const PostDataSource = {
   // },
   // beforeLoadComplete(res) {
   // },
+  get: async(id: string) => {
+    return PostRepository.get(id, {
+      fields: {
+        posts: 'title,thumb,photos,tags,slug,content,author,createdAt,publishedAt,updatedAt',
+      },
+      include: 'tags',
+    })
+  },
   fetch: PostRepository.fetch,
   save: PostRepository.save,
   delete: PostRepository.delete,

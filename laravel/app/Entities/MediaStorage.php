@@ -22,7 +22,6 @@ class MediaStorage
     public function find(string $path): ?Media
     {
         $url = Storage::disk($this->disk)->url($path);
-        Log::info("FIND");
         return new Media([
             'type' => 'file',
             'name' => basename($path),

@@ -17,7 +17,7 @@ class ApiResponse
 
     protected function handleException(\Throwable $exception): JsonResponse
     {
-      return response()->json(['error' => 'Bad Request11111'], 400);
+        return response()->json(['error' => 'Bad Request'], 400);
         // Xử lý trả về lỗi tương ứng
         switch ($exception->getStatusCode()) {
             case 400:
