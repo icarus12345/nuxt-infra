@@ -35,7 +35,8 @@ help: ## shows this Makefile help message
 .PHONY: build up down install start stop restart clear destroy
 
 build: ## Builds the container from Dockerfile
-	cd infrastructure && $(DOCKER_COMPOSE) up --build -d
+	cd infrastructure && cp .env.example .env2
+#	cd infrastructure && $(DOCKER_COMPOSE) up --build -d
 
 up: ## attaches to containers for a service and also starts any linked services
 	cd infrastructure && $(DOCKER_COMPOSE) up -d
@@ -47,7 +48,7 @@ install: ## Builds, Attaches the container , Installs the application
 	cd infrastructure && $(DOCKER_EXEC_TOOLS_APP) -c "cp .env.example .env"
 	cd infrastructure && $(DOCKER_EXEC_TOOLS_APP) -c "php artisan key:generate"
 	cd infrastructure && $(DOCKER_EXEC_TOOLS_APP) -c "php artisan storage:link"
-	$(MAKE) update seed
+	$(MAKE) update seed unzip
 	cd infrastructure && $(DOCKER_EXEC_TOOLS_APP) -c "php artisan jwt:secret"
 
 update: ## Starts the container running
@@ -95,7 +96,5 @@ seed: ## Execute the db seed Artisan command to seed your database
 	cd infrastructure && $(DOCKER_EXEC_TOOLS_APP) -c "php artisan db:seed"
 
 unzip: ## unzip the ui and dashboard common components
-	@mkdir -p "bff/.ui"
-	@unzip -o 'bff/ui.zip' -d "bff/.ui"
-	@mkdir -p "bff/.dashboard"
-	@unzip -o 'bff/dashboard.zip' -d "bff/.dashboard"
+	@unzip bff/ui.zip -d bff/.ui
+	@unzip bff/dashboard.zip -d bff/.dashboard
